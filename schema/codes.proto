@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package codes;
+option csharp_namespace = "Cube.Codes";
+
+// Custom error codes. Sent on a best-effort basis on the WebSocket
+// `CloseFrame`.
+enum CloseCode {
+  DO_NOT_USE = 0;
+  reserved 1 to 599;
+
+  ON_WAITLIST = 600;
+  INCOMPLETE_KYC = 601;
+  UNAPPROVED_KYC = 602;
+
+  BAD_MESSAGE = 700;
+  NO_HEARTBEAT = 701;
+
+  UNSPECIFIED = 999;
+
+  reserved 1000 to max;
+}

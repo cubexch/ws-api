@@ -1,0 +1,19 @@
+{
+  "name": "@cubexch/client",
+  "version": "1.1.11",
+  "scripts": {
+    "build": "tsc"
+  },
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/**/*"
+  ],
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.7",
+    "ts-proto": "^1.149.0",
+    "typescript": "^4.9.4"
+  }
+}
