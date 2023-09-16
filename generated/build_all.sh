@@ -11,5 +11,8 @@ echo 'Building Rust...'
 echo 'Building TypeScript...'
 ./js/build.sh
 
+echo 'Building Pythong...'
+./python/build.sh
+
 echo 'Building Markdown...'
 ./md/build.sh
