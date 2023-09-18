@@ -9,16 +9,16 @@ set -e
 # switch to script directory
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
-mkdir -p src
+mkdir -p cube_ws_api
 
 SCHEMAS="../../schema"
 
 protoc \
-  --python_out=./src \
-  --pyi_out=./src \
+  --python_out=./cube_ws_api \
+  --pyi_out=./cube_ws_api \
   --proto_path="$SCHEMAS" "$SCHEMAS"/market_data.proto
 
 protoc \
-  --python_out=./src \
-  --pyi_out=./src \
+  --python_out=./cube_ws_api \
+  --pyi_out=./cube_ws_api \
   --proto_path="$SCHEMAS" "$SCHEMAS"/trade.proto

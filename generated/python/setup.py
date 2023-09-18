@@ -8,4 +8,7 @@ setup(
     install_requires=[
         'protobuf',
     ],
+    package_data={
+        'cube_ws_api': ['py.typed'],
+    },
 )
