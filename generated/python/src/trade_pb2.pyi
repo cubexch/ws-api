@@ -48,14 +48,14 @@ DISABLED: PostOnly
 ENABLED: PostOnly
 
 class Credentials(_message.Message):
-    __slots__ = ["accessKeyId", "signature", "timestamp"]
-    ACCESSKEYID_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["access_key_id", "signature", "timestamp"]
+    ACCESS_KEY_ID_FIELD_NUMBER: _ClassVar[int]
     SIGNATURE_FIELD_NUMBER: _ClassVar[int]
     TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
-    accessKeyId: str
+    access_key_id: str
     signature: str
     timestamp: int
-    def __init__(self, accessKeyId: _Optional[str] = ..., signature: _Optional[str] = ..., timestamp: _Optional[int] = ...) -> None: ...
+    def __init__(self, access_key_id: _Optional[str] = ..., signature: _Optional[str] = ..., timestamp: _Optional[int] = ...) -> None: ...
 
 class OrderRequest(_message.Message):
     __slots__ = ["new", "cancel", "modify", "heartbeat", "mc"]
@@ -72,137 +72,137 @@ class OrderRequest(_message.Message):
     def __init__(self, new: _Optional[_Union[NewOrder, _Mapping]] = ..., cancel: _Optional[_Union[CancelOrder, _Mapping]] = ..., modify: _Optional[_Union[ModifyOrder, _Mapping]] = ..., heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., mc: _Optional[_Union[MassCancel, _Mapping]] = ...) -> None: ...
 
 class NewOrder(_message.Message):
-    __slots__ = ["clientOrderId", "requestId", "marketId", "price", "quantity", "side", "timeInForce", "orderType", "subaccountId", "selfTradePrevention", "postOnly"]
-    CLIENTORDERID_FIELD_NUMBER: _ClassVar[int]
-    REQUESTID_FIELD_NUMBER: _ClassVar[int]
-    MARKETID_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["client_order_id", "request_id", "market_id", "price", "quantity", "side", "time_in_force", "order_type", "subaccount_id", "self_trade_prevention", "post_only"]
+    CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
+    REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
+    MARKET_ID_FIELD_NUMBER: _ClassVar[int]
     PRICE_FIELD_NUMBER: _ClassVar[int]
     QUANTITY_FIELD_NUMBER: _ClassVar[int]
     SIDE_FIELD_NUMBER: _ClassVar[int]
-    TIMEINFORCE_FIELD_NUMBER: _ClassVar[int]
-    ORDERTYPE_FIELD_NUMBER: _ClassVar[int]
-    SUBACCOUNTID_FIELD_NUMBER: _ClassVar[int]
-    SELFTRADEPREVENTION_FIELD_NUMBER: _ClassVar[int]
-    POSTONLY_FIELD_NUMBER: _ClassVar[int]
-    clientOrderId: int
-    requestId: int
-    marketId: int
+    TIME_IN_FORCE_FIELD_NUMBER: _ClassVar[int]
+    ORDER_TYPE_FIELD_NUMBER: _ClassVar[int]
+    SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
+    SELF_TRADE_PREVENTION_FIELD_NUMBER: _ClassVar[int]
+    POST_ONLY_FIELD_NUMBER: _ClassVar[int]
+    client_order_id: int
+    request_id: int
+    market_id: int
     price: int
     quantity: int
     side: Side
-    timeInForce: TimeInForce
-    orderType: OrderType
-    subaccountId: int
-    selfTradePrevention: SelfTradePrevention
-    postOnly: PostOnly
-    def __init__(self, clientOrderId: _Optional[int] = ..., requestId: _Optional[int] = ..., marketId: _Optional[int] = ..., price: _Optional[int] = ..., quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., timeInForce: _Optional[_Union[TimeInForce, str]] = ..., orderType: _Optional[_Union[OrderType, str]] = ..., subaccountId: _Optional[int] = ..., selfTradePrevention: _Optional[_Union[SelfTradePrevention, str]] = ..., postOnly: _Optional[_Union[PostOnly, str]] = ...) -> None: ...
+    time_in_force: TimeInForce
+    order_type: OrderType
+    subaccount_id: int
+    self_trade_prevention: SelfTradePrevention
+    post_only: PostOnly
+    def __init__(self, client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., market_id: _Optional[int] = ..., price: _Optional[int] = ..., quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., time_in_force: _Optional[_Union[TimeInForce, str]] = ..., order_type: _Optional[_Union[OrderType, str]] = ..., subaccount_id: _Optional[int] = ..., self_trade_prevention: _Optional[_Union[SelfTradePrevention, str]] = ..., post_only: _Optional[_Union[PostOnly, str]] = ...) -> None: ...
 
 class CancelOrder(_message.Message):
-    __slots__ = ["marketId", "clientOrderId", "requestId", "subaccountId"]
-    MARKETID_FIELD_NUMBER: _ClassVar[int]
-    CLIENTORDERID_FIELD_NUMBER: _ClassVar[int]
-    REQUESTID_FIELD_NUMBER: _ClassVar[int]
-    SUBACCOUNTID_FIELD_NUMBER: _ClassVar[int]
-    marketId: int
-    clientOrderId: int
-    requestId: int
-    subaccountId: int
-    def __init__(self, marketId: _Optional[int] = ..., clientOrderId: _Optional[int] = ..., requestId: _Optional[int] = ..., subaccountId: _Optional[int] = ...) -> None: ...
+    __slots__ = ["market_id", "client_order_id", "request_id", "subaccount_id"]
+    MARKET_ID_FIELD_NUMBER: _ClassVar[int]
+    CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
+    REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
+    SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
+    market_id: int
+    client_order_id: int
+    request_id: int
+    subaccount_id: int
+    def __init__(self, market_id: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., subaccount_id: _Optional[int] = ...) -> None: ...
 
 class ModifyOrder(_message.Message):
-    __slots__ = ["marketId", "clientOrderId", "requestId", "newPrice", "newQuantity", "subaccountId", "selfTradePrevention", "postOnly"]
-    MARKETID_FIELD_NUMBER: _ClassVar[int]
-    CLIENTORDERID_FIELD_NUMBER: _ClassVar[int]
-    REQUESTID_FIELD_NUMBER: _ClassVar[int]
-    NEWPRICE_FIELD_NUMBER: _ClassVar[int]
-    NEWQUANTITY_FIELD_NUMBER: _ClassVar[int]
-    SUBACCOUNTID_FIELD_NUMBER: _ClassVar[int]
-    SELFTRADEPREVENTION_FIELD_NUMBER: _ClassVar[int]
-    POSTONLY_FIELD_NUMBER: _ClassVar[int]
-    marketId: int
-    clientOrderId: int
-    requestId: int
-    newPrice: int
-    newQuantity: int
-    subaccountId: int
-    selfTradePrevention: SelfTradePrevention
-    postOnly: PostOnly
-    def __init__(self, marketId: _Optional[int] = ..., clientOrderId: _Optional[int] = ..., requestId: _Optional[int] = ..., newPrice: _Optional[int] = ..., newQuantity: _Optional[int] = ..., subaccountId: _Optional[int] = ..., selfTradePrevention: _Optional[_Union[SelfTradePrevention, str]] = ..., postOnly: _Optional[_Union[PostOnly, str]] = ...) -> None: ...
+    __slots__ = ["market_id", "client_order_id", "request_id", "new_price", "new_quantity", "subaccount_id", "self_trade_prevention", "post_only"]
+    MARKET_ID_FIELD_NUMBER: _ClassVar[int]
+    CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
+    REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
+    NEW_PRICE_FIELD_NUMBER: _ClassVar[int]
+    NEW_QUANTITY_FIELD_NUMBER: _ClassVar[int]
+    SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
+    SELF_TRADE_PREVENTION_FIELD_NUMBER: _ClassVar[int]
+    POST_ONLY_FIELD_NUMBER: _ClassVar[int]
+    market_id: int
+    client_order_id: int
+    request_id: int
+    new_price: int
+    new_quantity: int
+    subaccount_id: int
+    self_trade_prevention: SelfTradePrevention
+    post_only: PostOnly
+    def __init__(self, market_id: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., new_price: _Optional[int] = ..., new_quantity: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., self_trade_prevention: _Optional[_Union[SelfTradePrevention, str]] = ..., post_only: _Optional[_Union[PostOnly, str]] = ...) -> None: ...
 
 class MassCancel(_message.Message):
-    __slots__ = ["subaccountId", "requestId", "marketId", "side"]
-    SUBACCOUNTID_FIELD_NUMBER: _ClassVar[int]
-    REQUESTID_FIELD_NUMBER: _ClassVar[int]
-    MARKETID_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["subaccount_id", "request_id", "market_id", "side"]
+    SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
+    REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
+    MARKET_ID_FIELD_NUMBER: _ClassVar[int]
     SIDE_FIELD_NUMBER: _ClassVar[int]
-    subaccountId: int
-    requestId: int
-    marketId: int
+    subaccount_id: int
+    request_id: int
+    market_id: int
     side: Side
-    def __init__(self, subaccountId: _Optional[int] = ..., requestId: _Optional[int] = ..., marketId: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ...) -> None: ...
+    def __init__(self, subaccount_id: _Optional[int] = ..., request_id: _Optional[int] = ..., market_id: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ...) -> None: ...
 
 class Heartbeat(_message.Message):
-    __slots__ = ["requestId", "timestamp"]
-    REQUESTID_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["request_id", "timestamp"]
+    REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
     TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
-    requestId: int
+    request_id: int
     timestamp: int
-    def __init__(self, requestId: _Optional[int] = ..., timestamp: _Optional[int] = ...) -> None: ...
+    def __init__(self, request_id: _Optional[int] = ..., timestamp: _Optional[int] = ...) -> None: ...
 
 class OrderResponse(_message.Message):
-    __slots__ = ["newAck", "cancelAck", "modifyAck", "newReject", "cancelReject", "modifyReject", "fill", "heartbeat", "position", "massCancelAck"]
-    NEWACK_FIELD_NUMBER: _ClassVar[int]
-    CANCELACK_FIELD_NUMBER: _ClassVar[int]
-    MODIFYACK_FIELD_NUMBER: _ClassVar[int]
-    NEWREJECT_FIELD_NUMBER: _ClassVar[int]
-    CANCELREJECT_FIELD_NUMBER: _ClassVar[int]
-    MODIFYREJECT_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["new_ack", "cancel_ack", "modify_ack", "new_reject", "cancel_reject", "modify_reject", "fill", "heartbeat", "position", "mass_cancel_ack"]
+    NEW_ACK_FIELD_NUMBER: _ClassVar[int]
+    CANCEL_ACK_FIELD_NUMBER: _ClassVar[int]
+    MODIFY_ACK_FIELD_NUMBER: _ClassVar[int]
+    NEW_REJECT_FIELD_NUMBER: _ClassVar[int]
+    CANCEL_REJECT_FIELD_NUMBER: _ClassVar[int]
+    MODIFY_REJECT_FIELD_NUMBER: _ClassVar[int]
     FILL_FIELD_NUMBER: _ClassVar[int]
     HEARTBEAT_FIELD_NUMBER: _ClassVar[int]
     POSITION_FIELD_NUMBER: _ClassVar[int]
-    MASSCANCELACK_FIELD_NUMBER: _ClassVar[int]
-    newAck: NewOrderAck
-    cancelAck: CancelOrderAck
-    modifyAck: ModifyOrderAck
-    newReject: NewOrderReject
-    cancelReject: CancelOrderReject
-    modifyReject: ModifyOrderReject
+    MASS_CANCEL_ACK_FIELD_NUMBER: _ClassVar[int]
+    new_ack: NewOrderAck
+    cancel_ack: CancelOrderAck
+    modify_ack: ModifyOrderAck
+    new_reject: NewOrderReject
+    cancel_reject: CancelOrderReject
+    modify_reject: ModifyOrderReject
     fill: Fill
     heartbeat: Heartbeat
     position: AssetPosition
-    massCancelAck: MassCancelAck
-    def __init__(self, newAck: _Optional[_Union[NewOrderAck, _Mapping]] = ..., cancelAck: _Optional[_Union[CancelOrderAck, _Mapping]] = ..., modifyAck: _Optional[_Union[ModifyOrderAck, _Mapping]] = ..., newReject: _Optional[_Union[NewOrderReject, _Mapping]] = ..., cancelReject: _Optional[_Union[CancelOrderReject, _Mapping]] = ..., modifyReject: _Optional[_Union[ModifyOrderReject, _Mapping]] = ..., fill: _Optional[_Union[Fill, _Mapping]] = ..., heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., position: _Optional[_Union[AssetPosition, _Mapping]] = ..., massCancelAck: _Optional[_Union[MassCancelAck, _Mapping]] = ...) -> None: ...
+    mass_cancel_ack: MassCancelAck
+    def __init__(self, new_ack: _Optional[_Union[NewOrderAck, _Mapping]] = ..., cancel_ack: _Optional[_Union[CancelOrderAck, _Mapping]] = ..., modify_ack: _Optional[_Union[ModifyOrderAck, _Mapping]] = ..., new_reject: _Optional[_Union[NewOrderReject, _Mapping]] = ..., cancel_reject: _Optional[_Union[CancelOrderReject, _Mapping]] = ..., modify_reject: _Optional[_Union[ModifyOrderReject, _Mapping]] = ..., fill: _Optional[_Union[Fill, _Mapping]] = ..., heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., position: _Optional[_Union[AssetPosition, _Mapping]] = ..., mass_cancel_ack: _Optional[_Union[MassCancelAck, _Mapping]] = ...) -> None: ...
 
 class NewOrderAck(_message.Message):
-    __slots__ = ["msgSeqNum", "clientOrderId", "requestId", "exchangeOrderId", "marketId", "price", "quantity", "side", "timeInForce", "orderType", "transactTime", "subaccountId"]
-    MSGSEQNUM_FIELD_NUMBER: _ClassVar[int]
-    CLIENTORDERID_FIELD_NUMBER: _ClassVar[int]
-    REQUESTID_FIELD_NUMBER: _ClassVar[int]
-    EXCHANGEORDERID_FIELD_NUMBER: _ClassVar[int]
-    MARKETID_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["msg_seq_num", "client_order_id", "request_id", "exchange_order_id", "market_id", "price", "quantity", "side", "time_in_force", "order_type", "transact_time", "subaccount_id"]
+    MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
+    CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
+    REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
+    EXCHANGE_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
+    MARKET_ID_FIELD_NUMBER: _ClassVar[int]
     PRICE_FIELD_NUMBER: _ClassVar[int]
     QUANTITY_FIELD_NUMBER: _ClassVar[int]
     SIDE_FIELD_NUMBER: _ClassVar[int]
-    TIMEINFORCE_FIELD_NUMBER: _ClassVar[int]
-    ORDERTYPE_FIELD_NUMBER: _ClassVar[int]
-    TRANSACTTIME_FIELD_NUMBER: _ClassVar[int]
-    SUBACCOUNTID_FIELD_NUMBER: _ClassVar[int]
-    msgSeqNum: int
-    clientOrderId: int
-    requestId: int
-    exchangeOrderId: int
-    marketId: int
+    TIME_IN_FORCE_FIELD_NUMBER: _ClassVar[int]
+    ORDER_TYPE_FIELD_NUMBER: _ClassVar[int]
+    TRANSACT_TIME_FIELD_NUMBER: _ClassVar[int]
+    SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
+    msg_seq_num: int
+    client_order_id: int
+    request_id: int
+    exchange_order_id: int
+    market_id: int
     price: int
     quantity: int
     side: Side
-    timeInForce: TimeInForce
-    orderType: OrderType
-    transactTime: int
-    subaccountId: int
-    def __init__(self, msgSeqNum: _Optional[int] = ..., clientOrderId: _Optional[int] = ..., requestId: _Optional[int] = ..., exchangeOrderId: _Optional[int] = ..., marketId: _Optional[int] = ..., price: _Optional[int] = ..., quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., timeInForce: _Optional[_Union[TimeInForce, str]] = ..., orderType: _Optional[_Union[OrderType, str]] = ..., transactTime: _Optional[int] = ..., subaccountId: _Optional[int] = ...) -> None: ...
+    time_in_force: TimeInForce
+    order_type: OrderType
+    transact_time: int
+    subaccount_id: int
+    def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., exchange_order_id: _Optional[int] = ..., market_id: _Optional[int] = ..., price: _Optional[int] = ..., quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., time_in_force: _Optional[_Union[TimeInForce, str]] = ..., order_type: _Optional[_Union[OrderType, str]] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ...) -> None: ...
 
 class CancelOrderAck(_message.Message):
-    __slots__ = ["msgSeqNum", "clientOrderId", "requestId", "transactTime", "subaccountId", "reason", "marketId"]
+    __slots__ = ["msg_seq_num", "client_order_id", "request_id", "transact_time", "subaccount_id", "reason", "market_id"]
     class Reason(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         UNCLASSIFIED: _ClassVar[CancelOrderAck.Reason]
@@ -219,44 +219,44 @@ class CancelOrderAck(_message.Message):
     STP_RESTING: CancelOrderAck.Reason
     STP_AGGRESSING: CancelOrderAck.Reason
     MASS_CANCEL: CancelOrderAck.Reason
-    MSGSEQNUM_FIELD_NUMBER: _ClassVar[int]
-    CLIENTORDERID_FIELD_NUMBER: _ClassVar[int]
-    REQUESTID_FIELD_NUMBER: _ClassVar[int]
-    TRANSACTTIME_FIELD_NUMBER: _ClassVar[int]
-    SUBACCOUNTID_FIELD_NUMBER: _ClassVar[int]
+    MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
+    CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
+    REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
+    TRANSACT_TIME_FIELD_NUMBER: _ClassVar[int]
+    SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     REASON_FIELD_NUMBER: _ClassVar[int]
-    MARKETID_FIELD_NUMBER: _ClassVar[int]
-    msgSeqNum: int
-    clientOrderId: int
-    requestId: int
-    transactTime: int
-    subaccountId: int
+    MARKET_ID_FIELD_NUMBER: _ClassVar[int]
+    msg_seq_num: int
+    client_order_id: int
+    request_id: int
+    transact_time: int
+    subaccount_id: int
     reason: CancelOrderAck.Reason
-    marketId: int
-    def __init__(self, msgSeqNum: _Optional[int] = ..., clientOrderId: _Optional[int] = ..., requestId: _Optional[int] = ..., transactTime: _Optional[int] = ..., subaccountId: _Optional[int] = ..., reason: _Optional[_Union[CancelOrderAck.Reason, str]] = ..., marketId: _Optional[int] = ...) -> None: ...
+    market_id: int
+    def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., reason: _Optional[_Union[CancelOrderAck.Reason, str]] = ..., market_id: _Optional[int] = ...) -> None: ...
 
 class ModifyOrderAck(_message.Message):
-    __slots__ = ["msgSeqNum", "clientOrderId", "requestId", "transactTime", "newQuantity", "subaccountId", "marketId", "price"]
-    MSGSEQNUM_FIELD_NUMBER: _ClassVar[int]
-    CLIENTORDERID_FIELD_NUMBER: _ClassVar[int]
-    REQUESTID_FIELD_NUMBER: _ClassVar[int]
-    TRANSACTTIME_FIELD_NUMBER: _ClassVar[int]
-    NEWQUANTITY_FIELD_NUMBER: _ClassVar[int]
-    SUBACCOUNTID_FIELD_NUMBER: _ClassVar[int]
-    MARKETID_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["msg_seq_num", "client_order_id", "request_id", "transact_time", "new_quantity", "subaccount_id", "market_id", "price"]
+    MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
+    CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
+    REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
+    TRANSACT_TIME_FIELD_NUMBER: _ClassVar[int]
+    NEW_QUANTITY_FIELD_NUMBER: _ClassVar[int]
+    SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
+    MARKET_ID_FIELD_NUMBER: _ClassVar[int]
     PRICE_FIELD_NUMBER: _ClassVar[int]
-    msgSeqNum: int
-    clientOrderId: int
-    requestId: int
-    transactTime: int
-    newQuantity: int
-    subaccountId: int
-    marketId: int
+    msg_seq_num: int
+    client_order_id: int
+    request_id: int
+    transact_time: int
+    new_quantity: int
+    subaccount_id: int
+    market_id: int
     price: int
-    def __init__(self, msgSeqNum: _Optional[int] = ..., clientOrderId: _Optional[int] = ..., requestId: _Optional[int] = ..., transactTime: _Optional[int] = ..., newQuantity: _Optional[int] = ..., subaccountId: _Optional[int] = ..., marketId: _Optional[int] = ..., price: _Optional[int] = ...) -> None: ...
+    def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., new_quantity: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., market_id: _Optional[int] = ..., price: _Optional[int] = ...) -> None: ...
 
 class MassCancelAck(_message.Message):
-    __slots__ = ["msgSeqNum", "subaccountId", "requestId", "transactTime", "reason", "totalAffectedOrders"]
+    __slots__ = ["msg_seq_num", "subaccount_id", "request_id", "transact_time", "reason", "total_affected_orders"]
     class Reason(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         UNCLASSIFIED: _ClassVar[MassCancelAck.Reason]
@@ -265,22 +265,22 @@ class MassCancelAck(_message.Message):
     UNCLASSIFIED: MassCancelAck.Reason
     INVALID_MARKET_ID: MassCancelAck.Reason
     INVALID_SIDE: MassCancelAck.Reason
-    MSGSEQNUM_FIELD_NUMBER: _ClassVar[int]
-    SUBACCOUNTID_FIELD_NUMBER: _ClassVar[int]
-    REQUESTID_FIELD_NUMBER: _ClassVar[int]
-    TRANSACTTIME_FIELD_NUMBER: _ClassVar[int]
+    MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
+    SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
+    REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
+    TRANSACT_TIME_FIELD_NUMBER: _ClassVar[int]
     REASON_FIELD_NUMBER: _ClassVar[int]
-    TOTALAFFECTEDORDERS_FIELD_NUMBER: _ClassVar[int]
-    msgSeqNum: int
-    subaccountId: int
-    requestId: int
-    transactTime: int
+    TOTAL_AFFECTED_ORDERS_FIELD_NUMBER: _ClassVar[int]
+    msg_seq_num: int
+    subaccount_id: int
+    request_id: int
+    transact_time: int
     reason: MassCancelAck.Reason
-    totalAffectedOrders: int
-    def __init__(self, msgSeqNum: _Optional[int] = ..., subaccountId: _Optional[int] = ..., requestId: _Optional[int] = ..., transactTime: _Optional[int] = ..., reason: _Optional[_Union[MassCancelAck.Reason, str]] = ..., totalAffectedOrders: _Optional[int] = ...) -> None: ...
+    total_affected_orders: int
+    def __init__(self, msg_seq_num: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., request_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., reason: _Optional[_Union[MassCancelAck.Reason, str]] = ..., total_affected_orders: _Optional[int] = ...) -> None: ...
 
 class NewOrderReject(_message.Message):
-    __slots__ = ["msgSeqNum", "clientOrderId", "requestId", "transactTime", "subaccountId", "reason", "marketId", "price", "quantity", "side", "timeInForce", "orderType"]
+    __slots__ = ["msg_seq_num", "client_order_id", "request_id", "transact_time", "subaccount_id", "reason", "market_id", "price", "quantity", "side", "time_in_force", "order_type"]
     class Reason(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         UNCLASSIFIED: _ClassVar[NewOrderReject.Reason]
@@ -317,34 +317,34 @@ class NewOrderReject(_message.Message):
     NO_OPPOSING_LIMIT_ORDER: NewOrderReject.Reason
     POST_ONLY_WOULD_TRADE: NewOrderReject.Reason
     DID_NOT_FULLY_FILL: NewOrderReject.Reason
-    MSGSEQNUM_FIELD_NUMBER: _ClassVar[int]
-    CLIENTORDERID_FIELD_NUMBER: _ClassVar[int]
-    REQUESTID_FIELD_NUMBER: _ClassVar[int]
-    TRANSACTTIME_FIELD_NUMBER: _ClassVar[int]
-    SUBACCOUNTID_FIELD_NUMBER: _ClassVar[int]
+    MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
+    CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
+    REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
+    TRANSACT_TIME_FIELD_NUMBER: _ClassVar[int]
+    SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     REASON_FIELD_NUMBER: _ClassVar[int]
-    MARKETID_FIELD_NUMBER: _ClassVar[int]
+    MARKET_ID_FIELD_NUMBER: _ClassVar[int]
     PRICE_FIELD_NUMBER: _ClassVar[int]
     QUANTITY_FIELD_NUMBER: _ClassVar[int]
     SIDE_FIELD_NUMBER: _ClassVar[int]
-    TIMEINFORCE_FIELD_NUMBER: _ClassVar[int]
-    ORDERTYPE_FIELD_NUMBER: _ClassVar[int]
-    msgSeqNum: int
-    clientOrderId: int
-    requestId: int
-    transactTime: int
-    subaccountId: int
+    TIME_IN_FORCE_FIELD_NUMBER: _ClassVar[int]
+    ORDER_TYPE_FIELD_NUMBER: _ClassVar[int]
+    msg_seq_num: int
+    client_order_id: int
+    request_id: int
+    transact_time: int
+    subaccount_id: int
     reason: NewOrderReject.Reason
-    marketId: int
+    market_id: int
     price: int
     quantity: int
     side: Side
-    timeInForce: TimeInForce
-    orderType: OrderType
-    def __init__(self, msgSeqNum: _Optional[int] = ..., clientOrderId: _Optional[int] = ..., requestId: _Optional[int] = ..., transactTime: _Optional[int] = ..., subaccountId: _Optional[int] = ..., reason: _Optional[_Union[NewOrderReject.Reason, str]] = ..., marketId: _Optional[int] = ..., price: _Optional[int] = ..., quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., timeInForce: _Optional[_Union[TimeInForce, str]] = ..., orderType: _Optional[_Union[OrderType, str]] = ...) -> None: ...
+    time_in_force: TimeInForce
+    order_type: OrderType
+    def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., reason: _Optional[_Union[NewOrderReject.Reason, str]] = ..., market_id: _Optional[int] = ..., price: _Optional[int] = ..., quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., time_in_force: _Optional[_Union[TimeInForce, str]] = ..., order_type: _Optional[_Union[OrderType, str]] = ...) -> None: ...
 
 class CancelOrderReject(_message.Message):
-    __slots__ = ["msgSeqNum", "clientOrderId", "requestId", "transactTime", "subaccountId", "reason", "marketId"]
+    __slots__ = ["msg_seq_num", "client_order_id", "request_id", "transact_time", "subaccount_id", "reason", "market_id"]
     class Reason(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         UNCLASSIFIED: _ClassVar[CancelOrderReject.Reason]
@@ -353,24 +353,24 @@ class CancelOrderReject(_message.Message):
     UNCLASSIFIED: CancelOrderReject.Reason
     INVALID_MARKET_ID: CancelOrderReject.Reason
     ORDER_NOT_FOUND: CancelOrderReject.Reason
-    MSGSEQNUM_FIELD_NUMBER: _ClassVar[int]
-    CLIENTORDERID_FIELD_NUMBER: _ClassVar[int]
-    REQUESTID_FIELD_NUMBER: _ClassVar[int]
-    TRANSACTTIME_FIELD_NUMBER: _ClassVar[int]
-    SUBACCOUNTID_FIELD_NUMBER: _ClassVar[int]
+    MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
+    CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
+    REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
+    TRANSACT_TIME_FIELD_NUMBER: _ClassVar[int]
+    SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     REASON_FIELD_NUMBER: _ClassVar[int]
-    MARKETID_FIELD_NUMBER: _ClassVar[int]
-    msgSeqNum: int
-    clientOrderId: int
-    requestId: int
-    transactTime: int
-    subaccountId: int
+    MARKET_ID_FIELD_NUMBER: _ClassVar[int]
+    msg_seq_num: int
+    client_order_id: int
+    request_id: int
+    transact_time: int
+    subaccount_id: int
     reason: CancelOrderReject.Reason
-    marketId: int
-    def __init__(self, msgSeqNum: _Optional[int] = ..., clientOrderId: _Optional[int] = ..., requestId: _Optional[int] = ..., transactTime: _Optional[int] = ..., subaccountId: _Optional[int] = ..., reason: _Optional[_Union[CancelOrderReject.Reason, str]] = ..., marketId: _Optional[int] = ...) -> None: ...
+    market_id: int
+    def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., reason: _Optional[_Union[CancelOrderReject.Reason, str]] = ..., market_id: _Optional[int] = ...) -> None: ...
 
 class ModifyOrderReject(_message.Message):
-    __slots__ = ["msgSeqNum", "clientOrderId", "requestId", "transactTime", "subaccountId", "reason", "marketId"]
+    __slots__ = ["msg_seq_num", "client_order_id", "request_id", "transact_time", "subaccount_id", "reason", "market_id"]
     class Reason(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         UNCLASSIFIED: _ClassVar[ModifyOrderReject.Reason]
@@ -393,55 +393,55 @@ class ModifyOrderReject(_message.Message):
     UNKNOWN_TRADER: ModifyOrderReject.Reason
     EXCEEDED_SPOT_POSITION: ModifyOrderReject.Reason
     POST_ONLY_WOULD_TRADE: ModifyOrderReject.Reason
-    MSGSEQNUM_FIELD_NUMBER: _ClassVar[int]
-    CLIENTORDERID_FIELD_NUMBER: _ClassVar[int]
-    REQUESTID_FIELD_NUMBER: _ClassVar[int]
-    TRANSACTTIME_FIELD_NUMBER: _ClassVar[int]
-    SUBACCOUNTID_FIELD_NUMBER: _ClassVar[int]
+    MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
+    CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
+    REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
+    TRANSACT_TIME_FIELD_NUMBER: _ClassVar[int]
+    SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     REASON_FIELD_NUMBER: _ClassVar[int]
-    MARKETID_FIELD_NUMBER: _ClassVar[int]
-    msgSeqNum: int
-    clientOrderId: int
-    requestId: int
-    transactTime: int
-    subaccountId: int
+    MARKET_ID_FIELD_NUMBER: _ClassVar[int]
+    msg_seq_num: int
+    client_order_id: int
+    request_id: int
+    transact_time: int
+    subaccount_id: int
     reason: ModifyOrderReject.Reason
-    marketId: int
-    def __init__(self, msgSeqNum: _Optional[int] = ..., clientOrderId: _Optional[int] = ..., requestId: _Optional[int] = ..., transactTime: _Optional[int] = ..., subaccountId: _Optional[int] = ..., reason: _Optional[_Union[ModifyOrderReject.Reason, str]] = ..., marketId: _Optional[int] = ...) -> None: ...
+    market_id: int
+    def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., reason: _Optional[_Union[ModifyOrderReject.Reason, str]] = ..., market_id: _Optional[int] = ...) -> None: ...
 
 class Fill(_message.Message):
-    __slots__ = ["msgSeqNum", "marketId", "clientOrderId", "exchangeOrderId", "fillPrice", "fillQuantity", "leavesQuantity", "transactTime", "subaccountId"]
-    MSGSEQNUM_FIELD_NUMBER: _ClassVar[int]
-    MARKETID_FIELD_NUMBER: _ClassVar[int]
-    CLIENTORDERID_FIELD_NUMBER: _ClassVar[int]
-    EXCHANGEORDERID_FIELD_NUMBER: _ClassVar[int]
-    FILLPRICE_FIELD_NUMBER: _ClassVar[int]
-    FILLQUANTITY_FIELD_NUMBER: _ClassVar[int]
-    LEAVESQUANTITY_FIELD_NUMBER: _ClassVar[int]
-    TRANSACTTIME_FIELD_NUMBER: _ClassVar[int]
-    SUBACCOUNTID_FIELD_NUMBER: _ClassVar[int]
-    msgSeqNum: int
-    marketId: int
-    clientOrderId: int
-    exchangeOrderId: int
-    fillPrice: int
-    fillQuantity: int
-    leavesQuantity: int
-    transactTime: int
-    subaccountId: int
-    def __init__(self, msgSeqNum: _Optional[int] = ..., marketId: _Optional[int] = ..., clientOrderId: _Optional[int] = ..., exchangeOrderId: _Optional[int] = ..., fillPrice: _Optional[int] = ..., fillQuantity: _Optional[int] = ..., leavesQuantity: _Optional[int] = ..., transactTime: _Optional[int] = ..., subaccountId: _Optional[int] = ...) -> None: ...
+    __slots__ = ["msg_seq_num", "market_id", "client_order_id", "exchange_order_id", "fill_price", "fill_quantity", "leaves_quantity", "transact_time", "subaccount_id"]
+    MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
+    MARKET_ID_FIELD_NUMBER: _ClassVar[int]
+    CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
+    EXCHANGE_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
+    FILL_PRICE_FIELD_NUMBER: _ClassVar[int]
+    FILL_QUANTITY_FIELD_NUMBER: _ClassVar[int]
+    LEAVES_QUANTITY_FIELD_NUMBER: _ClassVar[int]
+    TRANSACT_TIME_FIELD_NUMBER: _ClassVar[int]
+    SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
+    msg_seq_num: int
+    market_id: int
+    client_order_id: int
+    exchange_order_id: int
+    fill_price: int
+    fill_quantity: int
+    leaves_quantity: int
+    transact_time: int
+    subaccount_id: int
+    def __init__(self, msg_seq_num: _Optional[int] = ..., market_id: _Optional[int] = ..., client_order_id: _Optional[int] = ..., exchange_order_id: _Optional[int] = ..., fill_price: _Optional[int] = ..., fill_quantity: _Optional[int] = ..., leaves_quantity: _Optional[int] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ...) -> None: ...
 
 class AssetPosition(_message.Message):
-    __slots__ = ["subaccountId", "assetId", "total", "available"]
-    SUBACCOUNTID_FIELD_NUMBER: _ClassVar[int]
-    ASSETID_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["subaccount_id", "asset_id", "total", "available"]
+    SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
+    ASSET_ID_FIELD_NUMBER: _ClassVar[int]
     TOTAL_FIELD_NUMBER: _ClassVar[int]
     AVAILABLE_FIELD_NUMBER: _ClassVar[int]
-    subaccountId: int
-    assetId: int
+    subaccount_id: int
+    asset_id: int
     total: RawUnits
     available: RawUnits
-    def __init__(self, subaccountId: _Optional[int] = ..., assetId: _Optional[int] = ..., total: _Optional[_Union[RawUnits, _Mapping]] = ..., available: _Optional[_Union[RawUnits, _Mapping]] = ...) -> None: ...
+    def __init__(self, subaccount_id: _Optional[int] = ..., asset_id: _Optional[int] = ..., total: _Optional[_Union[RawUnits, _Mapping]] = ..., available: _Optional[_Union[RawUnits, _Mapping]] = ...) -> None: ...
 
 class RawUnits(_message.Message):
     __slots__ = ["word0", "word1", "word2", "word3"]
@@ -478,33 +478,33 @@ class AssetPositions(_message.Message):
     def __init__(self, positions: _Optional[_Iterable[_Union[AssetPosition, _Mapping]]] = ...) -> None: ...
 
 class Done(_message.Message):
-    __slots__ = ["latestTransactTime"]
-    LATESTTRANSACTTIME_FIELD_NUMBER: _ClassVar[int]
-    latestTransactTime: int
-    def __init__(self, latestTransactTime: _Optional[int] = ...) -> None: ...
+    __slots__ = ["latest_transact_time"]
+    LATEST_TRANSACT_TIME_FIELD_NUMBER: _ClassVar[int]
+    latest_transact_time: int
+    def __init__(self, latest_transact_time: _Optional[int] = ...) -> None: ...
 
 class RestingOrder(_message.Message):
-    __slots__ = ["clientOrderId", "exchangeOrderId", "marketId", "price", "originalQuantity", "side", "timeInForce", "orderType", "remainingQuantity", "restTime", "subaccountId"]
-    CLIENTORDERID_FIELD_NUMBER: _ClassVar[int]
-    EXCHANGEORDERID_FIELD_NUMBER: _ClassVar[int]
-    MARKETID_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["client_order_id", "exchange_order_id", "market_id", "price", "original_quantity", "side", "time_in_force", "order_type", "remaining_quantity", "rest_time", "subaccount_id"]
+    CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
+    EXCHANGE_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
+    MARKET_ID_FIELD_NUMBER: _ClassVar[int]
     PRICE_FIELD_NUMBER: _ClassVar[int]
-    ORIGINALQUANTITY_FIELD_NUMBER: _ClassVar[int]
+    ORIGINAL_QUANTITY_FIELD_NUMBER: _ClassVar[int]
     SIDE_FIELD_NUMBER: _ClassVar[int]
-    TIMEINFORCE_FIELD_NUMBER: _ClassVar[int]
-    ORDERTYPE_FIELD_NUMBER: _ClassVar[int]
-    REMAININGQUANTITY_FIELD_NUMBER: _ClassVar[int]
-    RESTTIME_FIELD_NUMBER: _ClassVar[int]
-    SUBACCOUNTID_FIELD_NUMBER: _ClassVar[int]
-    clientOrderId: int
-    exchangeOrderId: int
-    marketId: int
+    TIME_IN_FORCE_FIELD_NUMBER: _ClassVar[int]
+    ORDER_TYPE_FIELD_NUMBER: _ClassVar[int]
+    REMAINING_QUANTITY_FIELD_NUMBER: _ClassVar[int]
+    REST_TIME_FIELD_NUMBER: _ClassVar[int]
+    SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
+    client_order_id: int
+    exchange_order_id: int
+    market_id: int
     price: int
-    originalQuantity: int
+    original_quantity: int
     side: Side
-    timeInForce: TimeInForce
-    orderType: OrderType
-    remainingQuantity: int
-    restTime: int
-    subaccountId: int
-    def __init__(self, clientOrderId: _Optional[int] = ..., exchangeOrderId: _Optional[int] = ..., marketId: _Optional[int] = ..., price: _Optional[int] = ..., originalQuantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., timeInForce: _Optional[_Union[TimeInForce, str]] = ..., orderType: _Optional[_Union[OrderType, str]] = ..., remainingQuantity: _Optional[int] = ..., restTime: _Optional[int] = ..., subaccountId: _Optional[int] = ...) -> None: ...
+    time_in_force: TimeInForce
+    order_type: OrderType
+    remaining_quantity: int
+    rest_time: int
+    subaccount_id: int
+    def __init__(self, client_order_id: _Optional[int] = ..., exchange_order_id: _Optional[int] = ..., market_id: _Optional[int] = ..., price: _Optional[int] = ..., original_quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., time_in_force: _Optional[_Union[TimeInForce, str]] = ..., order_type: _Optional[_Union[OrderType, str]] = ..., remaining_quantity: _Optional[int] = ..., rest_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ...) -> None: ...

@@ -114,7 +114,7 @@ enum OrderType {
 
 // Self-trade-prevention (STP) allows market participants to prevent the matching
 // of orders for accounts with common ownership. Currently, STP only applies for
-// orders with the same subaccountId. STP will only be applied when a match is
+// orders with the same subaccount_id. STP will only be applied when a match is
 // about to occur between the two orders. That is, if the aggressing order is
 // fully filled before reaching the resting order in FIFO order, no STP cancels
 // will happen.
@@ -168,7 +168,7 @@ enum PostOnly {
 // ```
 message Credentials {
   // Public API key
-  string accessKeyId = 1;
+  string access_key_id = 1;
   // HMAC signature
   string signature = 2;
   // Timestamp in seconds
@@ -192,33 +192,33 @@ message OrderRequest {
 message NewOrder {
   // A unique order ID assigned by the client for this order. The ID must be
   // unique among open orders by this subaccount.
-  uint64 clientOrderId = 1;
+  uint64 client_order_id = 1;
   // A request ID that is echoed back on the NewOrderAck or NewOrderReject
-  uint64 requestId = 2;
-  uint64 marketId = 3;
+  uint64 request_id = 2;
+  uint64 market_id = 3;
   optional uint64 price = 4;
   uint64 quantity = 5;
   Side side = 6;
-  TimeInForce timeInForce = 7;
-  OrderType orderType = 8;
+  TimeInForce time_in_force = 7;
+  OrderType order_type = 8;
   // The subaccount to place this order on. This subaccount must be writable by
   // the API key specified in the Credentials message.
-  uint64 subaccountId = 9;
-  optional SelfTradePrevention selfTradePrevention = 10;
-  PostOnly postOnly = 11;
+  uint64 subaccount_id = 9;
+  optional SelfTradePrevention self_trade_prevention = 10;
+  PostOnly post_only = 11;
 }
 
 // Cancel a resting order.
 // Note that this can be done before the order is acknowledged (an aggressive
-// cancel) since the identifying field is the `clientOrderId`.
+// cancel) since the identifying field is the `client_order_id`.
 message CancelOrder {
-  uint64 marketId = 1;
+  uint64 market_id = 1;
   // The order ID specified by the client on the NewOrder request.
-  uint64 clientOrderId = 2;
+  uint64 client_order_id = 2;
   // A request ID that is echoed back on the CancelOrderAck or CancelOrderReject
-  uint64 requestId = 3;
+  uint64 request_id = 3;
   // The subaccount that the NewOrder was placed on.
-  uint64 subaccountId = 4;
+  uint64 subaccount_id = 4;
 }
 
 // Modify a resting order.
@@ -244,43 +244,43 @@ message CancelOrder {
 //
 // The post-modify quantity will be `newQuantity - filled = 4 - 2 = 2`.
 message ModifyOrder {
-  uint64 marketId = 1;
+  uint64 market_id = 1;
   // The order ID specified by the client on the NewOrder request.
-  uint64 clientOrderId = 2;
+  uint64 client_order_id = 2;
   // A request ID that is echoed back on the ModifyOrderAck or ModifyOrderReject
-  uint64 requestId = 3;
-  uint64 newPrice = 4;
-  uint64 newQuantity = 5;
+  uint64 request_id = 3;
+  uint64 new_price = 4;
+  uint64 new_quantity = 5;
   // The subaccount that the NewOrder was placed on.
-  uint64 subaccountId = 6;
-  optional SelfTradePrevention selfTradePrevention = 7;
-  PostOnly postOnly = 8;
+  uint64 subaccount_id = 6;
+  optional SelfTradePrevention self_trade_prevention = 7;
+  PostOnly post_only = 8;
 }
 
 // Cancel all resting orders, optionally limiting to a particular market and /
 // or order book side.
 message MassCancel {
   // The subaccount to cancel orders for.
-  uint64 subaccountId = 1;
+  uint64 subaccount_id = 1;
   // A request ID that is echoed back on the MassCancelAck and individual
   // CancelOrderAck's.
-  uint64 requestId = 2;
+  uint64 request_id = 2;
   // If specified, only orders on the corresponding market will be canceled.
-  optional uint64 marketId = 3;
+  optional uint64 market_id = 3;
   // If specified, only orders with this side will be canceled.
   optional Side side = 4;
 }
 
 // A client and server heartbeat. The heartbeat reply, including the timestamp
 // value, comes from the order service and not the matching engine. Matching
-// engine timestamps can be extracted from `transactTime` (below).
+// engine timestamps can be extracted from `transact_time` (below).
 //
 // Latency can be estimated from this, but only the relative difference between
 // successive server messages should be used. In particular, the client and
 // server clock should not be expected to be synchronized.
 message Heartbeat {
   // A request ID that is echoed back on the Heartbeat
-  uint64 requestId = 1;
+  uint64 request_id = 1;
   uint64 timestamp = 2;
 }
 
@@ -290,41 +290,41 @@ message Heartbeat {
 // OrderResponse.
 message OrderResponse {
   oneof inner {
-    NewOrderAck newAck = 1;
-    CancelOrderAck cancelAck = 2;
-    ModifyOrderAck modifyAck = 3;
-    NewOrderReject newReject = 4;
-    CancelOrderReject cancelReject = 5;
-    ModifyOrderReject modifyReject = 6;
+    NewOrderAck new_ack = 1;
+    CancelOrderAck cancel_ack = 2;
+    ModifyOrderAck modify_ack = 3;
+    NewOrderReject new_reject = 4;
+    CancelOrderReject cancel_reject = 5;
+    ModifyOrderReject modify_reject = 6;
     Fill fill = 7;
     Heartbeat heartbeat = 8;
     AssetPosition position = 9;
-    MassCancelAck massCancelAck = 10;
+    MassCancelAck mass_cancel_ack = 10;
   }
 }
 
 // New-order-ack confirms a new-order request. The ack will be ordered before
 // any fills for this order.
 message NewOrderAck {
-  uint64 msgSeqNum = 1;
+  uint64 msg_seq_num = 1;
   // The client order ID specified in the new-order request.
-  uint64 clientOrderId = 2;
+  uint64 client_order_id = 2;
   // The request ID specified in the new-order request.
-  uint64 requestId = 3;
+  uint64 request_id = 3;
   // [Exchange order ID](#exchange-order-id)
-  uint64 exchangeOrderId = 4;
-  uint64 marketId = 5;
+  uint64 exchange_order_id = 4;
+  uint64 market_id = 5;
   // If the order ultimately rests, the `price` field will include the resting
   // price.
   optional uint64 price = 6;
   // The quantity submitted in the new-order request.
   uint64 quantity = 7;
   Side side = 8;
-  TimeInForce timeInForce = 9;
-  OrderType orderType = 10;
+  TimeInForce time_in_force = 9;
+  OrderType order_type = 10;
   // [Transact time](#transact-time)
-  uint64 transactTime = 11;
-  uint64 subaccountId = 12;
+  uint64 transact_time = 11;
+  uint64 subaccount_id = 12;
 }
 
 // Cancel-order-ack confirms a cancel request, or that an order has been
@@ -345,36 +345,36 @@ message CancelOrderAck {
     MASS_CANCEL = 6;
   }
 
-  uint64 msgSeqNum = 1;
-  uint64 clientOrderId = 2;
+  uint64 msg_seq_num = 1;
+  uint64 client_order_id = 2;
   // If the Reason is `DISCONNECT`, `IOC`, `STP_RESTING`, or `STP_AGGRESSING`,
   // this request ID will be `u64::MAX`. Otherwise, it will be the request ID of
   // the initiated cancel action. For a mass cancel, each cancel order ack will
-  // have the MassCancel's requestId.
-  uint64 requestId = 3;
+  // have the MassCancel's request_id.
+  uint64 request_id = 3;
   // [Transact time](#transact-time)
-  uint64 transactTime = 4;
-  uint64 subaccountId = 5;
+  uint64 transact_time = 4;
+  uint64 subaccount_id = 5;
   Reason reason = 6;
-  uint64 marketId = 7;
+  uint64 market_id = 7;
 }
 
 // Modify-order-ack confirms a modify-order request. If the modify resulted in
 // an aggressing cancel-replace, the ack will be ordered before any fills for
 // this order.
 message ModifyOrderAck {
-  uint64 msgSeqNum = 1;
-  uint64 clientOrderId = 2;
+  uint64 msg_seq_num = 1;
+  uint64 client_order_id = 2;
   // The request ID specified in the modify request.
-  uint64 requestId = 3;
+  uint64 request_id = 3;
   // [Transact time](#transact-time)
-  uint64 transactTime = 4;
+  uint64 transact_time = 4;
 
   // The quantity submitted in the modify request after applying IFM
   // logic.
-  uint64 newQuantity = 5;
-  uint64 subaccountId = 6;
-  uint64 marketId = 7;
+  uint64 new_quantity = 5;
+  uint64 subaccount_id = 6;
+  uint64 market_id = 7;
   uint64 price = 8;
 }
 
@@ -388,15 +388,15 @@ message MassCancelAck {
     INVALID_SIDE = 2;
   }
 
-  uint64 msgSeqNum = 1;
-  uint64 subaccountId = 2;
+  uint64 msg_seq_num = 1;
+  uint64 subaccount_id = 2;
   // The request ID specified in the mass-cancel request.
-  uint64 requestId = 3;
+  uint64 request_id = 3;
   // [Transact time](#transact-time)
-  uint64 transactTime = 4;
+  uint64 transact_time = 4;
   optional Reason reason = 6;
   // The total number of orders that were canceled.
-  uint32 totalAffectedOrders = 7;
+  uint32 total_affected_orders = 7;
 }
 
 // New-order-reject indicates that a new-order request was not applied.
@@ -434,22 +434,22 @@ message NewOrderReject {
     DID_NOT_FULLY_FILL = 16;
   }
 
-  uint64 msgSeqNum = 1;
+  uint64 msg_seq_num = 1;
   // The client order ID specified in the new-order request.
-  uint64 clientOrderId = 2;
+  uint64 client_order_id = 2;
   // The request ID specified in the new-order request.
-  uint64 requestId = 3;
+  uint64 request_id = 3;
   // [Transact time](#transact-time)
-  uint64 transactTime = 4;
-  uint64 subaccountId = 5;
+  uint64 transact_time = 4;
+  uint64 subaccount_id = 5;
   Reason reason = 6;
 
-  uint64 marketId = 7;
+  uint64 market_id = 7;
   optional uint64 price = 8;
   uint64 quantity = 9;
   Side side = 10;
-  TimeInForce timeInForce = 11;
-  OrderType orderType = 12;
+  TimeInForce time_in_force = 11;
+  OrderType order_type = 12;
 }
 
 // Cancel-order-reject indicates that a cancel-order request was not applied.
@@ -463,16 +463,16 @@ message CancelOrderReject {
     ORDER_NOT_FOUND = 2;
   }
 
-  uint64 msgSeqNum = 1;
+  uint64 msg_seq_num = 1;
   // The client order ID specified in the cancel-order request.
-  uint64 clientOrderId = 2;
+  uint64 client_order_id = 2;
   // The request ID specified in the cancel-order request.
-  uint64 requestId = 3;
+  uint64 request_id = 3;
   // [Transact time](#transact-time)
-  uint64 transactTime = 4;
-  uint64 subaccountId = 5;
+  uint64 transact_time = 4;
+  uint64 subaccount_id = 5;
   Reason reason = 6;
-  uint64 marketId = 7;
+  uint64 market_id = 7;
 }
 
 // Modify-order-reject indicates that a modify-order request was not applied.
@@ -502,43 +502,43 @@ message ModifyOrderReject {
     POST_ONLY_WOULD_TRADE = 9;
   }
 
-  uint64 msgSeqNum = 1;
+  uint64 msg_seq_num = 1;
   // The client order ID specified in the modify-order request.
-  uint64 clientOrderId = 2;
+  uint64 client_order_id = 2;
   // The request ID specified in the modify-order request.
-  uint64 requestId = 3;
+  uint64 request_id = 3;
   // [Transact time](#transact-time)
-  uint64 transactTime = 4;
-  uint64 subaccountId = 5;
+  uint64 transact_time = 4;
+  uint64 subaccount_id = 5;
   Reason reason = 6;
-  uint64 marketId = 7;
+  uint64 market_id = 7;
 }
 
 // A fill for an order.
 message Fill {
-  uint64 msgSeqNum = 1;
-  uint64 marketId = 2;
+  uint64 msg_seq_num = 1;
+  uint64 market_id = 2;
   // The client order ID specified in the new-order request.
-  uint64 clientOrderId = 3;
+  uint64 client_order_id = 3;
   // [Exchange order ID](#exchange-order-id)
-  uint64 exchangeOrderId = 4;
+  uint64 exchange_order_id = 4;
   // The price that this trade occured at.
-  uint64 fillPrice = 5;
+  uint64 fill_price = 5;
   // The quantity that was traded in this fill.
-  uint64 fillQuantity = 6;
+  uint64 fill_quantity = 6;
   // The remaining quantity for this order after the fill is applied.
-  uint64 leavesQuantity = 7;
+  uint64 leaves_quantity = 7;
   // [Transact time](#transact-time)
-  uint64 transactTime = 8;
-  uint64 subaccountId = 9;
+  uint64 transact_time = 8;
+  uint64 subaccount_id = 9;
 }
 
 // The user's underlying asset position. These are sent asynchronously as
 // positions are updated and broadcast through internal position channels. They
 // can also be tracked by applying other OrderResponse messages individually.
 message AssetPosition {
-  uint64 subaccountId = 1;
-  uint64 assetId = 2;
+  uint64 subaccount_id = 1;
+  uint64 asset_id = 2;
   RawUnits total = 3;
   // The available amount after open orders are subtracted.
   RawUnits available = 4;
@@ -585,27 +585,27 @@ message AssetPositions {
 // An indication that bootstrap is complete.
 message Done {
   // [Transact time](#transact-time)
-  uint64 latestTransactTime = 1;
+  uint64 latest_transact_time = 1;
 }
 
 // A resting order. Sent on bootstrap in `RestingOrders`.
 message RestingOrder {
   // The client order ID specified in the new-order request.
-  uint64 clientOrderId = 1;
+  uint64 client_order_id = 1;
   // [Exchange order ID](#exchange-order-id)
-  uint64 exchangeOrderId = 2;
-  uint64 marketId = 3;
+  uint64 exchange_order_id = 2;
+  uint64 market_id = 3;
   uint64 price = 4;
   // The quantity submitted in the new-order request.
-  uint64 originalQuantity = 5;
+  uint64 original_quantity = 5;
   Side side = 6;
-  TimeInForce timeInForce = 7;
-  OrderType orderType = 8;
+  TimeInForce time_in_force = 7;
+  OrderType order_type = 8;
 
   // The current remaining quantity on the book.
-  uint64 remainingQuantity = 9;
+  uint64 remaining_quantity = 9;
 
   // [Transact time](#transact-time) of the NewOrderAck
-  uint64 restTime = 10;
-  uint64 subaccountId = 11;
+  uint64 rest_time = 10;
+  uint64 subaccount_id = 11;
 }

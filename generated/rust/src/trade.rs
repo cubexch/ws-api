@@ -96,7 +96,7 @@ pub struct NewOrder {
 }
 /// Cancel a resting order.
 /// Note that this can be done before the order is acknowledged (an aggressive
-/// cancel) since the identifying field is the `clientOrderId`.
+/// cancel) since the identifying field is the `client_order_id`.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CancelOrder {
@@ -178,7 +178,7 @@ pub struct MassCancel {
 }
 /// A client and server heartbeat. The heartbeat reply, including the timestamp
 /// value, comes from the order service and not the matching engine. Matching
-/// engine timestamps can be extracted from `transactTime` (below).
+/// engine timestamps can be extracted from `transact_time` (below).
 ///
 /// Latency can be estimated from this, but only the relative difference between
 /// successive server messages should be used. In particular, the client and
@@ -276,7 +276,7 @@ pub struct CancelOrderAck {
     /// If the Reason is `DISCONNECT`, `IOC`, `STP_RESTING`, or `STP_AGGRESSING`,
     /// this request ID will be `u64::MAX`. Otherwise, it will be the request ID of
     /// the initiated cancel action. For a mass cancel, each cancel order ack will
-    /// have the MassCancel's requestId.
+    /// have the MassCancel's request_id.
     #[prost(uint64, tag="3")]
     pub request_id: u64,
     /// [Transact time](#transact-time)
@@ -939,7 +939,7 @@ impl OrderType {
 }
 /// Self-trade-prevention (STP) allows market participants to prevent the matching
 /// of orders for accounts with common ownership. Currently, STP only applies for
-/// orders with the same subaccountId. STP will only be applied when a match is
+/// orders with the same subaccount_id. STP will only be applied when a match is
 /// about to occur between the two orders. That is, if the aggressing order is
 /// fully filled before reaching the resting order in FIFO order, no STP cancels
 /// will happen.

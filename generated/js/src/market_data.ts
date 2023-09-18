@@ -103,9 +103,9 @@ export interface MdMessage {
 }
 
 /**
- * Market by price snapshot message. This is chunked into `numChunks` and starts
+ * Market by price snapshot message. This is chunked into `num_chunks` and starts
  * with `chunk = 0`. A snapshot is sent on first connect. `Level`'s should be
- * concatened until `chunk = numChunks - 1`. Currently, the chunks and levels
+ * concatened until `chunk = num_chunks - 1`. Currently, the chunks and levels
  * are streamed from tightest price level outwards with interleaved Bid and Ask
  * levels, but no ordering is guaranteed.
  */
@@ -157,9 +157,9 @@ export interface MarketByPriceDiff_Diff {
 }
 
 /**
- * Market by order snapshot message. This is chunked into `numChunks` and starts
+ * Market by order snapshot message. This is chunked into `num_chunks` and starts
  * with `chunk = 0`. A snapshot is sent on first connect. `Level`'s should be
- * concatened until `chunk = numChunks - 1`. Orders are sent in order of FIFO
+ * concatened until `chunk = num_chunks - 1`. Orders are sent in order of FIFO
  * queue priority so the first order of a level should be the first order to be
  * matched when that level is aggressed.
  */
@@ -219,7 +219,7 @@ export enum MarketByOrderDiff_DiffOp {
 
 /**
  * An order diff creates, updates, or deletes a resting order based on the
- * `exchangeOrderId`
+ * `exchange_order_id`
  */
 export interface MarketByOrderDiff_Diff {
   price: bigint;

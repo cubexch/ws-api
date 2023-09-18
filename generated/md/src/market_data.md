@@ -40,10 +40,10 @@ Every exchange message from `/book/:market_id` will be wrapped as an
 | heartbeat | [Heartbeat](#heartbeat) |  | Server heartbeat reply |
 | summary | [Summary](#summary) |  | 24h summary |
 | trades | [Trades](#trades) |  | Recent trades |
-| mboSnapshot | [MarketByOrder](#market-by-order) |  | Market by order snapshot |
-| mboDiff | [MarketByOrderDiff](#market-by-order-diff) |  | Market by order diff |
-| mbpSnapshot | [MarketByPrice](#market-by-price) |  | Market by price snapshot |
-| mbpDiff | [MarketByPriceDiff](#market-by-price-diff) |  | Market by price diff |
+| mbo_snapshot | [MarketByOrder](#market-by-order) |  | Market by order snapshot |
+| mbo_diff | [MarketByOrderDiff](#market-by-order-diff) |  | Market by order diff |
+| mbp_snapshot | [MarketByPrice](#market-by-price) |  | Market by price snapshot |
+| mbp_diff | [MarketByPriceDiff](#market-by-price-diff) |  | Market by price diff |
 | kline | [Kline](#kline) |  | Candlestick |
 
 
@@ -53,9 +53,9 @@ Every exchange message from `/book/:market_id` will be wrapped as an
 
 
 ### MarketByPrice
-Market by price snapshot message. This is chunked into `numChunks` and starts
+Market by price snapshot message. This is chunked into `num_chunks` and starts
 with `chunk = 0`. A snapshot is sent on first connect. `Level`'s should be
-concatened until `chunk = numChunks - 1`. Currently, the chunks and levels
+concatened until `chunk = num_chunks - 1`. Currently, the chunks and levels
 are streamed from tightest price level outwards with interleaved Bid and Ask
 levels, but no ordering is guaranteed.
 
@@ -64,7 +64,7 @@ levels, but no ordering is guaranteed.
 | ----- | ---- | ----- | ----------- |
 | levels | [MarketByPrice.Level](#market-by-price-level) | repeated |  |
 | chunk | [uint32](#uint32) |  |  |
-| numChunks | [uint32](#uint32) |  |  |
+| num_chunks | [uint32](#uint32) |  |  |
 
 
 
@@ -98,8 +98,8 @@ reconciliation.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | diffs | [MarketByPriceDiff.Diff](#market-by-price-diff-diff) | repeated |  |
-| totalBidLevels | [uint32](#uint32) |  | Total number of bid levels after this diff is applied. |
-| totalAskLevels | [uint32](#uint32) |  | Total number of ask levels after this diff is applied. |
+| total_bid_levels | [uint32](#uint32) |  | Total number of bid levels after this diff is applied. |
+| total_ask_levels | [uint32](#uint32) |  | Total number of ask levels after this diff is applied. |
 
 
 
@@ -125,9 +125,9 @@ A price level diff overwrites the existing price level.
 
 
 ### MarketByOrder
-Market by order snapshot message. This is chunked into `numChunks` and starts
+Market by order snapshot message. This is chunked into `num_chunks` and starts
 with `chunk = 0`. A snapshot is sent on first connect. `Level`'s should be
-concatened until `chunk = numChunks - 1`. Orders are sent in order of FIFO
+concatened until `chunk = num_chunks - 1`. Orders are sent in order of FIFO
 queue priority so the first order of a level should be the first order to be
 matched when that level is aggressed.
 
@@ -136,7 +136,7 @@ matched when that level is aggressed.
 | ----- | ---- | ----- | ----------- |
 | orders | [MarketByOrder.Order](#market-by-order-order) | repeated |  |
 | chunk | [uint32](#uint32) |  |  |
-| numChunks | [uint32](#uint32) |  |  |
+| num_chunks | [uint32](#uint32) |  |  |
 
 
 
@@ -152,7 +152,7 @@ A resting order.
 | ----- | ---- | ----- | ----------- |
 | price | [uint64](#uint64) |  |  |
 | quantity | [uint64](#uint64) |  |  |
-| exchangeOrderId | [uint64](#uint64) |  | [Exchange order ID](/docs/api_reference/trade#exchange-order-id) |
+| exchange_order_id | [uint64](#uint64) |  | [Exchange order ID](/docs/api_reference/trade#exchange-order-id) |
 | side | [Side](#side) |  |  |
 | priority | [uint64](#uint64) |  | Order priority for execution. Valid within a price level and side. That is, orders must first be sorted by side and price (in descending order for bids and ascending for asks), and then the OrderPriority within the level. A lower value is a higher priority. |
 
@@ -175,10 +175,10 @@ exchange order ID will not change.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | diffs | [MarketByOrderDiff.Diff](#market-by-order-diff-diff) | repeated |  |
-| totalBidLevels | [uint32](#uint32) |  | Total number of bid levels after this diff is applied. |
-| totalAskLevels | [uint32](#uint32) |  | Total number of ask levels after this diff is applied. |
-| totalBidOrders | [uint32](#uint32) |  | Total number of bid orders after this diff is applied. |
-| totalAskOrders | [uint32](#uint32) |  | Total number of ask orders after this diff is applied. |
+| total_bid_levels | [uint32](#uint32) |  | Total number of bid levels after this diff is applied. |
+| total_ask_levels | [uint32](#uint32) |  | Total number of ask levels after this diff is applied. |
+| total_bid_orders | [uint32](#uint32) |  | Total number of bid orders after this diff is applied. |
+| total_ask_orders | [uint32](#uint32) |  | Total number of ask orders after this diff is applied. |
 
 
 
@@ -188,14 +188,14 @@ exchange order ID will not change.
 
 ### MarketByOrderDiff.Diff
 An order diff creates, updates, or deletes a resting order based on the
-`exchangeOrderId`
+`exchange_order_id`
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | price | [uint64](#uint64) |  |  |
 | quantity | [uint64](#uint64) |  |  |
-| exchangeOrderId | [uint64](#uint64) |  | [Exchange order ID](/docs/api_reference/trade#exchange-order-id) |
+| exchange_order_id | [uint64](#uint64) |  | [Exchange order ID](/docs/api_reference/trade#exchange-order-id) |
 | side | [Side](#side) |  |  |
 | op | [MarketByOrderDiff.DiffOp](#market-by-order-diff-diff-op) |  |  |
 | priority | [uint64](#uint64) |  | See [`MarketByOrder.Order`](#market-by-order-order) |
@@ -230,11 +230,11 @@ orders and levels, respectively.
 | ----- | ---- | ----- | ----------- |
 | tradeId | [uint64](#uint64) |  | The ID assigned to this trade. All trades that occur from the same event will be assigned the same ID, and are considered to be an atomic batch. |
 | price | [uint64](#uint64) |  | The price that this trade occurred at. |
-| aggressingSide | [Side](#side) |  | The side of the aggressing order. |
-| restingExchangeOrderId | [uint64](#uint64) |  | The [Exchange order ID](/docs/api_reference/trade#exchange-order-id) of the resting order. |
-| fillQuantity | [uint64](#uint64) |  |  |
-| transactTime | [uint64](#uint64) |  | The [transact time](/docs/api_reference/trade#transact-time) assigned by the matching engine for this trade. All trades that occur from the same event will be assigned the same transact time. |
-| aggressingExchangeOrderId | [uint64](#uint64) |  | The [Exchange order ID](/docs/api_reference/trade#exchange-order-id) of the aggressing order. |
+| aggressing_side | [Side](#side) |  | The side of the aggressing order. |
+| resting_exchange_order_id | [uint64](#uint64) |  | The [Exchange order ID](/docs/api_reference/trade#exchange-order-id) of the resting order. |
+| fill_quantity | [uint64](#uint64) |  |  |
+| transact_time | [uint64](#uint64) |  | The [transact time](/docs/api_reference/trade#transact-time) assigned by the matching engine for this trade. All trades that occur from the same event will be assigned the same transact time. |
+| aggressing_exchange_order_id | [uint64](#uint64) |  | The [Exchange order ID](/docs/api_reference/trade#exchange-order-id) of the aggressing order. |
 
 
 
@@ -252,10 +252,10 @@ Rolling 24h stats.
 | close | [uint64](#uint64) |  | Latest price |
 | low | [uint64](#uint64) |  | 24h low price |
 | high | [uint64](#uint64) |  | 24h high price |
-| baseVolumeLo | [uint64](#uint64) |  | Low 64-bits of the base quantity traded |
-| baseVolumeHi | [uint64](#uint64) |  | High 64-bits of the base quantity traded |
-| quoteVolumeLo | [uint64](#uint64) |  | Low 64-bits of the quote quantity traded |
-| quoteVolumeHi | [uint64](#uint64) |  | High 64-bits of the quote quantity traded |
+| base_volume_lo | [uint64](#uint64) |  | Low 64-bits of the base quantity traded |
+| base_volume_hi | [uint64](#uint64) |  | High 64-bits of the base quantity traded |
+| quote_volume_lo | [uint64](#uint64) |  | Low 64-bits of the quote quantity traded |
+| quote_volume_hi | [uint64](#uint64) |  | High 64-bits of the quote quantity traded |
 
 
 
@@ -270,13 +270,13 @@ Candlestick bar.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | interval | [KlineInterval](#kline-interval) |  |  |
-| startTime | [uint64](#uint64) |  | The unix nanosecond timestamp that this kline covers. |
+| start_time | [uint64](#uint64) |  | The unix nanosecond timestamp that this kline covers. |
 | open | [uint64](#uint64) |  | Kline open price. |
 | close | [uint64](#uint64) |  | Kline close price. |
 | high | [uint64](#uint64) |  | Kline high price. |
 | low | [uint64](#uint64) |  | Kline low price. |
-| volumeLo | [uint64](#uint64) |  | Low 64-bits of the base quantity traded. |
-| volumeHi | [uint64](#uint64) |  | High 64-bits of the base quantity traded. |
+| volume_lo | [uint64](#uint64) |  | Low 64-bits of the base quantity traded. |
+| volume_hi | [uint64](#uint64) |  | High 64-bits of the base quantity traded. |
 
 
 
@@ -291,7 +291,7 @@ value, comes from the market data service.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| requestId | [uint64](#uint64) |  | A request ID that is echoed back on the Heartbeat |
+| request_id | [uint64](#uint64) |  | A request ID that is echoed back on the Heartbeat |
 | timestamp | [uint64](#uint64) |  |  |
 
 
@@ -321,8 +321,8 @@ Every exchange message from `/tops` will be wrapped as an `AggMessage`.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | heartbeat | [Heartbeat](#heartbeat) |  | Server heartbeat reply |
-| topOfBooks | [TopOfBooks](#top-of-books) |  | Top of books |
-| rateUpdates | [RateUpdates](#rate-updates) |  | Rates for all assets |
+| top_of_books | [TopOfBooks](#top-of-books) |  | Top of books |
+| rate_updates | [RateUpdates](#rate-updates) |  | Rates for all assets |
 
 
 
@@ -336,14 +336,14 @@ Top of book
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| marketId | [uint64](#uint64) |  |  |
-| transactTime | [uint64](#uint64) |  | The [transact time](/docs/api_reference/trade#transact-time) of the latest book update on this market. |
-| bidPrice | [uint64](#uint64) |  | The best bid price. |
-| bidQuantity | [uint64](#uint64) |  | The total bid quantity at the best bid price. |
-| askPrice | [uint64](#uint64) |  | The best ask price. |
-| askQuantity | [uint64](#uint64) |  | The total ask quantity at the best ask price. |
-| lastPrice | [uint64](#uint64) |  | The last trade price. |
-| rolling24hPrice | [uint64](#uint64) |  | The 24h open price. |
+| market_id | [uint64](#uint64) |  |  |
+| transact_time | [uint64](#uint64) |  | The [transact time](/docs/api_reference/trade#transact-time) of the latest book update on this market. |
+| bid_price | [uint64](#uint64) |  | The best bid price. |
+| bid_quantity | [uint64](#uint64) |  | The total bid quantity at the best bid price. |
+| ask_price | [uint64](#uint64) |  | The best ask price. |
+| ask_quantity | [uint64](#uint64) |  | The total ask quantity at the best ask price. |
+| last_price | [uint64](#uint64) |  | The last trade price. |
+| rolling24h_price | [uint64](#uint64) |  | The 24h open price. |
 
 
 
@@ -375,7 +375,7 @@ EUR, updateSide = QUOTE` of `r2`, the BTC-EUR price estimate is `r1 * r2`.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| assetId | [uint64](#uint64) |  |  |
+| asset_id | [uint64](#uint64) |  |  |
 | timestamp | [uint64](#uint64) |  | The nanosecond timestamp of the update. |
 | rate | [uint64](#uint64) |  | The asset rate at the given timestamp. |
 | side | [RateUpdateSide](#rate-update-side) |  |  |

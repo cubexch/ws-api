@@ -100,7 +100,7 @@ let signature = <[u8; 32]>::from(mac.finalize().into_bytes());
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| accessKeyId | [string](#string) |  | Public API key |
+| access_key_id | [string](#string) |  | Public API key |
 | signature | [string](#string) |  | HMAC signature |
 | timestamp | [uint64](#uint64) |  | Timestamp in seconds |
 
@@ -135,17 +135,17 @@ Place a new order.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| clientOrderId | [uint64](#uint64) |  | A unique order ID assigned by the client for this order. The ID must be unique among open orders by this subaccount. |
-| requestId | [uint64](#uint64) |  | A request ID that is echoed back on the NewOrderAck or NewOrderReject |
-| marketId | [uint64](#uint64) |  |  |
+| client_order_id | [uint64](#uint64) |  | A unique order ID assigned by the client for this order. The ID must be unique among open orders by this subaccount. |
+| request_id | [uint64](#uint64) |  | A request ID that is echoed back on the NewOrderAck or NewOrderReject |
+| market_id | [uint64](#uint64) |  |  |
 | price | [uint64](#uint64) | optional |  |
 | quantity | [uint64](#uint64) |  |  |
 | side | [Side](#side) |  |  |
-| timeInForce | [TimeInForce](#time-in-force) |  |  |
-| orderType | [OrderType](#order-type) |  |  |
-| subaccountId | [uint64](#uint64) |  | The subaccount to place this order on. This subaccount must be writable by the API key specified in the Credentials message. |
-| selfTradePrevention | [SelfTradePrevention](#self-trade-prevention) | optional |  |
-| postOnly | [PostOnly](#post-only) |  |  |
+| time_in_force | [TimeInForce](#time-in-force) |  |  |
+| order_type | [OrderType](#order-type) |  |  |
+| subaccount_id | [uint64](#uint64) |  | The subaccount to place this order on. This subaccount must be writable by the API key specified in the Credentials message. |
+| self_trade_prevention | [SelfTradePrevention](#self-trade-prevention) | optional |  |
+| post_only | [PostOnly](#post-only) |  |  |
 
 
 
@@ -156,15 +156,15 @@ Place a new order.
 ### CancelOrder
 Cancel a resting order.
 Note that this can be done before the order is acknowledged (an aggressive
-cancel) since the identifying field is the `clientOrderId`.
+cancel) since the identifying field is the `client_order_id`.
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| marketId | [uint64](#uint64) |  |  |
-| clientOrderId | [uint64](#uint64) |  | The order ID specified by the client on the NewOrder request. |
-| requestId | [uint64](#uint64) |  | A request ID that is echoed back on the CancelOrderAck or CancelOrderReject |
-| subaccountId | [uint64](#uint64) |  | The subaccount that the NewOrder was placed on. |
+| market_id | [uint64](#uint64) |  |  |
+| client_order_id | [uint64](#uint64) |  | The order ID specified by the client on the NewOrder request. |
+| request_id | [uint64](#uint64) |  | A request ID that is echoed back on the CancelOrderAck or CancelOrderReject |
+| subaccount_id | [uint64](#uint64) |  | The subaccount that the NewOrder was placed on. |
 
 
 
@@ -199,14 +199,14 @@ The post-modify quantity will be `newQuantity - filled = 4 - 2 = 2`.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| marketId | [uint64](#uint64) |  |  |
-| clientOrderId | [uint64](#uint64) |  | The order ID specified by the client on the NewOrder request. |
-| requestId | [uint64](#uint64) |  | A request ID that is echoed back on the ModifyOrderAck or ModifyOrderReject |
-| newPrice | [uint64](#uint64) |  |  |
-| newQuantity | [uint64](#uint64) |  |  |
-| subaccountId | [uint64](#uint64) |  | The subaccount that the NewOrder was placed on. |
-| selfTradePrevention | [SelfTradePrevention](#self-trade-prevention) | optional |  |
-| postOnly | [PostOnly](#post-only) |  |  |
+| market_id | [uint64](#uint64) |  |  |
+| client_order_id | [uint64](#uint64) |  | The order ID specified by the client on the NewOrder request. |
+| request_id | [uint64](#uint64) |  | A request ID that is echoed back on the ModifyOrderAck or ModifyOrderReject |
+| new_price | [uint64](#uint64) |  |  |
+| new_quantity | [uint64](#uint64) |  |  |
+| subaccount_id | [uint64](#uint64) |  | The subaccount that the NewOrder was placed on. |
+| self_trade_prevention | [SelfTradePrevention](#self-trade-prevention) | optional |  |
+| post_only | [PostOnly](#post-only) |  |  |
 
 
 
@@ -221,9 +221,9 @@ or order book side.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| subaccountId | [uint64](#uint64) |  | The subaccount to cancel orders for. |
-| requestId | [uint64](#uint64) |  | A request ID that is echoed back on the MassCancelAck and individual CancelOrderAck's. |
-| marketId | [uint64](#uint64) | optional | If specified, only orders on the corresponding market will be canceled. |
+| subaccount_id | [uint64](#uint64) |  | The subaccount to cancel orders for. |
+| request_id | [uint64](#uint64) |  | A request ID that is echoed back on the MassCancelAck and individual CancelOrderAck's. |
+| market_id | [uint64](#uint64) | optional | If specified, only orders on the corresponding market will be canceled. |
 | side | [Side](#side) | optional | If specified, only orders with this side will be canceled. |
 
 
@@ -235,7 +235,7 @@ or order book side.
 ### Heartbeat
 A client and server heartbeat. The heartbeat reply, including the timestamp
 value, comes from the order service and not the matching engine. Matching
-engine timestamps can be extracted from `transactTime` (below).
+engine timestamps can be extracted from `transact_time` (below).
 
 Latency can be estimated from this, but only the relative difference between
 successive server messages should be used. In particular, the client and
@@ -244,7 +244,7 @@ server clock should not be expected to be synchronized.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| requestId | [uint64](#uint64) |  | A request ID that is echoed back on the Heartbeat |
+| request_id | [uint64](#uint64) |  | A request ID that is echoed back on the Heartbeat |
 | timestamp | [uint64](#uint64) |  |  |
 
 
@@ -260,16 +260,16 @@ OrderResponse.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| newAck | [NewOrderAck](#new-order-ack) |  |  |
-| cancelAck | [CancelOrderAck](#cancel-order-ack) |  |  |
-| modifyAck | [ModifyOrderAck](#modify-order-ack) |  |  |
-| newReject | [NewOrderReject](#new-order-reject) |  |  |
-| cancelReject | [CancelOrderReject](#cancel-order-reject) |  |  |
-| modifyReject | [ModifyOrderReject](#modify-order-reject) |  |  |
+| new_ack | [NewOrderAck](#new-order-ack) |  |  |
+| cancel_ack | [CancelOrderAck](#cancel-order-ack) |  |  |
+| modify_ack | [ModifyOrderAck](#modify-order-ack) |  |  |
+| new_reject | [NewOrderReject](#new-order-reject) |  |  |
+| cancel_reject | [CancelOrderReject](#cancel-order-reject) |  |  |
+| modify_reject | [ModifyOrderReject](#modify-order-reject) |  |  |
 | fill | [Fill](#fill) |  |  |
 | heartbeat | [Heartbeat](#heartbeat) |  |  |
 | position | [AssetPosition](#asset-position) |  |  |
-| massCancelAck | [MassCancelAck](#mass-cancel-ack) |  |  |
+| mass_cancel_ack | [MassCancelAck](#mass-cancel-ack) |  |  |
 
 
 
@@ -284,18 +284,18 @@ any fills for this order.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| msgSeqNum | [uint64](#uint64) |  |  |
-| clientOrderId | [uint64](#uint64) |  | The client order ID specified in the new-order request. |
-| requestId | [uint64](#uint64) |  | The request ID specified in the new-order request. |
-| exchangeOrderId | [uint64](#uint64) |  | [Exchange order ID](#exchange-order-id) |
-| marketId | [uint64](#uint64) |  |  |
+| msg_seq_num | [uint64](#uint64) |  |  |
+| client_order_id | [uint64](#uint64) |  | The client order ID specified in the new-order request. |
+| request_id | [uint64](#uint64) |  | The request ID specified in the new-order request. |
+| exchange_order_id | [uint64](#uint64) |  | [Exchange order ID](#exchange-order-id) |
+| market_id | [uint64](#uint64) |  |  |
 | price | [uint64](#uint64) | optional | If the order ultimately rests, the `price` field will include the resting price. |
 | quantity | [uint64](#uint64) |  | The quantity submitted in the new-order request. |
 | side | [Side](#side) |  |  |
-| timeInForce | [TimeInForce](#time-in-force) |  |  |
-| orderType | [OrderType](#order-type) |  |  |
-| transactTime | [uint64](#uint64) |  | [Transact time](#transact-time) |
-| subaccountId | [uint64](#uint64) |  |  |
+| time_in_force | [TimeInForce](#time-in-force) |  |  |
+| order_type | [OrderType](#order-type) |  |  |
+| transact_time | [uint64](#uint64) |  | [Transact time](#transact-time) |
+| subaccount_id | [uint64](#uint64) |  |  |
 
 
 
@@ -310,13 +310,13 @@ canceled as the result of a different user-initiated reason.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| msgSeqNum | [uint64](#uint64) |  |  |
-| clientOrderId | [uint64](#uint64) |  |  |
-| requestId | [uint64](#uint64) |  | If the Reason is `DISCONNECT`, `IOC`, `STP_RESTING`, or `STP_AGGRESSING`, this request ID will be `u64::MAX`. Otherwise, it will be the request ID of the initiated cancel action. For a mass cancel, each cancel order ack will have the MassCancel's requestId. |
-| transactTime | [uint64](#uint64) |  | [Transact time](#transact-time) |
-| subaccountId | [uint64](#uint64) |  |  |
+| msg_seq_num | [uint64](#uint64) |  |  |
+| client_order_id | [uint64](#uint64) |  |  |
+| request_id | [uint64](#uint64) |  | If the Reason is `DISCONNECT`, `IOC`, `STP_RESTING`, or `STP_AGGRESSING`, this request ID will be `u64::MAX`. Otherwise, it will be the request ID of the initiated cancel action. For a mass cancel, each cancel order ack will have the MassCancel's request_id. |
+| transact_time | [uint64](#uint64) |  | [Transact time](#transact-time) |
+| subaccount_id | [uint64](#uint64) |  |  |
 | reason | [CancelOrderAck.Reason](#cancel-order-ack-reason) |  |  |
-| marketId | [uint64](#uint64) |  |  |
+| market_id | [uint64](#uint64) |  |  |
 
 
 
@@ -332,13 +332,13 @@ this order.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| msgSeqNum | [uint64](#uint64) |  |  |
-| clientOrderId | [uint64](#uint64) |  |  |
-| requestId | [uint64](#uint64) |  | The request ID specified in the modify request. |
-| transactTime | [uint64](#uint64) |  | [Transact time](#transact-time) |
-| newQuantity | [uint64](#uint64) |  | The quantity submitted in the modify request after applying IFM logic. |
-| subaccountId | [uint64](#uint64) |  |  |
-| marketId | [uint64](#uint64) |  |  |
+| msg_seq_num | [uint64](#uint64) |  |  |
+| client_order_id | [uint64](#uint64) |  |  |
+| request_id | [uint64](#uint64) |  | The request ID specified in the modify request. |
+| transact_time | [uint64](#uint64) |  | [Transact time](#transact-time) |
+| new_quantity | [uint64](#uint64) |  | The quantity submitted in the modify request after applying IFM logic. |
+| subaccount_id | [uint64](#uint64) |  |  |
+| market_id | [uint64](#uint64) |  |  |
 | price | [uint64](#uint64) |  |  |
 
 
@@ -355,12 +355,12 @@ CancelOrderAck's will be sent for each order that was affected.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| msgSeqNum | [uint64](#uint64) |  |  |
-| subaccountId | [uint64](#uint64) |  |  |
-| requestId | [uint64](#uint64) |  | The request ID specified in the mass-cancel request. |
-| transactTime | [uint64](#uint64) |  | [Transact time](#transact-time) |
+| msg_seq_num | [uint64](#uint64) |  |  |
+| subaccount_id | [uint64](#uint64) |  |  |
+| request_id | [uint64](#uint64) |  | The request ID specified in the mass-cancel request. |
+| transact_time | [uint64](#uint64) |  | [Transact time](#transact-time) |
 | reason | [MassCancelAck.Reason](#mass-cancel-ack-reason) | optional |  |
-| totalAffectedOrders | [uint32](#uint32) |  | The total number of orders that were canceled. |
+| total_affected_orders | [uint32](#uint32) |  | The total number of orders that were canceled. |
 
 
 
@@ -374,18 +374,18 @@ New-order-reject indicates that a new-order request was not applied.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| msgSeqNum | [uint64](#uint64) |  |  |
-| clientOrderId | [uint64](#uint64) |  | The client order ID specified in the new-order request. |
-| requestId | [uint64](#uint64) |  | The request ID specified in the new-order request. |
-| transactTime | [uint64](#uint64) |  | [Transact time](#transact-time) |
-| subaccountId | [uint64](#uint64) |  |  |
+| msg_seq_num | [uint64](#uint64) |  |  |
+| client_order_id | [uint64](#uint64) |  | The client order ID specified in the new-order request. |
+| request_id | [uint64](#uint64) |  | The request ID specified in the new-order request. |
+| transact_time | [uint64](#uint64) |  | [Transact time](#transact-time) |
+| subaccount_id | [uint64](#uint64) |  |  |
 | reason | [NewOrderReject.Reason](#new-order-reject-reason) |  |  |
-| marketId | [uint64](#uint64) |  |  |
+| market_id | [uint64](#uint64) |  |  |
 | price | [uint64](#uint64) | optional |  |
 | quantity | [uint64](#uint64) |  |  |
 | side | [Side](#side) |  |  |
-| timeInForce | [TimeInForce](#time-in-force) |  |  |
-| orderType | [OrderType](#order-type) |  |  |
+| time_in_force | [TimeInForce](#time-in-force) |  |  |
+| order_type | [OrderType](#order-type) |  |  |
 
 
 
@@ -399,13 +399,13 @@ Cancel-order-reject indicates that a cancel-order request was not applied.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| msgSeqNum | [uint64](#uint64) |  |  |
-| clientOrderId | [uint64](#uint64) |  | The client order ID specified in the cancel-order request. |
-| requestId | [uint64](#uint64) |  | The request ID specified in the cancel-order request. |
-| transactTime | [uint64](#uint64) |  | [Transact time](#transact-time) |
-| subaccountId | [uint64](#uint64) |  |  |
+| msg_seq_num | [uint64](#uint64) |  |  |
+| client_order_id | [uint64](#uint64) |  | The client order ID specified in the cancel-order request. |
+| request_id | [uint64](#uint64) |  | The request ID specified in the cancel-order request. |
+| transact_time | [uint64](#uint64) |  | [Transact time](#transact-time) |
+| subaccount_id | [uint64](#uint64) |  |  |
 | reason | [CancelOrderReject.Reason](#cancel-order-reject-reason) |  |  |
-| marketId | [uint64](#uint64) |  |  |
+| market_id | [uint64](#uint64) |  |  |
 
 
 
@@ -419,13 +419,13 @@ Modify-order-reject indicates that a modify-order request was not applied.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| msgSeqNum | [uint64](#uint64) |  |  |
-| clientOrderId | [uint64](#uint64) |  | The client order ID specified in the modify-order request. |
-| requestId | [uint64](#uint64) |  | The request ID specified in the modify-order request. |
-| transactTime | [uint64](#uint64) |  | [Transact time](#transact-time) |
-| subaccountId | [uint64](#uint64) |  |  |
+| msg_seq_num | [uint64](#uint64) |  |  |
+| client_order_id | [uint64](#uint64) |  | The client order ID specified in the modify-order request. |
+| request_id | [uint64](#uint64) |  | The request ID specified in the modify-order request. |
+| transact_time | [uint64](#uint64) |  | [Transact time](#transact-time) |
+| subaccount_id | [uint64](#uint64) |  |  |
 | reason | [ModifyOrderReject.Reason](#modify-order-reject-reason) |  |  |
-| marketId | [uint64](#uint64) |  |  |
+| market_id | [uint64](#uint64) |  |  |
 
 
 
@@ -439,15 +439,15 @@ A fill for an order.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| msgSeqNum | [uint64](#uint64) |  |  |
-| marketId | [uint64](#uint64) |  |  |
-| clientOrderId | [uint64](#uint64) |  | The client order ID specified in the new-order request. |
-| exchangeOrderId | [uint64](#uint64) |  | [Exchange order ID](#exchange-order-id) |
-| fillPrice | [uint64](#uint64) |  | The price that this trade occured at. |
-| fillQuantity | [uint64](#uint64) |  | The quantity that was traded in this fill. |
-| leavesQuantity | [uint64](#uint64) |  | The remaining quantity for this order after the fill is applied. |
-| transactTime | [uint64](#uint64) |  | [Transact time](#transact-time) |
-| subaccountId | [uint64](#uint64) |  |  |
+| msg_seq_num | [uint64](#uint64) |  |  |
+| market_id | [uint64](#uint64) |  |  |
+| client_order_id | [uint64](#uint64) |  | The client order ID specified in the new-order request. |
+| exchange_order_id | [uint64](#uint64) |  | [Exchange order ID](#exchange-order-id) |
+| fill_price | [uint64](#uint64) |  | The price that this trade occured at. |
+| fill_quantity | [uint64](#uint64) |  | The quantity that was traded in this fill. |
+| leaves_quantity | [uint64](#uint64) |  | The remaining quantity for this order after the fill is applied. |
+| transact_time | [uint64](#uint64) |  | [Transact time](#transact-time) |
+| subaccount_id | [uint64](#uint64) |  |  |
 
 
 
@@ -463,8 +463,8 @@ can also be tracked by applying other OrderResponse messages individually.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| subaccountId | [uint64](#uint64) |  |  |
-| assetId | [uint64](#uint64) |  |  |
+| subaccount_id | [uint64](#uint64) |  |  |
+| asset_id | [uint64](#uint64) |  |  |
 | total | [RawUnits](#raw-units) |  |  |
 | available | [RawUnits](#raw-units) |  | The available amount after open orders are subtracted. |
 
@@ -551,7 +551,7 @@ An indication that bootstrap is complete.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| latestTransactTime | [uint64](#uint64) |  | [Transact time](#transact-time) |
+| latest_transact_time | [uint64](#uint64) |  | [Transact time](#transact-time) |
 
 
 
@@ -565,17 +565,17 @@ A resting order. Sent on bootstrap in `RestingOrders`.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| clientOrderId | [uint64](#uint64) |  | The client order ID specified in the new-order request. |
-| exchangeOrderId | [uint64](#uint64) |  | [Exchange order ID](#exchange-order-id) |
-| marketId | [uint64](#uint64) |  |  |
+| client_order_id | [uint64](#uint64) |  | The client order ID specified in the new-order request. |
+| exchange_order_id | [uint64](#uint64) |  | [Exchange order ID](#exchange-order-id) |
+| market_id | [uint64](#uint64) |  |  |
 | price | [uint64](#uint64) |  |  |
-| originalQuantity | [uint64](#uint64) |  | The quantity submitted in the new-order request. |
+| original_quantity | [uint64](#uint64) |  | The quantity submitted in the new-order request. |
 | side | [Side](#side) |  |  |
-| timeInForce | [TimeInForce](#time-in-force) |  |  |
-| orderType | [OrderType](#order-type) |  |  |
-| remainingQuantity | [uint64](#uint64) |  | The current remaining quantity on the book. |
-| restTime | [uint64](#uint64) |  | [Transact time](#transact-time) of the NewOrderAck |
-| subaccountId | [uint64](#uint64) |  |  |
+| time_in_force | [TimeInForce](#time-in-force) |  |  |
+| order_type | [OrderType](#order-type) |  |  |
+| remaining_quantity | [uint64](#uint64) |  | The current remaining quantity on the book. |
+| rest_time | [uint64](#uint64) |  | [Transact time](#transact-time) of the NewOrderAck |
+| subaccount_id | [uint64](#uint64) |  |  |
 
 
 
@@ -628,7 +628,7 @@ Order-type specifies how the order will be placed into the order book.
 ### SelfTradePrevention
 Self-trade-prevention (STP) allows market participants to prevent the matching
 of orders for accounts with common ownership. Currently, STP only applies for
-orders with the same subaccountId. STP will only be applied when a match is
+orders with the same subaccount_id. STP will only be applied when a match is
 about to occur between the two orders. That is, if the aggressing order is
 fully filled before reaching the resting order in FIFO order, no STP cancels
 will happen.

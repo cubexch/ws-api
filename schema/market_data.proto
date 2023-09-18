@@ -63,27 +63,27 @@ message MdMessage {
     // Recent trades
     Trades trades = 3;
     // Market by order snapshot
-    MarketByOrder mboSnapshot = 4;
+    MarketByOrder mbo_snapshot = 4;
     // Market by order diff
-    MarketByOrderDiff mboDiff = 5;
+    MarketByOrderDiff mbo_diff = 5;
     // Market by price snapshot
-    MarketByPrice mbpSnapshot = 6;
+    MarketByPrice mbp_snapshot = 6;
     // Market by price diff
-    MarketByPriceDiff mbpDiff = 7;
+    MarketByPriceDiff mbp_diff = 7;
     // Candlestick
     Kline kline = 8;
   }
 }
 
-// Market by price snapshot message. This is chunked into `numChunks` and starts
+// Market by price snapshot message. This is chunked into `num_chunks` and starts
 // with `chunk = 0`. A snapshot is sent on first connect. `Level`'s should be
-// concatened until `chunk = numChunks - 1`. Currently, the chunks and levels
+// concatened until `chunk = num_chunks - 1`. Currently, the chunks and levels
 // are streamed from tightest price level outwards with interleaved Bid and Ask
 // levels, but no ordering is guaranteed.
 message MarketByPrice {
   repeated Level levels = 1;
   uint32 chunk = 2;
-  uint32 numChunks = 3;
+  uint32 num_chunks = 3;
 
   // Each price level is the aggregate total quantity of orders placed at that
   // price.
@@ -100,9 +100,9 @@ message MarketByPrice {
 message MarketByPriceDiff {
   repeated Diff diffs = 1;
   // Total number of bid levels after this diff is applied.
-  uint32 totalBidLevels = 2;
+  uint32 total_bid_levels = 2;
   // Total number of ask levels after this diff is applied.
-  uint32 totalAskLevels = 3;
+  uint32 total_ask_levels = 3;
 
   // The operation to apply for this price level. Currently, new price levels
   // are created with `REPLACE`.
@@ -121,22 +121,22 @@ message MarketByPriceDiff {
   }
 }
 
-// Market by order snapshot message. This is chunked into `numChunks` and starts
+// Market by order snapshot message. This is chunked into `num_chunks` and starts
 // with `chunk = 0`. A snapshot is sent on first connect. `Level`'s should be
-// concatened until `chunk = numChunks - 1`. Orders are sent in order of FIFO
+// concatened until `chunk = num_chunks - 1`. Orders are sent in order of FIFO
 // queue priority so the first order of a level should be the first order to be
 // matched when that level is aggressed.
 message MarketByOrder {
   repeated Order orders = 1;
   uint32 chunk = 2;
-  uint32 numChunks = 3;
+  uint32 num_chunks = 3;
 
   // A resting order.
   message Order {
     uint64 price = 1;
     uint64 quantity = 2;
     // [Exchange order ID](/docs/api_reference/trade#exchange-order-id)
-    uint64 exchangeOrderId = 3;
+    uint64 exchange_order_id = 3;
     Side side = 4;
     // Order priority for execution. Valid within a price level and side. That
     // is, orders must first be sorted by side and price (in descending order
@@ -156,13 +156,13 @@ message MarketByOrder {
 message MarketByOrderDiff {
   repeated Diff diffs = 1;
   // Total number of bid levels after this diff is applied.
-  uint32 totalBidLevels = 2;
+  uint32 total_bid_levels = 2;
   // Total number of ask levels after this diff is applied.
-  uint32 totalAskLevels = 3;
+  uint32 total_ask_levels = 3;
   // Total number of bid orders after this diff is applied.
-  uint32 totalBidOrders = 4;
+  uint32 total_bid_orders = 4;
   // Total number of ask orders after this diff is applied.
-  uint32 totalAskOrders = 5;
+  uint32 total_ask_orders = 5;
 
   // The operation to apply for this price level. For example, an resting order
   // that gets filled will be `REPLACE`'d with the new resting quantity. An
@@ -174,12 +174,12 @@ message MarketByOrderDiff {
   }
 
   // An order diff creates, updates, or deletes a resting order based on the
-  // `exchangeOrderId`
+  // `exchange_order_id`
   message Diff {
     uint64 price = 1;
     uint64 quantity = 2;
     // [Exchange order ID](/docs/api_reference/trade#exchange-order-id)
-    uint64 exchangeOrderId = 3;
+    uint64 exchange_order_id = 3;
     Side side = 4;
     DiffOp op = 5;
     // See [`MarketByOrder.Order`](#market-by-order-order)
@@ -200,18 +200,18 @@ message Trades {
     // The price that this trade occurred at.
     uint64 price = 2;
     // The side of the aggressing order.
-    Side aggressingSide = 3;
+    Side aggressing_side = 3;
     // The [Exchange order ID](/docs/api_reference/trade#exchange-order-id) of
     // the resting order.
-    uint64 restingExchangeOrderId = 4;
-    uint64 fillQuantity = 5;
+    uint64 resting_exchange_order_id = 4;
+    uint64 fill_quantity = 5;
     // The [transact time](/docs/api_reference/trade#transact-time) assigned by
     // the matching engine for this trade. All trades that occur from the same
     // event will be assigned the same transact time.
-    uint64 transactTime = 6;
+    uint64 transact_time = 6;
     // The [Exchange order ID](/docs/api_reference/trade#exchange-order-id) of
     // the aggressing order.
-    uint64 aggressingExchangeOrderId = 7;
+    uint64 aggressing_exchange_order_id = 7;
   }
 }
 
@@ -226,20 +226,20 @@ message Summary {
   // 24h high price
   uint64 high = 4;
   // Low 64-bits of the base quantity traded
-  uint64 baseVolumeLo = 5;
+  uint64 base_volume_lo = 5;
   // High 64-bits of the base quantity traded
-  uint64 baseVolumeHi = 6;
+  uint64 base_volume_hi = 6;
   // Low 64-bits of the quote quantity traded
-  uint64 quoteVolumeLo = 7;
+  uint64 quote_volume_lo = 7;
   // High 64-bits of the quote quantity traded
-  uint64 quoteVolumeHi = 8;
+  uint64 quote_volume_hi = 8;
 }
 
 // Candlestick bar.
 message Kline {
   KlineInterval interval = 1;
   // The unix nanosecond timestamp that this kline covers.
-  uint64 startTime = 2;
+  uint64 start_time = 2;
   // Kline open price.
   uint64 open = 3;
   // Kline close price.
@@ -249,16 +249,16 @@ message Kline {
   // Kline low price.
   uint64 low = 6;
   // Low 64-bits of the base quantity traded.
-  uint64 volumeLo = 7;
+  uint64 volume_lo = 7;
   // High 64-bits of the base quantity traded.
-  uint64 volumeHi = 8;
+  uint64 volume_hi = 8;
 }
 
 // A client and server heartbeat. The heartbeat reply, including the timestamp
 // value, comes from the market data service.
 message Heartbeat {
   // A request ID that is echoed back on the Heartbeat
-  uint64 requestId = 1;
+  uint64 request_id = 1;
   uint64 timestamp = 2;
 }
 
@@ -272,30 +272,30 @@ message AggMessage {
     // Server heartbeat reply
     Heartbeat heartbeat = 1;
     // Top of books
-    TopOfBooks topOfBooks = 2;
+    TopOfBooks top_of_books = 2;
     // Rates for all assets
-    RateUpdates rateUpdates = 3;
+    RateUpdates rate_updates = 3;
   }
 }
 
 // Top of book
 message TopOfBook {
-  uint64 marketId = 1;
+  uint64 market_id = 1;
   // The [transact time](/docs/api_reference/trade#transact-time) of the latest
   // book update on this market.
-  uint64 transactTime = 2;
+  uint64 transact_time = 2;
   // The best bid price.
-  uint64 bidPrice = 3;
+  uint64 bid_price = 3;
   // The total bid quantity at the best bid price.
-  uint64 bidQuantity = 4;
+  uint64 bid_quantity = 4;
   // The best ask price.
-  uint64 askPrice = 5;
+  uint64 ask_price = 5;
   // The total ask quantity at the best ask price.
-  uint64 askQuantity = 6;
+  uint64 ask_quantity = 6;
   // The last trade price.
-  uint64 lastPrice = 7;
+  uint64 last_price = 7;
   // The 24h open price.
-  uint64 rolling24hPrice = 8;
+  uint64 rolling24h_price = 8;
 }
 
 // Top of books for all books that were updates since the last top-of-books
@@ -309,7 +309,7 @@ message TopOfBooks {
 // RateUpdate for `assetId = BTC, updateSide = BASE` of `r1`, and `assetId =
 // EUR, updateSide = QUOTE` of `r2`, the BTC-EUR price estimate is `r1 * r2`.
 message RateUpdate {
-  uint64 assetId = 1;
+  uint64 asset_id = 1;
   // The nanosecond timestamp of the update.
   uint64 timestamp = 2;
   // The asset rate at the given timestamp.

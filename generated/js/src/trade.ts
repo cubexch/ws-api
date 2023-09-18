@@ -129,7 +129,7 @@ export enum OrderType {
 /**
  * Self-trade-prevention (STP) allows market participants to prevent the matching
  * of orders for accounts with common ownership. Currently, STP only applies for
- * orders with the same subaccountId. STP will only be applied when a match is
+ * orders with the same subaccount_id. STP will only be applied when a match is
  * about to occur between the two orders. That is, if the aggressing order is
  * fully filled before reaching the resting order in FIFO order, no STP cancels
  * will happen.
@@ -237,7 +237,7 @@ export interface NewOrder {
 /**
  * Cancel a resting order.
  * Note that this can be done before the order is acknowledged (an aggressive
- * cancel) since the identifying field is the `clientOrderId`.
+ * cancel) since the identifying field is the `client_order_id`.
  */
 export interface CancelOrder {
   marketId: bigint;
@@ -310,7 +310,7 @@ export interface MassCancel {
 /**
  * A client and server heartbeat. The heartbeat reply, including the timestamp
  * value, comes from the order service and not the matching engine. Matching
- * engine timestamps can be extracted from `transactTime` (below).
+ * engine timestamps can be extracted from `transact_time` (below).
  *
  * Latency can be estimated from this, but only the relative difference between
  * successive server messages should be used. In particular, the client and
@@ -380,7 +380,7 @@ export interface CancelOrderAck {
    * If the Reason is `DISCONNECT`, `IOC`, `STP_RESTING`, or `STP_AGGRESSING`,
    * this request ID will be `u64::MAX`. Otherwise, it will be the request ID of
    * the initiated cancel action. For a mass cancel, each cancel order ack will
-   * have the MassCancel's requestId.
+   * have the MassCancel's request_id.
    */
   requestId: bigint;
   /** [Transact time](#transact-time) */
