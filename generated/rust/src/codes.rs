@@ -4,12 +4,12 @@
 #[repr(i32)]
 pub enum CloseCode {
     DoNotUse = 0,
-    OnWaitlist = 600,
-    IncompleteKyc = 601,
-    UnapprovedKyc = 602,
-    BadMessage = 700,
-    NoHeartbeat = 701,
-    Unspecified = 999,
+    OnWaitlist = 4600,
+    IncompleteKyc = 4601,
+    UnapprovedKyc = 4602,
+    BadMessage = 4700,
+    NoHeartbeat = 4701,
+    Unspecified = 4999,
 }
 impl CloseCode {
     /// String value of the enum field names used in the ProtoBuf definition.

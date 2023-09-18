@@ -7,16 +7,16 @@ option csharp_namespace = "Cube.Codes";
 // `CloseFrame`.
 enum CloseCode {
   DO_NOT_USE = 0;
-  reserved 1 to 599;
+  reserved 1 to 3999;
 
-  ON_WAITLIST = 600;
-  INCOMPLETE_KYC = 601;
-  UNAPPROVED_KYC = 602;
+  ON_WAITLIST = 4600;
+  INCOMPLETE_KYC = 4601;
+  UNAPPROVED_KYC = 4602;
 
-  BAD_MESSAGE = 700;
-  NO_HEARTBEAT = 701;
+  BAD_MESSAGE = 4700;
+  NO_HEARTBEAT = 4701;
 
-  UNSPECIFIED = 999;
+  UNSPECIFIED = 4999;
 
-  reserved 1000 to max;
+  reserved 5000 to max;
 }

@@ -7,22 +7,22 @@ export function closeCodeFromJSON(object: any): CloseCode {
     case 0:
     case "DO_NOT_USE":
       return CloseCode.DO_NOT_USE;
-    case 600:
+    case 4600:
     case "ON_WAITLIST":
       return CloseCode.ON_WAITLIST;
-    case 601:
+    case 4601:
     case "INCOMPLETE_KYC":
       return CloseCode.INCOMPLETE_KYC;
-    case 602:
+    case 4602:
     case "UNAPPROVED_KYC":
       return CloseCode.UNAPPROVED_KYC;
-    case 700:
+    case 4700:
     case "BAD_MESSAGE":
       return CloseCode.BAD_MESSAGE;
-    case 701:
+    case 4701:
     case "NO_HEARTBEAT":
       return CloseCode.NO_HEARTBEAT;
-    case 999:
+    case 4999:
     case "UNSPECIFIED":
       return CloseCode.UNSPECIFIED;
     default:
