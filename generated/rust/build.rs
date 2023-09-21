@@ -1,6 +1,14 @@
 use std::path::Path;
 
 fn main() {
+    if !std::process::Command::new("which").arg("protoc")
+        .status().expect("which")
+        .success()
+    {
+        println!("cargo:warning=protoc not found. skipping {} codegen", env!("CARGO_PKG_NAME"));
+        return;
+    }
+
     let proto_inputs = &[
         Path::new("../../schema/market_data.proto"),
         Path::new("../../schema/trade.proto"),
