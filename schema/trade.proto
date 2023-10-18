@@ -139,6 +139,14 @@ enum PostOnly {
   ENABLED = 1;
 }
 
+// In general, order requests must have a signature attached to prove that the
+// account owner was the one who issued the order request. Requests without
+// valid signatures are rejected by the system. The signature version specifies
+// how the parameters of the order request are encoded into a message over the
+// signature will be computed. 
+enum SignatureVersion {
+  V0 = 0;
+}
 
 // Sent by client on websocket initialization. Once the websocket has been
 // connected, the client is expected to send this credentials message
@@ -206,6 +214,11 @@ message NewOrder {
   uint64 subaccount_id = 9;
   optional SelfTradePrevention self_trade_prevention = 10;
   PostOnly post_only = 11;
+  // The public key of the keypair used to sign this order request.
+  bytes pubkey = 12;
+  // The ed25519 signature over this order request.
+  bytes signature = 13;
+  SignatureVersion signatureVersion = 14;
 }
 
 // Cancel a resting order.
@@ -219,6 +232,11 @@ message CancelOrder {
   uint64 request_id = 3;
   // The subaccount that the NewOrder was placed on.
   uint64 subaccount_id = 4;
+  // The public key of the keypair used to sign this order request.
+  bytes pubkey = 5;
+  // The ed25519 signature over this order request.
+  bytes signature = 6;
+  SignatureVersion signatureVersion = 7;
 }
 
 // Modify a resting order.
@@ -255,6 +273,11 @@ message ModifyOrder {
   uint64 subaccount_id = 6;
   optional SelfTradePrevention self_trade_prevention = 7;
   PostOnly post_only = 8;
+  // The public key of the keypair used to sign this order request.
+  bytes pubkey = 9;
+  // The ed25519 signature over this order request.
+  bytes signature = 10;
+  SignatureVersion signatureVersion = 11;
 }
 
 // Cancel all resting orders, optionally limiting to a particular market and /
@@ -269,6 +292,11 @@ message MassCancel {
   optional uint64 market_id = 3;
   // If specified, only orders with this side will be canceled.
   optional Side side = 4;
+  // The public key of the keypair used to sign this order request.
+  bytes pubkey = 5;
+  // The ed25519 signature over this order request.
+  bytes signature = 6;
+  SignatureVersion signatureVersion = 7;
 }
 
 // A client and server heartbeat. The heartbeat reply, including the timestamp
@@ -386,6 +414,8 @@ message MassCancelAck {
     UNCLASSIFIED = 0;
     INVALID_MARKET_ID = 1;
     INVALID_SIDE = 2;
+    INVALID_SIGNATURE_VERSION = 3;
+    SIGNATURE_VERIFICATION_FAILED = 4;
   }
 
   uint64 msg_seq_num = 1;
@@ -417,21 +447,23 @@ message NewOrderReject {
     INVALID_ORDER_TYPE = 6;
     INVALID_POST_ONLY = 7;
     INVALID_SELF_TRADE_PREVENTION = 8;
+    INVALID_SIGNATURE_VERSION = 9;
     // Internal error: the matching engine could not find this subaccounts
     // positions.
-    UNKNOWN_TRADER = 9;
-    PRICE_WITH_MARKET_ORDER = 10;
-    POST_ONLY_WITH_MARKET_ORDER = 11;
-    POST_ONLY_WITH_INVALID_TIF = 12;
+    UNKNOWN_TRADER = 10;
+    PRICE_WITH_MARKET_ORDER = 11;
+    POST_ONLY_WITH_MARKET_ORDER = 12;
+    POST_ONLY_WITH_INVALID_TIF = 13;
+    SIGNATURE_VERIFICATION_FAILED = 14;
     // The sum of open orders and this new-order would exceed the subaccounts
     // spot limits.
-    EXCEEDED_SPOT_POSITION = 13;
-    NO_OPPOSING_LIMIT_ORDER = 14;
+    EXCEEDED_SPOT_POSITION = 15;
+    NO_OPPOSING_LIMIT_ORDER = 16;
     // The post-only order would have crossed and traded.
-    POST_ONLY_WOULD_TRADE = 15;
+    POST_ONLY_WOULD_TRADE = 17;
     // A FOK was not fully fillable against resting orders at the requested
     // price and quantity.
-    DID_NOT_FULLY_FILL = 16;
+    DID_NOT_FULLY_FILL = 18;
   }
 
   uint64 msg_seq_num = 1;
@@ -461,6 +493,8 @@ message CancelOrderReject {
     // The specified client order ID does not exist for the corresponding market
     // ID and subaccount ID.
     ORDER_NOT_FOUND = 2;
+    INVALID_SIGNATURE_VERSION = 3;
+    SIGNATURE_VERIFICATION_FAILED = 4;
   }
 
   uint64 msg_seq_num = 1;
@@ -491,15 +525,17 @@ message ModifyOrderReject {
     INVALID_IFM = 4;
     INVALID_POST_ONLY = 5;
     INVALID_SELF_TRADE_PREVENTION = 6;
+    INVALID_SIGNATURE_VERSION = 7;
     // Internal error: the matching engine could not find this subaccounts
     // positions.
-    UNKNOWN_TRADER = 7;
+    UNKNOWN_TRADER = 8;
+    SIGNATURE_VERIFICATION_FAILED = 9;
     // If the modify-order would cause a cancel-replace, the sum of open orders
     // and this replacement order would exceed the subaccounts spot limits.
-    EXCEEDED_SPOT_POSITION = 8;
+    EXCEEDED_SPOT_POSITION = 10;
     // If the modify-order would cause a cancel-replace, the post-only
     // replacement would have crossed and traded.
-    POST_ONLY_WOULD_TRADE = 9;
+    POST_ONLY_WOULD_TRADE = 11;
   }
 
   uint64 msg_seq_num = 1;
