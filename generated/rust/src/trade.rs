@@ -93,6 +93,14 @@ pub struct NewOrder {
     pub self_trade_prevention: ::core::option::Option<i32>,
     #[prost(enumeration="PostOnly", tag="11")]
     pub post_only: i32,
+    /// The public key of the keypair used to sign this order request.
+    #[prost(bytes="vec", tag="12")]
+    pub pubkey: ::prost::alloc::vec::Vec<u8>,
+    /// The ed25519 signature over this order request.
+    #[prost(bytes="vec", tag="13")]
+    pub signature: ::prost::alloc::vec::Vec<u8>,
+    #[prost(enumeration="SignatureVersion", tag="14")]
+    pub signature_version: i32,
 }
 /// Cancel a resting order.
 /// Note that this can be done before the order is acknowledged (an aggressive
@@ -111,6 +119,14 @@ pub struct CancelOrder {
     /// The subaccount that the NewOrder was placed on.
     #[prost(uint64, tag="4")]
     pub subaccount_id: u64,
+    /// The public key of the keypair used to sign this order request.
+    #[prost(bytes="vec", tag="5")]
+    pub pubkey: ::prost::alloc::vec::Vec<u8>,
+    /// The ed25519 signature over this order request.
+    #[prost(bytes="vec", tag="6")]
+    pub signature: ::prost::alloc::vec::Vec<u8>,
+    #[prost(enumeration="SignatureVersion", tag="7")]
+    pub signature_version: i32,
 }
 /// Modify a resting order.
 /// - If the `newPrice` and the current resting order's price is the same, and
@@ -156,6 +172,14 @@ pub struct ModifyOrder {
     pub self_trade_prevention: ::core::option::Option<i32>,
     #[prost(enumeration="PostOnly", tag="8")]
     pub post_only: i32,
+    /// The public key of the keypair used to sign this order request.
+    #[prost(bytes="vec", tag="9")]
+    pub pubkey: ::prost::alloc::vec::Vec<u8>,
+    /// The ed25519 signature over this order request.
+    #[prost(bytes="vec", tag="10")]
+    pub signature: ::prost::alloc::vec::Vec<u8>,
+    #[prost(enumeration="SignatureVersion", tag="11")]
+    pub signature_version: i32,
 }
 /// Cancel all resting orders, optionally limiting to a particular market and /
 /// or order book side.
@@ -175,6 +199,14 @@ pub struct MassCancel {
     /// If specified, only orders with this side will be canceled.
     #[prost(enumeration="Side", optional, tag="4")]
     pub side: ::core::option::Option<i32>,
+    /// The public key of the keypair used to sign this order request.
+    #[prost(bytes="vec", tag="5")]
+    pub pubkey: ::prost::alloc::vec::Vec<u8>,
+    /// The ed25519 signature over this order request.
+    #[prost(bytes="vec", tag="6")]
+    pub signature: ::prost::alloc::vec::Vec<u8>,
+    #[prost(enumeration="SignatureVersion", tag="7")]
+    pub signature_version: i32,
 }
 /// A client and server heartbeat. The heartbeat reply, including the timestamp
 /// value, comes from the order service and not the matching engine. Matching
@@ -395,6 +427,8 @@ pub mod mass_cancel_ack {
         Unclassified = 0,
         InvalidMarketId = 1,
         InvalidSide = 2,
+        InvalidSignatureVersion = 3,
+        SignatureVerificationFailed = 4,
     }
     impl Reason {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -406,6 +440,8 @@ pub mod mass_cancel_ack {
                 Reason::Unclassified => "UNCLASSIFIED",
                 Reason::InvalidMarketId => "INVALID_MARKET_ID",
                 Reason::InvalidSide => "INVALID_SIDE",
+                Reason::InvalidSignatureVersion => "INVALID_SIGNATURE_VERSION",
+                Reason::SignatureVerificationFailed => "SIGNATURE_VERIFICATION_FAILED",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -414,6 +450,8 @@ pub mod mass_cancel_ack {
                 "UNCLASSIFIED" => Some(Self::Unclassified),
                 "INVALID_MARKET_ID" => Some(Self::InvalidMarketId),
                 "INVALID_SIDE" => Some(Self::InvalidSide),
+                "INVALID_SIGNATURE_VERSION" => Some(Self::InvalidSignatureVersion),
+                "SIGNATURE_VERIFICATION_FAILED" => Some(Self::SignatureVerificationFailed),
                 _ => None,
             }
         }
@@ -471,21 +509,23 @@ pub mod new_order_reject {
         InvalidOrderType = 6,
         InvalidPostOnly = 7,
         InvalidSelfTradePrevention = 8,
+        InvalidSignatureVersion = 9,
         /// Internal error: the matching engine could not find this subaccounts
         /// positions.
-        UnknownTrader = 9,
-        PriceWithMarketOrder = 10,
-        PostOnlyWithMarketOrder = 11,
-        PostOnlyWithInvalidTif = 12,
+        UnknownTrader = 10,
+        PriceWithMarketOrder = 11,
+        PostOnlyWithMarketOrder = 12,
+        PostOnlyWithInvalidTif = 13,
+        SignatureVerificationFailed = 14,
         /// The sum of open orders and this new-order would exceed the subaccounts
         /// spot limits.
-        ExceededSpotPosition = 13,
-        NoOpposingLimitOrder = 14,
+        ExceededSpotPosition = 15,
+        NoOpposingLimitOrder = 16,
         /// The post-only order would have crossed and traded.
-        PostOnlyWouldTrade = 15,
+        PostOnlyWouldTrade = 17,
         /// A FOK was not fully fillable against resting orders at the requested
         /// price and quantity.
-        DidNotFullyFill = 16,
+        DidNotFullyFill = 18,
     }
     impl Reason {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -503,10 +543,12 @@ pub mod new_order_reject {
                 Reason::InvalidOrderType => "INVALID_ORDER_TYPE",
                 Reason::InvalidPostOnly => "INVALID_POST_ONLY",
                 Reason::InvalidSelfTradePrevention => "INVALID_SELF_TRADE_PREVENTION",
+                Reason::InvalidSignatureVersion => "INVALID_SIGNATURE_VERSION",
                 Reason::UnknownTrader => "UNKNOWN_TRADER",
                 Reason::PriceWithMarketOrder => "PRICE_WITH_MARKET_ORDER",
                 Reason::PostOnlyWithMarketOrder => "POST_ONLY_WITH_MARKET_ORDER",
                 Reason::PostOnlyWithInvalidTif => "POST_ONLY_WITH_INVALID_TIF",
+                Reason::SignatureVerificationFailed => "SIGNATURE_VERIFICATION_FAILED",
                 Reason::ExceededSpotPosition => "EXCEEDED_SPOT_POSITION",
                 Reason::NoOpposingLimitOrder => "NO_OPPOSING_LIMIT_ORDER",
                 Reason::PostOnlyWouldTrade => "POST_ONLY_WOULD_TRADE",
@@ -525,10 +567,12 @@ pub mod new_order_reject {
                 "INVALID_ORDER_TYPE" => Some(Self::InvalidOrderType),
                 "INVALID_POST_ONLY" => Some(Self::InvalidPostOnly),
                 "INVALID_SELF_TRADE_PREVENTION" => Some(Self::InvalidSelfTradePrevention),
+                "INVALID_SIGNATURE_VERSION" => Some(Self::InvalidSignatureVersion),
                 "UNKNOWN_TRADER" => Some(Self::UnknownTrader),
                 "PRICE_WITH_MARKET_ORDER" => Some(Self::PriceWithMarketOrder),
                 "POST_ONLY_WITH_MARKET_ORDER" => Some(Self::PostOnlyWithMarketOrder),
                 "POST_ONLY_WITH_INVALID_TIF" => Some(Self::PostOnlyWithInvalidTif),
+                "SIGNATURE_VERIFICATION_FAILED" => Some(Self::SignatureVerificationFailed),
                 "EXCEEDED_SPOT_POSITION" => Some(Self::ExceededSpotPosition),
                 "NO_OPPOSING_LIMIT_ORDER" => Some(Self::NoOpposingLimitOrder),
                 "POST_ONLY_WOULD_TRADE" => Some(Self::PostOnlyWouldTrade),
@@ -571,6 +615,8 @@ pub mod cancel_order_reject {
         /// The specified client order ID does not exist for the corresponding market
         /// ID and subaccount ID.
         OrderNotFound = 2,
+        InvalidSignatureVersion = 3,
+        SignatureVerificationFailed = 4,
     }
     impl Reason {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -582,6 +628,8 @@ pub mod cancel_order_reject {
                 Reason::Unclassified => "UNCLASSIFIED",
                 Reason::InvalidMarketId => "INVALID_MARKET_ID",
                 Reason::OrderNotFound => "ORDER_NOT_FOUND",
+                Reason::InvalidSignatureVersion => "INVALID_SIGNATURE_VERSION",
+                Reason::SignatureVerificationFailed => "SIGNATURE_VERIFICATION_FAILED",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -590,6 +638,8 @@ pub mod cancel_order_reject {
                 "UNCLASSIFIED" => Some(Self::Unclassified),
                 "INVALID_MARKET_ID" => Some(Self::InvalidMarketId),
                 "ORDER_NOT_FOUND" => Some(Self::OrderNotFound),
+                "INVALID_SIGNATURE_VERSION" => Some(Self::InvalidSignatureVersion),
+                "SIGNATURE_VERIFICATION_FAILED" => Some(Self::SignatureVerificationFailed),
                 _ => None,
             }
         }
@@ -635,15 +685,17 @@ pub mod modify_order_reject {
         InvalidIfm = 4,
         InvalidPostOnly = 5,
         InvalidSelfTradePrevention = 6,
+        InvalidSignatureVersion = 7,
         /// Internal error: the matching engine could not find this subaccounts
         /// positions.
-        UnknownTrader = 7,
+        UnknownTrader = 8,
+        SignatureVerificationFailed = 9,
         /// If the modify-order would cause a cancel-replace, the sum of open orders
         /// and this replacement order would exceed the subaccounts spot limits.
-        ExceededSpotPosition = 8,
+        ExceededSpotPosition = 10,
         /// If the modify-order would cause a cancel-replace, the post-only
         /// replacement would have crossed and traded.
-        PostOnlyWouldTrade = 9,
+        PostOnlyWouldTrade = 11,
     }
     impl Reason {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -659,7 +711,9 @@ pub mod modify_order_reject {
                 Reason::InvalidIfm => "INVALID_IFM",
                 Reason::InvalidPostOnly => "INVALID_POST_ONLY",
                 Reason::InvalidSelfTradePrevention => "INVALID_SELF_TRADE_PREVENTION",
+                Reason::InvalidSignatureVersion => "INVALID_SIGNATURE_VERSION",
                 Reason::UnknownTrader => "UNKNOWN_TRADER",
+                Reason::SignatureVerificationFailed => "SIGNATURE_VERIFICATION_FAILED",
                 Reason::ExceededSpotPosition => "EXCEEDED_SPOT_POSITION",
                 Reason::PostOnlyWouldTrade => "POST_ONLY_WOULD_TRADE",
             }
@@ -674,7 +728,9 @@ pub mod modify_order_reject {
                 "INVALID_IFM" => Some(Self::InvalidIfm),
                 "INVALID_POST_ONLY" => Some(Self::InvalidPostOnly),
                 "INVALID_SELF_TRADE_PREVENTION" => Some(Self::InvalidSelfTradePrevention),
+                "INVALID_SIGNATURE_VERSION" => Some(Self::InvalidSignatureVersion),
                 "UNKNOWN_TRADER" => Some(Self::UnknownTrader),
+                "SIGNATURE_VERIFICATION_FAILED" => Some(Self::SignatureVerificationFailed),
                 "EXCEEDED_SPOT_POSITION" => Some(Self::ExceededSpotPosition),
                 "POST_ONLY_WOULD_TRADE" => Some(Self::PostOnlyWouldTrade),
                 _ => None,
@@ -1004,6 +1060,34 @@ impl PostOnly {
         match value {
             "DISABLED" => Some(Self::Disabled),
             "ENABLED" => Some(Self::Enabled),
+            _ => None,
+        }
+    }
+}
+/// In general, order requests must have a signature attached to prove that the
+/// account owner was the one who issued the order request. Requests without
+/// valid signatures are rejected by the system. The signature version specifies
+/// how the parameters of the order request are encoded into a message over the
+/// signature will be computed. 
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum SignatureVersion {
+    V0 = 0,
+}
+impl SignatureVersion {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            SignatureVersion::V0 => "V0",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "V0" => Some(Self::V0),
             _ => None,
         }
     }
