@@ -12,14 +12,17 @@ mkdir -p src/methods
 SCHEMAS="../../schema"
 
 function cleanupMethods () {
-  # grab the lines that are not present in the types file
-  diff "$1" "$2" | grep '^< ' | sed 's/^< //' > ./cleanup-methods.tmp
-  rm "$1" && touch "$1"
+  # Separate files for easy debugging
+  BUILD_FILE="build.ts"
+  CLEANED_FILE="cleaned.ts"
 
   # import all the types
-  echo 'import {' >> "$1"
-  grep -E '^export (enum|interface)' "$2" | sed -E 's/^export (enum|interface) (.*) {/  \2,/' >> "$1"
-  echo "} from '../$3';" >> "$1"
+  echo 'import {' > "$BUILD_FILE"
+  grep -E '^export (enum|interface)' "$2" | sed -E 's/^export (enum|interface) (.*) {/  \2,/' >> "$BUILD_FILE"
+  echo "} from '../$3';" >> "$BUILD_FILE"
+
+  # grab the lines that are not present in the types file
+  git diff --no-index "$1" "$2" | grep -E '^-' | grep -vE '^---' | sed 's/^-//' >> "$BUILD_FILE"
 
   # relabel all the const exports so that we don't run into declaration merging
   # conflicts...
@@ -27,11 +30,14 @@ function cleanupMethods () {
   #
   # the second `sed` tries to find calls on objects in this file only... (so not
   # e.g `_m0.Reader`)
-  cat ./cleanup-methods.tmp \
+  cat "$BUILD_FILE" \
     | sed -E 's/^export const (.*) = {$/export const \1Methods = {/' \
     | sed -E 's/([^.])([A-Z][A-Za-z_]+)\.(create|encode|decode|fromJSON|toJSON)/\1\2Methods.\3/g' \
-    >> "$1"
-  rm ./cleanup-methods.tmp
+    > "$CLEANED_FILE"
+
+  # Replace originally generated methods file with doctored version
+  rm "$BUILD_FILE"
+  mv "$CLEANED_FILE" "$1"
 }
 
 echo 'Generating js for Market Data API...'
