@@ -623,6 +623,7 @@ function createBaseNewOrder(): NewOrder {
     subaccountId: BigInt("0"),
     selfTradePrevention: undefined,
     postOnly: 0,
+    cancelOnDisconnect: false,
   };
 }
 
@@ -660,6 +661,9 @@ export const NewOrderMethods = {
     }
     if (message.postOnly !== 0) {
       writer.uint32(88).int32(message.postOnly);
+    }
+    if (message.cancelOnDisconnect === true) {
+      writer.uint32(96).bool(message.cancelOnDisconnect);
     }
     return writer;
   },
@@ -748,6 +752,13 @@ export const NewOrderMethods = {
 
           message.postOnly = reader.int32() as any;
           continue;
+        case 12:
+          if (tag !== 96) {
+            break;
+          }
+
+          message.cancelOnDisconnect = reader.bool();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -772,6 +783,7 @@ export const NewOrderMethods = {
         ? selfTradePreventionFromJSON(object.selfTradePrevention)
         : undefined,
       postOnly: isSet(object.postOnly) ? postOnlyFromJSON(object.postOnly) : 0,
+      cancelOnDisconnect: isSet(object.cancelOnDisconnect) ? Boolean(object.cancelOnDisconnect) : false,
     };
   },
 
@@ -790,6 +802,7 @@ export const NewOrderMethods = {
       ? selfTradePreventionToJSON(message.selfTradePrevention)
       : undefined);
     message.postOnly !== undefined && (obj.postOnly = postOnlyToJSON(message.postOnly));
+    message.cancelOnDisconnect !== undefined && (obj.cancelOnDisconnect = message.cancelOnDisconnect);
     return obj;
   },
 };
@@ -1356,6 +1369,7 @@ function createBaseNewOrderAck(): NewOrderAck {
     orderType: 0,
     transactTime: BigInt("0"),
     subaccountId: BigInt("0"),
+    cancelOnDisconnect: false,
   };
 }
 
@@ -1396,6 +1410,9 @@ export const NewOrderAckMethods = {
     }
     if (message.subaccountId !== BigInt("0")) {
       writer.uint32(96).uint64(message.subaccountId.toString());
+    }
+    if (message.cancelOnDisconnect === true) {
+      writer.uint32(104).bool(message.cancelOnDisconnect);
     }
     return writer;
   },
@@ -1491,6 +1508,13 @@ export const NewOrderAckMethods = {
 
           message.subaccountId = longToBigint(reader.uint64() as Long);
           continue;
+        case 13:
+          if (tag !== 104) {
+            break;
+          }
+
+          message.cancelOnDisconnect = reader.bool();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1514,6 +1538,7 @@ export const NewOrderAckMethods = {
       orderType: isSet(object.orderType) ? orderTypeFromJSON(object.orderType) : 0,
       transactTime: isSet(object.transactTime) ? BigInt(object.transactTime) : BigInt("0"),
       subaccountId: isSet(object.subaccountId) ? BigInt(object.subaccountId) : BigInt("0"),
+      cancelOnDisconnect: isSet(object.cancelOnDisconnect) ? Boolean(object.cancelOnDisconnect) : false,
     };
   },
 
@@ -1531,6 +1556,7 @@ export const NewOrderAckMethods = {
     message.orderType !== undefined && (obj.orderType = orderTypeToJSON(message.orderType));
     message.transactTime !== undefined && (obj.transactTime = message.transactTime.toString());
     message.subaccountId !== undefined && (obj.subaccountId = message.subaccountId.toString());
+    message.cancelOnDisconnect !== undefined && (obj.cancelOnDisconnect = message.cancelOnDisconnect);
     return obj;
   },
 };

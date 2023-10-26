@@ -93,6 +93,17 @@ pub struct NewOrder {
     pub self_trade_prevention: ::core::option::Option<i32>,
     #[prost(enumeration="PostOnly", tag="11")]
     pub post_only: i32,
+    /// If true, this order will be automatically cancelled
+    /// after the closure of the network connection
+    /// between Cube's servers and the client that placed the order.
+    ///
+    /// If the client initiates the disconnect or network instability drops the connection,
+    /// the order will be cancelled when Cube's servers recognize the disconnection.
+    ///
+    /// In the event of a server-side disconnect that causes a halt in trading,
+    /// such as scheduled downtime, the order will be cancelled before trading resumes.
+    #[prost(bool, tag="12")]
+    pub cancel_on_disconnect: bool,
 }
 /// Cancel a resting order.
 /// Note that this can be done before the order is acknowledged (an aggressive
@@ -263,6 +274,8 @@ pub struct NewOrderAck {
     pub transact_time: u64,
     #[prost(uint64, tag="12")]
     pub subaccount_id: u64,
+    #[prost(bool, tag="13")]
+    pub cancel_on_disconnect: bool,
 }
 /// Cancel-order-ack confirms a cancel request, or that an order has been
 /// canceled as the result of a different user-initiated reason.

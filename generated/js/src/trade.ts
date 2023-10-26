@@ -232,6 +232,18 @@ export interface NewOrder {
   subaccountId: bigint;
   selfTradePrevention?: SelfTradePrevention | undefined;
   postOnly: PostOnly;
+  /**
+   * If true, this order will be automatically cancelled
+   * after the closure of the network connection
+   * between Cube's servers and the client that placed the order.
+   *
+   * If the client initiates the disconnect or network instability drops the connection,
+   * the order will be cancelled when Cube's servers recognize the disconnection.
+   *
+   * In the event of a server-side disconnect that causes a halt in trading,
+   * such as scheduled downtime, the order will be cancelled before trading resumes.
+   */
+  cancelOnDisconnect: boolean;
 }
 
 /**
@@ -367,6 +379,7 @@ export interface NewOrderAck {
   /** [Transact time](#transact-time) */
   transactTime: bigint;
   subaccountId: bigint;
+  cancelOnDisconnect: boolean;
 }
 
 /**
