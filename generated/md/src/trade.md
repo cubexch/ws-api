@@ -1,7 +1,7 @@
 ---
 title: Trade API
 pageTitle: Cube - Trade API
-description: Trade crypto at microsecond speeds, so your market maker code never miss a tick.
+description: Trade crypto at microsecond speeds so your market making code never misses a tick.
 ---
 
 ## trade.proto
