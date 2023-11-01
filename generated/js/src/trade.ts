@@ -529,6 +529,8 @@ export enum NewOrderReject_Reason {
    * price and quantity.
    */
   DID_NOT_FULLY_FILL = 16,
+  /** ONLY_ORDER_CANCEL_ACCEPTED - An exchange accepts no now orders at this time */
+  ONLY_ORDER_CANCEL_ACCEPTED = 17,
 }
 
 /** Cancel-order-reject indicates that a cancel-order request was not applied. */
@@ -603,6 +605,8 @@ export enum ModifyOrderReject_Reason {
    * replacement would have crossed and traded.
    */
   POST_ONLY_WOULD_TRADE = 9,
+  /** ONLY_ORDER_CANCEL_ACCEPTED - An exchange accepts no order modifications at this time */
+  ONLY_ORDER_CANCEL_ACCEPTED = 17,
 }
 
 /** A fill for an order. */

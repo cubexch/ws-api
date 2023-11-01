@@ -719,6 +719,7 @@ corresponding field did not take a valid value.
 | NO_OPPOSING_LIMIT_ORDER | 14 |  |
 | POST_ONLY_WOULD_TRADE | 15 | The post-only order would have crossed and traded. |
 | DID_NOT_FULLY_FILL | 16 | A FOK was not fully fillable against resting orders at the requested price and quantity. |
+| ONLY_ORDER_CANCEL_ACCEPTED | 17 | An exchange accepts no now orders at this time |
 
 
 
@@ -751,6 +752,7 @@ corresponding field did not take a valid value.
 | UNKNOWN_TRADER | 7 | Internal error: the matching engine could not find this subaccounts positions. |
 | EXCEEDED_SPOT_POSITION | 8 | If the modify-order would cause a cancel-replace, the sum of open orders and this replacement order would exceed the subaccounts spot limits. |
 | POST_ONLY_WOULD_TRADE | 9 | If the modify-order would cause a cancel-replace, the post-only replacement would have crossed and traded. |
+| ONLY_ORDER_CANCEL_ACCEPTED | 17 | An exchange accepts no order modifications at this time |
 
 
 

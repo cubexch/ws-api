@@ -507,6 +507,8 @@ pub mod new_order_reject {
         /// A FOK was not fully fillable against resting orders at the requested
         /// price and quantity.
         DidNotFullyFill = 16,
+        /// An exchange accepts no now orders at this time
+        OnlyOrderCancelAccepted = 17,
     }
     impl Reason {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -532,6 +534,7 @@ pub mod new_order_reject {
                 Reason::NoOpposingLimitOrder => "NO_OPPOSING_LIMIT_ORDER",
                 Reason::PostOnlyWouldTrade => "POST_ONLY_WOULD_TRADE",
                 Reason::DidNotFullyFill => "DID_NOT_FULLY_FILL",
+                Reason::OnlyOrderCancelAccepted => "ONLY_ORDER_CANCEL_ACCEPTED",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -554,6 +557,7 @@ pub mod new_order_reject {
                 "NO_OPPOSING_LIMIT_ORDER" => Some(Self::NoOpposingLimitOrder),
                 "POST_ONLY_WOULD_TRADE" => Some(Self::PostOnlyWouldTrade),
                 "DID_NOT_FULLY_FILL" => Some(Self::DidNotFullyFill),
+                "ONLY_ORDER_CANCEL_ACCEPTED" => Some(Self::OnlyOrderCancelAccepted),
                 _ => None,
             }
         }
@@ -665,6 +669,8 @@ pub mod modify_order_reject {
         /// If the modify-order would cause a cancel-replace, the post-only
         /// replacement would have crossed and traded.
         PostOnlyWouldTrade = 9,
+        /// An exchange accepts no order modifications at this time
+        OnlyOrderCancelAccepted = 17,
     }
     impl Reason {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -683,6 +689,7 @@ pub mod modify_order_reject {
                 Reason::UnknownTrader => "UNKNOWN_TRADER",
                 Reason::ExceededSpotPosition => "EXCEEDED_SPOT_POSITION",
                 Reason::PostOnlyWouldTrade => "POST_ONLY_WOULD_TRADE",
+                Reason::OnlyOrderCancelAccepted => "ONLY_ORDER_CANCEL_ACCEPTED",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -698,6 +705,7 @@ pub mod modify_order_reject {
                 "UNKNOWN_TRADER" => Some(Self::UnknownTrader),
                 "EXCEEDED_SPOT_POSITION" => Some(Self::ExceededSpotPosition),
                 "POST_ONLY_WOULD_TRADE" => Some(Self::PostOnlyWouldTrade),
+                "ONLY_ORDER_CANCEL_ACCEPTED" => Some(Self::OnlyOrderCancelAccepted),
                 _ => None,
             }
         }
