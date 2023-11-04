@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package codes;
 option csharp_namespace = "Cube.Codes";
+option go_package = "go/";
 
 // Custom error codes. Sent on a best-effort basis on the WebSocket
 // `CloseFrame`.
