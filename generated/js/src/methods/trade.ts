@@ -1695,10 +1695,12 @@ function createBaseModifyOrderAck(): ModifyOrderAck {
     clientOrderId: BigInt("0"),
     requestId: BigInt("0"),
     transactTime: BigInt("0"),
-    newQuantity: BigInt("0"),
+    remainingQuantity: BigInt("0"),
     subaccountId: BigInt("0"),
     marketId: BigInt("0"),
     price: BigInt("0"),
+    quantity: BigInt("0"),
+    cumulativeQuantity: BigInt("0"),
   };
 }
 
@@ -1716,8 +1718,8 @@ export const ModifyOrderAckMethods = {
     if (message.transactTime !== BigInt("0")) {
       writer.uint32(32).uint64(message.transactTime.toString());
     }
-    if (message.newQuantity !== BigInt("0")) {
-      writer.uint32(40).uint64(message.newQuantity.toString());
+    if (message.remainingQuantity !== BigInt("0")) {
+      writer.uint32(40).uint64(message.remainingQuantity.toString());
     }
     if (message.subaccountId !== BigInt("0")) {
       writer.uint32(48).uint64(message.subaccountId.toString());
@@ -1727,6 +1729,12 @@ export const ModifyOrderAckMethods = {
     }
     if (message.price !== BigInt("0")) {
       writer.uint32(64).uint64(message.price.toString());
+    }
+    if (message.quantity !== BigInt("0")) {
+      writer.uint32(72).uint64(message.quantity.toString());
+    }
+    if (message.cumulativeQuantity !== BigInt("0")) {
+      writer.uint32(80).uint64(message.cumulativeQuantity.toString());
     }
     return writer;
   },
@@ -1771,7 +1779,7 @@ export const ModifyOrderAckMethods = {
             break;
           }
 
-          message.newQuantity = longToBigint(reader.uint64() as Long);
+          message.remainingQuantity = longToBigint(reader.uint64() as Long);
           continue;
         case 6:
           if (tag !== 48) {
@@ -1794,6 +1802,20 @@ export const ModifyOrderAckMethods = {
 
           message.price = longToBigint(reader.uint64() as Long);
           continue;
+        case 9:
+          if (tag !== 72) {
+            break;
+          }
+
+          message.quantity = longToBigint(reader.uint64() as Long);
+          continue;
+        case 10:
+          if (tag !== 80) {
+            break;
+          }
+
+          message.cumulativeQuantity = longToBigint(reader.uint64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1809,10 +1831,12 @@ export const ModifyOrderAckMethods = {
       clientOrderId: isSet(object.clientOrderId) ? BigInt(object.clientOrderId) : BigInt("0"),
       requestId: isSet(object.requestId) ? BigInt(object.requestId) : BigInt("0"),
       transactTime: isSet(object.transactTime) ? BigInt(object.transactTime) : BigInt("0"),
-      newQuantity: isSet(object.newQuantity) ? BigInt(object.newQuantity) : BigInt("0"),
+      remainingQuantity: isSet(object.remainingQuantity) ? BigInt(object.remainingQuantity) : BigInt("0"),
       subaccountId: isSet(object.subaccountId) ? BigInt(object.subaccountId) : BigInt("0"),
       marketId: isSet(object.marketId) ? BigInt(object.marketId) : BigInt("0"),
       price: isSet(object.price) ? BigInt(object.price) : BigInt("0"),
+      quantity: isSet(object.quantity) ? BigInt(object.quantity) : BigInt("0"),
+      cumulativeQuantity: isSet(object.cumulativeQuantity) ? BigInt(object.cumulativeQuantity) : BigInt("0"),
     };
   },
 
@@ -1822,10 +1846,12 @@ export const ModifyOrderAckMethods = {
     message.clientOrderId !== undefined && (obj.clientOrderId = message.clientOrderId.toString());
     message.requestId !== undefined && (obj.requestId = message.requestId.toString());
     message.transactTime !== undefined && (obj.transactTime = message.transactTime.toString());
-    message.newQuantity !== undefined && (obj.newQuantity = message.newQuantity.toString());
+    message.remainingQuantity !== undefined && (obj.remainingQuantity = message.remainingQuantity.toString());
     message.subaccountId !== undefined && (obj.subaccountId = message.subaccountId.toString());
     message.marketId !== undefined && (obj.marketId = message.marketId.toString());
     message.price !== undefined && (obj.price = message.price.toString());
+    message.quantity !== undefined && (obj.quantity = message.quantity.toString());
+    message.cumulativeQuantity !== undefined && (obj.cumulativeQuantity = message.cumulativeQuantity.toString());
     return obj;
   },
 };
@@ -2406,6 +2432,7 @@ function createBaseFill(): Fill {
     leavesQuantity: BigInt("0"),
     transactTime: BigInt("0"),
     subaccountId: BigInt("0"),
+    cumulativeQuantity: BigInt("0"),
   };
 }
 
@@ -2437,6 +2464,9 @@ export const FillMethods = {
     }
     if (message.subaccountId !== BigInt("0")) {
       writer.uint32(72).uint64(message.subaccountId.toString());
+    }
+    if (message.cumulativeQuantity !== BigInt("0")) {
+      writer.uint32(80).uint64(message.cumulativeQuantity.toString());
     }
     return writer;
   },
@@ -2511,6 +2541,13 @@ export const FillMethods = {
 
           message.subaccountId = longToBigint(reader.uint64() as Long);
           continue;
+        case 10:
+          if (tag !== 80) {
+            break;
+          }
+
+          message.cumulativeQuantity = longToBigint(reader.uint64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2531,6 +2568,7 @@ export const FillMethods = {
       leavesQuantity: isSet(object.leavesQuantity) ? BigInt(object.leavesQuantity) : BigInt("0"),
       transactTime: isSet(object.transactTime) ? BigInt(object.transactTime) : BigInt("0"),
       subaccountId: isSet(object.subaccountId) ? BigInt(object.subaccountId) : BigInt("0"),
+      cumulativeQuantity: isSet(object.cumulativeQuantity) ? BigInt(object.cumulativeQuantity) : BigInt("0"),
     };
   },
 
@@ -2545,6 +2583,7 @@ export const FillMethods = {
     message.leavesQuantity !== undefined && (obj.leavesQuantity = message.leavesQuantity.toString());
     message.transactTime !== undefined && (obj.transactTime = message.transactTime.toString());
     message.subaccountId !== undefined && (obj.subaccountId = message.subaccountId.toString());
+    message.cumulativeQuantity !== undefined && (obj.cumulativeQuantity = message.cumulativeQuantity.toString());
     return obj;
   },
 };
@@ -2946,13 +2985,14 @@ function createBaseRestingOrder(): RestingOrder {
     exchangeOrderId: BigInt("0"),
     marketId: BigInt("0"),
     price: BigInt("0"),
-    originalQuantity: BigInt("0"),
+    orderQuantity: BigInt("0"),
     side: 0,
     timeInForce: 0,
     orderType: 0,
     remainingQuantity: BigInt("0"),
     restTime: BigInt("0"),
     subaccountId: BigInt("0"),
+    cumulativeQuantity: BigInt("0"),
   };
 }
 
@@ -2970,8 +3010,8 @@ export const RestingOrderMethods = {
     if (message.price !== BigInt("0")) {
       writer.uint32(32).uint64(message.price.toString());
     }
-    if (message.originalQuantity !== BigInt("0")) {
-      writer.uint32(40).uint64(message.originalQuantity.toString());
+    if (message.orderQuantity !== BigInt("0")) {
+      writer.uint32(40).uint64(message.orderQuantity.toString());
     }
     if (message.side !== 0) {
       writer.uint32(48).int32(message.side);
@@ -2990,6 +3030,9 @@ export const RestingOrderMethods = {
     }
     if (message.subaccountId !== BigInt("0")) {
       writer.uint32(88).uint64(message.subaccountId.toString());
+    }
+    if (message.cumulativeQuantity !== BigInt("0")) {
+      writer.uint32(96).uint64(message.cumulativeQuantity.toString());
     }
     return writer;
   },
@@ -3034,7 +3077,7 @@ export const RestingOrderMethods = {
             break;
           }
 
-          message.originalQuantity = longToBigint(reader.uint64() as Long);
+          message.orderQuantity = longToBigint(reader.uint64() as Long);
           continue;
         case 6:
           if (tag !== 48) {
@@ -3078,6 +3121,13 @@ export const RestingOrderMethods = {
 
           message.subaccountId = longToBigint(reader.uint64() as Long);
           continue;
+        case 12:
+          if (tag !== 96) {
+            break;
+          }
+
+          message.cumulativeQuantity = longToBigint(reader.uint64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -3093,13 +3143,14 @@ export const RestingOrderMethods = {
       exchangeOrderId: isSet(object.exchangeOrderId) ? BigInt(object.exchangeOrderId) : BigInt("0"),
       marketId: isSet(object.marketId) ? BigInt(object.marketId) : BigInt("0"),
       price: isSet(object.price) ? BigInt(object.price) : BigInt("0"),
-      originalQuantity: isSet(object.originalQuantity) ? BigInt(object.originalQuantity) : BigInt("0"),
+      orderQuantity: isSet(object.orderQuantity) ? BigInt(object.orderQuantity) : BigInt("0"),
       side: isSet(object.side) ? sideFromJSON(object.side) : 0,
       timeInForce: isSet(object.timeInForce) ? timeInForceFromJSON(object.timeInForce) : 0,
       orderType: isSet(object.orderType) ? orderTypeFromJSON(object.orderType) : 0,
       remainingQuantity: isSet(object.remainingQuantity) ? BigInt(object.remainingQuantity) : BigInt("0"),
       restTime: isSet(object.restTime) ? BigInt(object.restTime) : BigInt("0"),
       subaccountId: isSet(object.subaccountId) ? BigInt(object.subaccountId) : BigInt("0"),
+      cumulativeQuantity: isSet(object.cumulativeQuantity) ? BigInt(object.cumulativeQuantity) : BigInt("0"),
     };
   },
 
@@ -3109,13 +3160,14 @@ export const RestingOrderMethods = {
     message.exchangeOrderId !== undefined && (obj.exchangeOrderId = message.exchangeOrderId.toString());
     message.marketId !== undefined && (obj.marketId = message.marketId.toString());
     message.price !== undefined && (obj.price = message.price.toString());
-    message.originalQuantity !== undefined && (obj.originalQuantity = message.originalQuantity.toString());
+    message.orderQuantity !== undefined && (obj.orderQuantity = message.orderQuantity.toString());
     message.side !== undefined && (obj.side = sideToJSON(message.side));
     message.timeInForce !== undefined && (obj.timeInForce = timeInForceToJSON(message.timeInForce));
     message.orderType !== undefined && (obj.orderType = orderTypeToJSON(message.orderType));
     message.remainingQuantity !== undefined && (obj.remainingQuantity = message.remainingQuantity.toString());
     message.restTime !== undefined && (obj.restTime = message.restTime.toString());
     message.subaccountId !== undefined && (obj.subaccountId = message.subaccountId.toString());
+    message.cumulativeQuantity !== undefined && (obj.cumulativeQuantity = message.cumulativeQuantity.toString());
     return obj;
   },
 };

@@ -253,6 +253,9 @@ message CancelOrder {
 // ```
 //
 // The post-modify quantity will be `newQuantity - filled = 4 - 2 = 2`.
+//
+// Regardless of IFM, the invariant for order quantity is that `quantity =
+// remaining_quantity + cumulative_quantity`.
 message ModifyOrder {
   uint64 market_id = 1;
   // The order ID specified by the client on the NewOrder request.
@@ -381,12 +384,15 @@ message ModifyOrderAck {
   // [Transact time](#transact-time)
   uint64 transact_time = 4;
 
-  // The quantity submitted in the modify request after applying IFM
-  // logic.
-  uint64 new_quantity = 5;
+  // The quantity remaining on the book after applying the modify request.
+  uint64 remaining_quantity = 5;
   uint64 subaccount_id = 6;
   uint64 market_id = 7;
   uint64 price = 8;
+  // The quantity submitted in the modify request.
+  uint64 quantity = 9;
+  // The cumulative filled quantity for this order.
+  uint64 cumulative_quantity = 10;
 }
 
 // Mass-cancel-ack confirms a mass-cancel request. If `reason` is set, the mass
@@ -542,6 +548,8 @@ message Fill {
   // [Transact time](#transact-time)
   uint64 transact_time = 8;
   uint64 subaccount_id = 9;
+  // The cumulative filled quantity for this order after the fill is applied.
+  uint64 cumulative_quantity = 10;
 }
 
 // The user's underlying asset position. These are sent asynchronously as
@@ -607,8 +615,11 @@ message RestingOrder {
   uint64 exchange_order_id = 2;
   uint64 market_id = 3;
   uint64 price = 4;
-  // The quantity submitted in the new-order request.
-  uint64 original_quantity = 5;
+  // The quantity submitted in the latest quantity-modifying request. If the
+  // order has not been modified, then it is the quantity on the new-order-ack.
+  // If it has been modified, then it is the quantity of the latest
+  // modify-order-ack.
+  uint64 order_quantity = 5;
   Side side = 6;
   TimeInForce time_in_force = 7;
   OrderType order_type = 8;
@@ -619,4 +630,7 @@ message RestingOrder {
   // [Transact time](#transact-time) of the NewOrderAck
   uint64 rest_time = 10;
   uint64 subaccount_id = 11;
+
+  // The cumulative filled quantity for this order.
+  uint64 cumulative_quantity = 12;
 }

@@ -201,6 +201,9 @@ Modify 4 | 2       | 2
 
 The post-modify quantity will be `newQuantity - filled = 4 - 2 = 2`.
 
+Regardless of IFM, the invariant for order quantity is that `quantity =
+remaining_quantity + cumulative_quantity`.
+
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
@@ -342,10 +345,12 @@ this order.
 | client_order_id | [uint64](#uint64) |  |  |
 | request_id | [uint64](#uint64) |  | The request ID specified in the modify request. |
 | transact_time | [uint64](#uint64) |  | [Transact time](#transact-time) |
-| new_quantity | [uint64](#uint64) |  | The quantity submitted in the modify request after applying IFM logic. |
+| remaining_quantity | [uint64](#uint64) |  | The quantity remaining on the book after applying the modify request. |
 | subaccount_id | [uint64](#uint64) |  |  |
 | market_id | [uint64](#uint64) |  |  |
 | price | [uint64](#uint64) |  |  |
+| quantity | [uint64](#uint64) |  | The quantity submitted in the modify request. |
+| cumulative_quantity | [uint64](#uint64) |  | The cumulative filled quantity for this order. |
 
 
 
@@ -454,6 +459,7 @@ A fill for an order.
 | leaves_quantity | [uint64](#uint64) |  | The remaining quantity for this order after the fill is applied. |
 | transact_time | [uint64](#uint64) |  | [Transact time](#transact-time) |
 | subaccount_id | [uint64](#uint64) |  |  |
+| cumulative_quantity | [uint64](#uint64) |  | The cumulative filled quantity for this order after the fill is applied. |
 
 
 
@@ -575,13 +581,14 @@ A resting order. Sent on bootstrap in `RestingOrders`.
 | exchange_order_id | [uint64](#uint64) |  | [Exchange order ID](#exchange-order-id) |
 | market_id | [uint64](#uint64) |  |  |
 | price | [uint64](#uint64) |  |  |
-| original_quantity | [uint64](#uint64) |  | The quantity submitted in the new-order request. |
+| order_quantity | [uint64](#uint64) |  | The quantity submitted in the latest quantity-modifying request. If the order has not been modified, then it is the quantity on the new-order-ack. If it has been modified, then it is the quantity of the latest modify-order-ack. |
 | side | [Side](#side) |  |  |
 | time_in_force | [TimeInForce](#time-in-force) |  |  |
 | order_type | [OrderType](#order-type) |  |  |
 | remaining_quantity | [uint64](#uint64) |  | The current remaining quantity on the book. |
 | rest_time | [uint64](#uint64) |  | [Transact time](#transact-time) of the NewOrderAck |
 | subaccount_id | [uint64](#uint64) |  |  |
+| cumulative_quantity | [uint64](#uint64) |  | The cumulative filled quantity for this order. |
 
 
 

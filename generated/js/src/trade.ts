@@ -284,6 +284,9 @@ export interface CancelOrder {
  * ```
  *
  * The post-modify quantity will be `newQuantity - filled = 4 - 2 = 2`.
+ *
+ * Regardless of IFM, the invariant for order quantity is that `quantity =
+ * remaining_quantity + cumulative_quantity`.
  */
 export interface ModifyOrder {
   marketId: bigint;
@@ -430,14 +433,15 @@ export interface ModifyOrderAck {
   requestId: bigint;
   /** [Transact time](#transact-time) */
   transactTime: bigint;
-  /**
-   * The quantity submitted in the modify request after applying IFM
-   * logic.
-   */
-  newQuantity: bigint;
+  /** The quantity remaining on the book after applying the modify request. */
+  remainingQuantity: bigint;
   subaccountId: bigint;
   marketId: bigint;
   price: bigint;
+  /** The quantity submitted in the modify request. */
+  quantity: bigint;
+  /** The cumulative filled quantity for this order. */
+  cumulativeQuantity: bigint;
 }
 
 /**
@@ -618,6 +622,8 @@ export interface Fill {
   /** [Transact time](#transact-time) */
   transactTime: bigint;
   subaccountId: bigint;
+  /** The cumulative filled quantity for this order after the fill is applied. */
+  cumulativeQuantity: bigint;
 }
 
 /**
@@ -688,8 +694,13 @@ export interface RestingOrder {
   exchangeOrderId: bigint;
   marketId: bigint;
   price: bigint;
-  /** The quantity submitted in the new-order request. */
-  originalQuantity: bigint;
+  /**
+   * The quantity submitted in the latest quantity-modifying request. If the
+   * order has not been modified, then it is the quantity on the new-order-ack.
+   * If it has been modified, then it is the quantity of the latest
+   * modify-order-ack.
+   */
+  orderQuantity: bigint;
   side: Side;
   timeInForce: TimeInForce;
   orderType: OrderType;
@@ -698,4 +709,6 @@ export interface RestingOrder {
   /** [Transact time](#transact-time) of the NewOrderAck */
   restTime: bigint;
   subaccountId: bigint;
+  /** The cumulative filled quantity for this order. */
+  cumulativeQuantity: bigint;
 }

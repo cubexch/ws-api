@@ -240,24 +240,28 @@ class CancelOrderAck(_message.Message):
     def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., reason: _Optional[_Union[CancelOrderAck.Reason, str]] = ..., market_id: _Optional[int] = ...) -> None: ...
 
 class ModifyOrderAck(_message.Message):
-    __slots__ = ["msg_seq_num", "client_order_id", "request_id", "transact_time", "new_quantity", "subaccount_id", "market_id", "price"]
+    __slots__ = ["msg_seq_num", "client_order_id", "request_id", "transact_time", "remaining_quantity", "subaccount_id", "market_id", "price", "quantity", "cumulative_quantity"]
     MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
     CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
     TRANSACT_TIME_FIELD_NUMBER: _ClassVar[int]
-    NEW_QUANTITY_FIELD_NUMBER: _ClassVar[int]
+    REMAINING_QUANTITY_FIELD_NUMBER: _ClassVar[int]
     SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     MARKET_ID_FIELD_NUMBER: _ClassVar[int]
     PRICE_FIELD_NUMBER: _ClassVar[int]
+    QUANTITY_FIELD_NUMBER: _ClassVar[int]
+    CUMULATIVE_QUANTITY_FIELD_NUMBER: _ClassVar[int]
     msg_seq_num: int
     client_order_id: int
     request_id: int
     transact_time: int
-    new_quantity: int
+    remaining_quantity: int
     subaccount_id: int
     market_id: int
     price: int
-    def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., new_quantity: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., market_id: _Optional[int] = ..., price: _Optional[int] = ...) -> None: ...
+    quantity: int
+    cumulative_quantity: int
+    def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., remaining_quantity: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., market_id: _Optional[int] = ..., price: _Optional[int] = ..., quantity: _Optional[int] = ..., cumulative_quantity: _Optional[int] = ...) -> None: ...
 
 class MassCancelAck(_message.Message):
     __slots__ = ["msg_seq_num", "subaccount_id", "request_id", "transact_time", "reason", "total_affected_orders"]
@@ -414,7 +418,7 @@ class ModifyOrderReject(_message.Message):
     def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., reason: _Optional[_Union[ModifyOrderReject.Reason, str]] = ..., market_id: _Optional[int] = ...) -> None: ...
 
 class Fill(_message.Message):
-    __slots__ = ["msg_seq_num", "market_id", "client_order_id", "exchange_order_id", "fill_price", "fill_quantity", "leaves_quantity", "transact_time", "subaccount_id"]
+    __slots__ = ["msg_seq_num", "market_id", "client_order_id", "exchange_order_id", "fill_price", "fill_quantity", "leaves_quantity", "transact_time", "subaccount_id", "cumulative_quantity"]
     MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
     MARKET_ID_FIELD_NUMBER: _ClassVar[int]
     CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
@@ -424,6 +428,7 @@ class Fill(_message.Message):
     LEAVES_QUANTITY_FIELD_NUMBER: _ClassVar[int]
     TRANSACT_TIME_FIELD_NUMBER: _ClassVar[int]
     SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
+    CUMULATIVE_QUANTITY_FIELD_NUMBER: _ClassVar[int]
     msg_seq_num: int
     market_id: int
     client_order_id: int
@@ -433,7 +438,8 @@ class Fill(_message.Message):
     leaves_quantity: int
     transact_time: int
     subaccount_id: int
-    def __init__(self, msg_seq_num: _Optional[int] = ..., market_id: _Optional[int] = ..., client_order_id: _Optional[int] = ..., exchange_order_id: _Optional[int] = ..., fill_price: _Optional[int] = ..., fill_quantity: _Optional[int] = ..., leaves_quantity: _Optional[int] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ...) -> None: ...
+    cumulative_quantity: int
+    def __init__(self, msg_seq_num: _Optional[int] = ..., market_id: _Optional[int] = ..., client_order_id: _Optional[int] = ..., exchange_order_id: _Optional[int] = ..., fill_price: _Optional[int] = ..., fill_quantity: _Optional[int] = ..., leaves_quantity: _Optional[int] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., cumulative_quantity: _Optional[int] = ...) -> None: ...
 
 class AssetPosition(_message.Message):
     __slots__ = ["subaccount_id", "asset_id", "total", "available"]
@@ -488,27 +494,29 @@ class Done(_message.Message):
     def __init__(self, latest_transact_time: _Optional[int] = ...) -> None: ...
 
 class RestingOrder(_message.Message):
-    __slots__ = ["client_order_id", "exchange_order_id", "market_id", "price", "original_quantity", "side", "time_in_force", "order_type", "remaining_quantity", "rest_time", "subaccount_id"]
+    __slots__ = ["client_order_id", "exchange_order_id", "market_id", "price", "order_quantity", "side", "time_in_force", "order_type", "remaining_quantity", "rest_time", "subaccount_id", "cumulative_quantity"]
     CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     EXCHANGE_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     MARKET_ID_FIELD_NUMBER: _ClassVar[int]
     PRICE_FIELD_NUMBER: _ClassVar[int]
-    ORIGINAL_QUANTITY_FIELD_NUMBER: _ClassVar[int]
+    ORDER_QUANTITY_FIELD_NUMBER: _ClassVar[int]
     SIDE_FIELD_NUMBER: _ClassVar[int]
     TIME_IN_FORCE_FIELD_NUMBER: _ClassVar[int]
     ORDER_TYPE_FIELD_NUMBER: _ClassVar[int]
     REMAINING_QUANTITY_FIELD_NUMBER: _ClassVar[int]
     REST_TIME_FIELD_NUMBER: _ClassVar[int]
     SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
+    CUMULATIVE_QUANTITY_FIELD_NUMBER: _ClassVar[int]
     client_order_id: int
     exchange_order_id: int
     market_id: int
     price: int
-    original_quantity: int
+    order_quantity: int
     side: Side
     time_in_force: TimeInForce
     order_type: OrderType
     remaining_quantity: int
     rest_time: int
     subaccount_id: int
-    def __init__(self, client_order_id: _Optional[int] = ..., exchange_order_id: _Optional[int] = ..., market_id: _Optional[int] = ..., price: _Optional[int] = ..., original_quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., time_in_force: _Optional[_Union[TimeInForce, str]] = ..., order_type: _Optional[_Union[OrderType, str]] = ..., remaining_quantity: _Optional[int] = ..., rest_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ...) -> None: ...
+    cumulative_quantity: int
+    def __init__(self, client_order_id: _Optional[int] = ..., exchange_order_id: _Optional[int] = ..., market_id: _Optional[int] = ..., price: _Optional[int] = ..., order_quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., time_in_force: _Optional[_Union[TimeInForce, str]] = ..., order_type: _Optional[_Union[OrderType, str]] = ..., remaining_quantity: _Optional[int] = ..., rest_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., cumulative_quantity: _Optional[int] = ...) -> None: ...

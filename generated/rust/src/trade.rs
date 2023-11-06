@@ -145,6 +145,9 @@ pub struct CancelOrder {
 /// ```
 ///
 /// The post-modify quantity will be `newQuantity - filled = 4 - 2 = 2`.
+///
+/// Regardless of IFM, the invariant for order quantity is that `quantity =
+/// remaining_quantity + cumulative_quantity`.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ModifyOrder {
@@ -367,16 +370,21 @@ pub struct ModifyOrderAck {
     /// [Transact time](#transact-time)
     #[prost(uint64, tag="4")]
     pub transact_time: u64,
-    /// The quantity submitted in the modify request after applying IFM
-    /// logic.
+    /// The quantity remaining on the book after applying the modify request.
     #[prost(uint64, tag="5")]
-    pub new_quantity: u64,
+    pub remaining_quantity: u64,
     #[prost(uint64, tag="6")]
     pub subaccount_id: u64,
     #[prost(uint64, tag="7")]
     pub market_id: u64,
     #[prost(uint64, tag="8")]
     pub price: u64,
+    /// The quantity submitted in the modify request.
+    #[prost(uint64, tag="9")]
+    pub quantity: u64,
+    /// The cumulative filled quantity for this order.
+    #[prost(uint64, tag="10")]
+    pub cumulative_quantity: u64,
 }
 /// Mass-cancel-ack confirms a mass-cancel request. If `reason` is set, the mass
 /// cancel was not applied and there are no affected orders. Individual
@@ -723,6 +731,9 @@ pub struct Fill {
     pub transact_time: u64,
     #[prost(uint64, tag="9")]
     pub subaccount_id: u64,
+    /// The cumulative filled quantity for this order after the fill is applied.
+    #[prost(uint64, tag="10")]
+    pub cumulative_quantity: u64,
 }
 /// The user's underlying asset position. These are sent asynchronously as
 /// positions are updated and broadcast through internal position channels. They
@@ -819,9 +830,12 @@ pub struct RestingOrder {
     pub market_id: u64,
     #[prost(uint64, tag="4")]
     pub price: u64,
-    /// The quantity submitted in the new-order request.
+    /// The quantity submitted in the latest quantity-modifying request. If the
+    /// order has not been modified, then it is the quantity on the new-order-ack.
+    /// If it has been modified, then it is the quantity of the latest
+    /// modify-order-ack.
     #[prost(uint64, tag="5")]
-    pub original_quantity: u64,
+    pub order_quantity: u64,
     #[prost(enumeration="Side", tag="6")]
     pub side: i32,
     #[prost(enumeration="TimeInForce", tag="7")]
@@ -836,6 +850,9 @@ pub struct RestingOrder {
     pub rest_time: u64,
     #[prost(uint64, tag="11")]
     pub subaccount_id: u64,
+    /// The cumulative filled quantity for this order.
+    #[prost(uint64, tag="12")]
+    pub cumulative_quantity: u64,
 }
 /// Side specifies whether the order is buying or selling the base asset. A trade
 /// is matched when a buyer (BID) and a seller (ASK) agree on a price (cross).
