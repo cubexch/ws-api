@@ -146,6 +146,11 @@ Place a new order.
 | subaccount_id | [uint64](#uint64) |  | The subaccount to place this order on. This subaccount must be writable by the API key specified in the Credentials message. |
 | self_trade_prevention | [SelfTradePrevention](#self-trade-prevention) | optional |  |
 | post_only | [PostOnly](#post-only) |  |  |
+| cancel_on_disconnect | [bool](#bool) |  | If true, this order will be automatically cancelled after the closure of the network connection between Cube's servers and the client that placed the order.
+
+If the client initiates the disconnect or network instability drops the connection, the order will be cancelled when Cube's servers recognize the disconnection.
+
+In the event of a server-side disconnect that causes a halt in trading, such as scheduled downtime, the order will be cancelled before trading resumes. |
 
 
 
@@ -296,6 +301,7 @@ any fills for this order.
 | order_type | [OrderType](#order-type) |  |  |
 | transact_time | [uint64](#uint64) |  | [Transact time](#transact-time) |
 | subaccount_id | [uint64](#uint64) |  |  |
+| cancel_on_disconnect | [bool](#bool) |  |  |
 
 
 

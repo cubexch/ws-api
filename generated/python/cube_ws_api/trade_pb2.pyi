@@ -72,7 +72,7 @@ class OrderRequest(_message.Message):
     def __init__(self, new: _Optional[_Union[NewOrder, _Mapping]] = ..., cancel: _Optional[_Union[CancelOrder, _Mapping]] = ..., modify: _Optional[_Union[ModifyOrder, _Mapping]] = ..., heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., mc: _Optional[_Union[MassCancel, _Mapping]] = ...) -> None: ...
 
 class NewOrder(_message.Message):
-    __slots__ = ["client_order_id", "request_id", "market_id", "price", "quantity", "side", "time_in_force", "order_type", "subaccount_id", "self_trade_prevention", "post_only"]
+    __slots__ = ["client_order_id", "request_id", "market_id", "price", "quantity", "side", "time_in_force", "order_type", "subaccount_id", "self_trade_prevention", "post_only", "cancel_on_disconnect"]
     CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
     MARKET_ID_FIELD_NUMBER: _ClassVar[int]
@@ -84,6 +84,7 @@ class NewOrder(_message.Message):
     SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     SELF_TRADE_PREVENTION_FIELD_NUMBER: _ClassVar[int]
     POST_ONLY_FIELD_NUMBER: _ClassVar[int]
+    CANCEL_ON_DISCONNECT_FIELD_NUMBER: _ClassVar[int]
     client_order_id: int
     request_id: int
     market_id: int
@@ -95,7 +96,8 @@ class NewOrder(_message.Message):
     subaccount_id: int
     self_trade_prevention: SelfTradePrevention
     post_only: PostOnly
-    def __init__(self, client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., market_id: _Optional[int] = ..., price: _Optional[int] = ..., quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., time_in_force: _Optional[_Union[TimeInForce, str]] = ..., order_type: _Optional[_Union[OrderType, str]] = ..., subaccount_id: _Optional[int] = ..., self_trade_prevention: _Optional[_Union[SelfTradePrevention, str]] = ..., post_only: _Optional[_Union[PostOnly, str]] = ...) -> None: ...
+    cancel_on_disconnect: bool
+    def __init__(self, client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., market_id: _Optional[int] = ..., price: _Optional[int] = ..., quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., time_in_force: _Optional[_Union[TimeInForce, str]] = ..., order_type: _Optional[_Union[OrderType, str]] = ..., subaccount_id: _Optional[int] = ..., self_trade_prevention: _Optional[_Union[SelfTradePrevention, str]] = ..., post_only: _Optional[_Union[PostOnly, str]] = ..., cancel_on_disconnect: bool = ...) -> None: ...
 
 class CancelOrder(_message.Message):
     __slots__ = ["market_id", "client_order_id", "request_id", "subaccount_id"]
@@ -174,7 +176,7 @@ class OrderResponse(_message.Message):
     def __init__(self, new_ack: _Optional[_Union[NewOrderAck, _Mapping]] = ..., cancel_ack: _Optional[_Union[CancelOrderAck, _Mapping]] = ..., modify_ack: _Optional[_Union[ModifyOrderAck, _Mapping]] = ..., new_reject: _Optional[_Union[NewOrderReject, _Mapping]] = ..., cancel_reject: _Optional[_Union[CancelOrderReject, _Mapping]] = ..., modify_reject: _Optional[_Union[ModifyOrderReject, _Mapping]] = ..., fill: _Optional[_Union[Fill, _Mapping]] = ..., heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., position: _Optional[_Union[AssetPosition, _Mapping]] = ..., mass_cancel_ack: _Optional[_Union[MassCancelAck, _Mapping]] = ...) -> None: ...
 
 class NewOrderAck(_message.Message):
-    __slots__ = ["msg_seq_num", "client_order_id", "request_id", "exchange_order_id", "market_id", "price", "quantity", "side", "time_in_force", "order_type", "transact_time", "subaccount_id"]
+    __slots__ = ["msg_seq_num", "client_order_id", "request_id", "exchange_order_id", "market_id", "price", "quantity", "side", "time_in_force", "order_type", "transact_time", "subaccount_id", "cancel_on_disconnect"]
     MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
     CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
@@ -187,6 +189,7 @@ class NewOrderAck(_message.Message):
     ORDER_TYPE_FIELD_NUMBER: _ClassVar[int]
     TRANSACT_TIME_FIELD_NUMBER: _ClassVar[int]
     SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
+    CANCEL_ON_DISCONNECT_FIELD_NUMBER: _ClassVar[int]
     msg_seq_num: int
     client_order_id: int
     request_id: int
@@ -199,7 +202,8 @@ class NewOrderAck(_message.Message):
     order_type: OrderType
     transact_time: int
     subaccount_id: int
-    def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., exchange_order_id: _Optional[int] = ..., market_id: _Optional[int] = ..., price: _Optional[int] = ..., quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., time_in_force: _Optional[_Union[TimeInForce, str]] = ..., order_type: _Optional[_Union[OrderType, str]] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ...) -> None: ...
+    cancel_on_disconnect: bool
+    def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., exchange_order_id: _Optional[int] = ..., market_id: _Optional[int] = ..., price: _Optional[int] = ..., quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., time_in_force: _Optional[_Union[TimeInForce, str]] = ..., order_type: _Optional[_Union[OrderType, str]] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., cancel_on_disconnect: bool = ...) -> None: ...
 
 class CancelOrderAck(_message.Message):
     __slots__ = ["msg_seq_num", "client_order_id", "request_id", "transact_time", "subaccount_id", "reason", "market_id"]

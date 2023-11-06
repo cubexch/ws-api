@@ -206,6 +206,16 @@ message NewOrder {
   uint64 subaccount_id = 9;
   optional SelfTradePrevention self_trade_prevention = 10;
   PostOnly post_only = 11;
+  // If true, this order will be automatically cancelled
+  // after the closure of the network connection
+  // between Cube's servers and the client that placed the order.
+  //
+  // If the client initiates the disconnect or network instability drops the connection,
+  // the order will be cancelled when Cube's servers recognize the disconnection.
+  //
+  // In the event of a server-side disconnect that causes a halt in trading,
+  // such as scheduled downtime, the order will be cancelled before trading resumes.
+  bool cancel_on_disconnect = 12;
 }
 
 // Cancel a resting order.
@@ -325,6 +335,7 @@ message NewOrderAck {
   // [Transact time](#transact-time)
   uint64 transact_time = 11;
   uint64 subaccount_id = 12;
+  bool cancel_on_disconnect = 13;
 }
 
 // Cancel-order-ack confirms a cancel request, or that an order has been
