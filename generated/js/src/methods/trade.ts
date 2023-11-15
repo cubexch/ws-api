@@ -301,6 +301,9 @@ export function newOrderReject_ReasonFromJSON(object: any): NewOrderReject_Reaso
     case 16:
     case "DID_NOT_FULLY_FILL":
       return NewOrderReject_Reason.DID_NOT_FULLY_FILL;
+    case 17:
+    case "ONLY_ORDER_CANCEL_ACCEPTED":
+      return NewOrderReject_Reason.ONLY_ORDER_CANCEL_ACCEPTED;
     default:
       throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum NewOrderReject_Reason");
   }
@@ -342,6 +345,8 @@ export function newOrderReject_ReasonToJSON(object: NewOrderReject_Reason): stri
       return "POST_ONLY_WOULD_TRADE";
     case NewOrderReject_Reason.DID_NOT_FULLY_FILL:
       return "DID_NOT_FULLY_FILL";
+    case NewOrderReject_Reason.ONLY_ORDER_CANCEL_ACCEPTED:
+      return "ONLY_ORDER_CANCEL_ACCEPTED";
     default:
       throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum NewOrderReject_Reason");
   }
@@ -408,6 +413,9 @@ export function modifyOrderReject_ReasonFromJSON(object: any): ModifyOrderReject
     case 9:
     case "POST_ONLY_WOULD_TRADE":
       return ModifyOrderReject_Reason.POST_ONLY_WOULD_TRADE;
+    case 17:
+    case "ONLY_ORDER_CANCEL_ACCEPTED":
+      return ModifyOrderReject_Reason.ONLY_ORDER_CANCEL_ACCEPTED;
     default:
       throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum ModifyOrderReject_Reason");
   }
@@ -435,6 +443,8 @@ export function modifyOrderReject_ReasonToJSON(object: ModifyOrderReject_Reason)
       return "EXCEEDED_SPOT_POSITION";
     case ModifyOrderReject_Reason.POST_ONLY_WOULD_TRADE:
       return "POST_ONLY_WOULD_TRADE";
+    case ModifyOrderReject_Reason.ONLY_ORDER_CANCEL_ACCEPTED:
+      return "ONLY_ORDER_CANCEL_ACCEPTED";
     default:
       throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum ModifyOrderReject_Reason");
   }

@@ -308,6 +308,7 @@ class NewOrderReject(_message.Message):
         NO_OPPOSING_LIMIT_ORDER: _ClassVar[NewOrderReject.Reason]
         POST_ONLY_WOULD_TRADE: _ClassVar[NewOrderReject.Reason]
         DID_NOT_FULLY_FILL: _ClassVar[NewOrderReject.Reason]
+        ONLY_ORDER_CANCEL_ACCEPTED: _ClassVar[NewOrderReject.Reason]
     UNCLASSIFIED: NewOrderReject.Reason
     INVALID_QUANTITY: NewOrderReject.Reason
     INVALID_MARKET_ID: NewOrderReject.Reason
@@ -325,6 +326,7 @@ class NewOrderReject(_message.Message):
     NO_OPPOSING_LIMIT_ORDER: NewOrderReject.Reason
     POST_ONLY_WOULD_TRADE: NewOrderReject.Reason
     DID_NOT_FULLY_FILL: NewOrderReject.Reason
+    ONLY_ORDER_CANCEL_ACCEPTED: NewOrderReject.Reason
     MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
     CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
@@ -391,6 +393,7 @@ class ModifyOrderReject(_message.Message):
         UNKNOWN_TRADER: _ClassVar[ModifyOrderReject.Reason]
         EXCEEDED_SPOT_POSITION: _ClassVar[ModifyOrderReject.Reason]
         POST_ONLY_WOULD_TRADE: _ClassVar[ModifyOrderReject.Reason]
+        ONLY_ORDER_CANCEL_ACCEPTED: _ClassVar[ModifyOrderReject.Reason]
     UNCLASSIFIED: ModifyOrderReject.Reason
     INVALID_QUANTITY: ModifyOrderReject.Reason
     INVALID_MARKET_ID: ModifyOrderReject.Reason
@@ -401,6 +404,7 @@ class ModifyOrderReject(_message.Message):
     UNKNOWN_TRADER: ModifyOrderReject.Reason
     EXCEEDED_SPOT_POSITION: ModifyOrderReject.Reason
     POST_ONLY_WOULD_TRADE: ModifyOrderReject.Reason
+    ONLY_ORDER_CANCEL_ACCEPTED: ModifyOrderReject.Reason
     MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
     CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
