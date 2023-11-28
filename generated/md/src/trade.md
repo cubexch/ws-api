@@ -79,6 +79,7 @@ signature should be calculated as the concatenation of the byte string
 little-endian 64-bit number. For example:
 
 ```rust compile_fail
+use base64::Engine;
 use hmac::{Hmac, Mac, NewMac};
 use std::time::SystemTime;
 
@@ -94,14 +95,22 @@ let mut mac = Hmac::<sha2::Sha256>::new_from_slice(
 ).expect("new HMAC error");
 mac.update(b"cube.xyz");
 mac.update(&timestamp.to_le_bytes());
-let signature = <[u8; 32]>::from(mac.finalize().into_bytes());
+let signature_bytes = <[u8; 32]>::from(mac.finalize().into_bytes());
+let signature = base64::general_purpose::STANDARD.encode(signature_bytes);
+```
+
+Not that the signature is base-64 encoded with the 'standard' alphabet and
+padding.
+
+```
+ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/
 ```
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | access_key_id | [string](#string) |  | Public API key |
-| signature | [string](#string) |  | HMAC signature |
+| signature | [string](#string) |  | HMAC signature, base-64 encoded |
 | timestamp | [uint64](#uint64) |  | Timestamp in seconds |
 
 

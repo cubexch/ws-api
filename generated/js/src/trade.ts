@@ -171,6 +171,7 @@ export enum PostOnly {
  * little-endian 64-bit number. For example:
  *
  * ```rust compile_fail
+ * use base64::Engine;
  * use hmac::{Hmac, Mac, NewMac};
  * use std::time::SystemTime;
  *
@@ -186,13 +187,21 @@ export enum PostOnly {
  * ).expect("new HMAC error");
  * mac.update(b"cube.xyz");
  * mac.update(&timestamp.to_le_bytes());
- * let signature = <[u8; 32]>::from(mac.finalize().into_bytes());
+ * let signature_bytes = <[u8; 32]>::from(mac.finalize().into_bytes());
+ * let signature = base64::general_purpose::STANDARD.encode(signature_bytes);
+ * ```
+ *
+ * Not that the signature is base-64 encoded with the 'standard' alphabet and
+ * padding.
+ *
+ * ```
+ * ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/
  * ```
  */
 export interface Credentials {
   /** Public API key */
   accessKeyId: string;
-  /** HMAC signature */
+  /** HMAC signature, base-64 encoded */
   signature: string;
   /** Timestamp in seconds */
   timestamp: bigint;

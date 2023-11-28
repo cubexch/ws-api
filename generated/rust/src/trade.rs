@@ -7,6 +7,7 @@
 /// little-endian 64-bit number. For example:
 ///
 /// ```rust compile_fail
+/// use base64::Engine;
 /// use hmac::{Hmac, Mac, NewMac};
 /// use std::time::SystemTime;
 ///
@@ -22,15 +23,24 @@
 /// ).expect("new HMAC error");
 /// mac.update(b"cube.xyz");
 /// mac.update(&timestamp.to_le_bytes());
-/// let signature = <[u8; 32]>::from(mac.finalize().into_bytes());
+/// let signature_bytes = <[u8; 32]>::from(mac.finalize().into_bytes());
+/// let signature = base64::general_purpose::STANDARD.encode(signature_bytes);
 /// ```
+///
+/// Not that the signature is base-64 encoded with the 'standard' alphabet and
+/// padding.
+///
+/// ```
+/// ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/
+/// ```
+///
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Credentials {
     /// Public API key
     #[prost(string, tag="1")]
     pub access_key_id: ::prost::alloc::string::String,
-    /// HMAC signature
+    /// HMAC signature, base-64 encoded
     #[prost(string, tag="2")]
     pub signature: ::prost::alloc::string::String,
     /// Timestamp in seconds
