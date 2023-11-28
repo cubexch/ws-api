@@ -168,7 +168,20 @@ export enum PostOnly {
  * array) should be generated on the settings page with the write access. The
  * signature should be calculated as the concatenation of the byte string
  * `cube.xyz` and the current unix epoch in seconds interpreted at a
- * little-endian 64-bit number. For example:
+ * little-endian 64-bit number.
+ *
+ * Implementation notes:
+ * - The signature is base-64 encoded with the 'standard' alphabet and
+ *   padding.
+ *
+ *   ```
+ *   ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/
+ *   ```
+ * - The timestamp should be encoded as 8-byte little-endian (array of bytes)
+ * - The secret key should be decoded from a hex string into a 32-byte array of
+ *   bytes
+ *
+ * #### Rust
  *
  * ```rust compile_fail
  * use base64::Engine;
@@ -177,10 +190,7 @@ export enum PostOnly {
  *
  * let secret_key = [...];
  *
- * let timestamp = SystemTime::now()
- *     .duration_since(SystemTime::UNIX_EPOCH)
- *     .expect("clock went backwords")
- *     .as_secs();
+ * let timestamp: u64 = SystemTime::now().duration_since(SystemTime::UNIX_EPOCH).unwrap().as_secs();
  *
  * let mut mac = Hmac::<sha2::Sha256>::new_from_slice(
  *     secret_key
@@ -191,11 +201,18 @@ export enum PostOnly {
  * let signature = base64::general_purpose::STANDARD.encode(signature_bytes);
  * ```
  *
- * Not that the signature is base-64 encoded with the 'standard' alphabet and
- * padding.
- *
+ * #### Typescript
  * ```
- * ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/
+ * import { createHmac } from 'crypto';
+ * const secretKey = "cafecafecafecafecafecafecafecafecafecafecafecafecafecafecafecafe";
+ * const timestampSecs = Math.floor(Date.now() / 1000);
+ * const timestampBytes = Buffer.alloc(8);
+ * timestampBytes.writeBigInt64LE(BigInt(timestampSecs));
+ *
+ * const signature = createHmac('sha256', Buffer.from(secretKey, 'hex'))
+ *   .update(`cube.xyz`)
+ *   .update(timestampBytes)
+ *   .digest('base64');
  * ```
  */
 export interface Credentials {
