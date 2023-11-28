@@ -1,6 +1,6 @@
 {
   "name": "@cubexch/client",
-  "version": "1.1.12",
+  "version": "1.1.13",
   "scripts": {
     "build": "tsc"
   },
