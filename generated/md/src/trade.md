@@ -591,6 +591,7 @@ An indication that bootstrap is complete.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | latest_transact_time | [uint64](#uint64) |  | [Transact time](#transact-time) |
+| read_only | [bool](#bool) |  |  |
 
 
 

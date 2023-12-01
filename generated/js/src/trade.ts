@@ -714,6 +714,7 @@ export interface AssetPositions {
 export interface Done {
   /** [Transact time](#transact-time) */
   latestTransactTime: bigint;
+  readOnly: boolean;
 }
 
 /** A resting order. Sent on bootstrap in `RestingOrders`. */

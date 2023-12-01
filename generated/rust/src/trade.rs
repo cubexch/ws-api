@@ -852,6 +852,8 @@ pub struct Done {
     /// [Transact time](#transact-time)
     #[prost(uint64, tag="1")]
     pub latest_transact_time: u64,
+    #[prost(bool, tag="2")]
+    pub read_only: bool,
 }
 /// A resting order. Sent on bootstrap in `RestingOrders`.
 #[allow(clippy::derive_partial_eq_without_eq)]

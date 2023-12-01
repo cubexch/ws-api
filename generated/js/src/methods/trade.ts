@@ -2944,13 +2944,16 @@ export const AssetPositionsMethods = {
 };
 
 function createBaseDone(): Done {
-  return { latestTransactTime: BigInt("0") };
+  return { latestTransactTime: BigInt("0"), readOnly: false };
 }
 
 export const DoneMethods = {
   encode(message: Done, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.latestTransactTime !== BigInt("0")) {
       writer.uint32(8).uint64(message.latestTransactTime.toString());
+    }
+    if (message.readOnly === true) {
+      writer.uint32(16).bool(message.readOnly);
     }
     return writer;
   },
@@ -2969,6 +2972,13 @@ export const DoneMethods = {
 
           message.latestTransactTime = longToBigint(reader.uint64() as Long);
           continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.readOnly = reader.bool();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2979,12 +2989,16 @@ export const DoneMethods = {
   },
 
   fromJSON(object: any): Done {
-    return { latestTransactTime: isSet(object.latestTransactTime) ? BigInt(object.latestTransactTime) : BigInt("0") };
+    return {
+      latestTransactTime: isSet(object.latestTransactTime) ? BigInt(object.latestTransactTime) : BigInt("0"),
+      readOnly: isSet(object.readOnly) ? Boolean(object.readOnly) : false,
+    };
   },
 
   toJSON(message: Done): unknown {
     const obj: any = {};
     message.latestTransactTime !== undefined && (obj.latestTransactTime = message.latestTransactTime.toString());
+    message.readOnly !== undefined && (obj.readOnly = message.readOnly);
     return obj;
   },
 };

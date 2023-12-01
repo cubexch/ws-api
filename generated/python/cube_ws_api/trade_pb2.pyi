@@ -492,10 +492,12 @@ class AssetPositions(_message.Message):
     def __init__(self, positions: _Optional[_Iterable[_Union[AssetPosition, _Mapping]]] = ...) -> None: ...
 
 class Done(_message.Message):
-    __slots__ = ["latest_transact_time"]
+    __slots__ = ["latest_transact_time", "read_only"]
     LATEST_TRANSACT_TIME_FIELD_NUMBER: _ClassVar[int]
+    READ_ONLY_FIELD_NUMBER: _ClassVar[int]
     latest_transact_time: int
-    def __init__(self, latest_transact_time: _Optional[int] = ...) -> None: ...
+    read_only: bool
+    def __init__(self, latest_transact_time: _Optional[int] = ..., read_only: bool = ...) -> None: ...
 
 class RestingOrder(_message.Message):
     __slots__ = ["client_order_id", "exchange_order_id", "market_id", "price", "order_quantity", "side", "time_in_force", "order_type", "remaining_quantity", "rest_time", "subaccount_id", "cumulative_quantity"]

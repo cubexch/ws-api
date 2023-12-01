@@ -641,6 +641,7 @@ message AssetPositions {
 message Done {
   // [Transact time](#transact-time)
   uint64 latest_transact_time = 1;
+  bool read_only = 2;
 }
 
 // A resting order. Sent on bootstrap in `RestingOrders`.
