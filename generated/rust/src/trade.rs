@@ -351,6 +351,9 @@ pub mod cancel_order_ack {
         StpAggressing = 5,
         /// This order was covered by a mass-cancel request.
         MassCancel = 6,
+        /// This order was canceled because asset position limits would be otherwise
+        /// breached.
+        PositionLimit = 7,
     }
     impl Reason {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -366,6 +369,7 @@ pub mod cancel_order_ack {
                 Reason::StpResting => "STP_RESTING",
                 Reason::StpAggressing => "STP_AGGRESSING",
                 Reason::MassCancel => "MASS_CANCEL",
+                Reason::PositionLimit => "POSITION_LIMIT",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -378,6 +382,7 @@ pub mod cancel_order_ack {
                 "STP_RESTING" => Some(Self::StpResting),
                 "STP_AGGRESSING" => Some(Self::StpAggressing),
                 "MASS_CANCEL" => Some(Self::MassCancel),
+                "POSITION_LIMIT" => Some(Self::PositionLimit),
                 _ => None,
             }
         }
@@ -964,6 +969,15 @@ impl TimeInForce {
     }
 }
 /// Order-type specifies how the order will be placed into the order book.
+///
+/// - Note that for LIMIT orders, there is a pre-flight check that there is
+///    sufficient available balance to place this order at the price and quantity
+///    specified. Otherwise, the order will be rejected with the
+///    EXCEEDED_SPOT_POSITION reason.
+/// - For MARKET_LIMIT and MARKET_WITH_PROTECTION orders, there is no such
+///    pre-flight check and a submitted order will be partially filled up until
+///    the subaccount's position limit. The remaining quantity will be canceled
+///    with the POSITION_LIMIT reason.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum OrderType {

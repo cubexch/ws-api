@@ -100,7 +100,18 @@ export enum TimeInForce {
   FILL_OR_KILL = 2,
 }
 
-/** Order-type specifies how the order will be placed into the order book. */
+/**
+ * Order-type specifies how the order will be placed into the order book.
+ *
+ * - Note that for LIMIT orders, there is a pre-flight check that there is
+ *   sufficient available balance to place this order at the price and quantity
+ *   specified. Otherwise, the order will be rejected with the
+ *   EXCEEDED_SPOT_POSITION reason.
+ * - For MARKET_LIMIT and MARKET_WITH_PROTECTION orders, there is no such
+ *   pre-flight check and a submitted order will be partially filled up until
+ *   the subaccount's position limit. The remaining quantity will be canceled
+ *   with the POSITION_LIMIT reason.
+ */
 export enum OrderType {
   /**
    * LIMIT - A limit order is accompanied with a price (inclusive) that specifies the
@@ -450,6 +461,11 @@ export enum CancelOrderAck_Reason {
   STP_AGGRESSING = 5,
   /** MASS_CANCEL - This order was covered by a mass-cancel request. */
   MASS_CANCEL = 6,
+  /**
+   * POSITION_LIMIT - This order was canceled because asset position limits would be otherwise
+   * breached.
+   */
+  POSITION_LIMIT = 7,
 }
 
 /**

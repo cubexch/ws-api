@@ -193,6 +193,9 @@ export function cancelOrderAck_ReasonFromJSON(object: any): CancelOrderAck_Reaso
     case 6:
     case "MASS_CANCEL":
       return CancelOrderAck_Reason.MASS_CANCEL;
+    case 7:
+    case "POSITION_LIMIT":
+      return CancelOrderAck_Reason.POSITION_LIMIT;
     default:
       throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum CancelOrderAck_Reason");
   }
@@ -214,6 +217,8 @@ export function cancelOrderAck_ReasonToJSON(object: CancelOrderAck_Reason): stri
       return "STP_AGGRESSING";
     case CancelOrderAck_Reason.MASS_CANCEL:
       return "MASS_CANCEL";
+    case CancelOrderAck_Reason.POSITION_LIMIT:
+      return "POSITION_LIMIT";
     default:
       throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum CancelOrderAck_Reason");
   }

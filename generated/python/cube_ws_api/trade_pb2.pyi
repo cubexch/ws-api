@@ -216,6 +216,7 @@ class CancelOrderAck(_message.Message):
         STP_RESTING: _ClassVar[CancelOrderAck.Reason]
         STP_AGGRESSING: _ClassVar[CancelOrderAck.Reason]
         MASS_CANCEL: _ClassVar[CancelOrderAck.Reason]
+        POSITION_LIMIT: _ClassVar[CancelOrderAck.Reason]
     UNCLASSIFIED: CancelOrderAck.Reason
     DISCONNECT: CancelOrderAck.Reason
     REQUESTED: CancelOrderAck.Reason
@@ -223,6 +224,7 @@ class CancelOrderAck(_message.Message):
     STP_RESTING: CancelOrderAck.Reason
     STP_AGGRESSING: CancelOrderAck.Reason
     MASS_CANCEL: CancelOrderAck.Reason
+    POSITION_LIMIT: CancelOrderAck.Reason
     MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
     CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     REQUEST_ID_FIELD_NUMBER: _ClassVar[int]

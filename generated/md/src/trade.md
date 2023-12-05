@@ -657,6 +657,15 @@ Time-in-force (TIF) specifies how long the order remains in effect.
 ### OrderType
 Order-type specifies how the order will be placed into the order book.
 
+- Note that for LIMIT orders, there is a pre-flight check that there is
+  sufficient available balance to place this order at the price and quantity
+  specified. Otherwise, the order will be rejected with the
+  EXCEEDED_SPOT_POSITION reason.
+- For MARKET_LIMIT and MARKET_WITH_PROTECTION orders, there is no such
+  pre-flight check and a submitted order will be partially filled up until
+  the subaccount's position limit. The remaining quantity will be canceled
+  with the POSITION_LIMIT reason.
+
 | Name | Number | Description |
 | ---- | ------ | ----------- |
 | LIMIT | 0 | A limit order is accompanied with a price (inclusive) that specifies the upper limit to buy and the lower limit to sell. If the price is not immediately available and the TIF allows resting orders, the limit order will rest until filled or canceled. |
@@ -708,6 +717,7 @@ allow resting orders.
 | STP_RESTING | 4 | A resting order was STP canceled. |
 | STP_AGGRESSING | 5 | An aggressing order was STP canceled. |
 | MASS_CANCEL | 6 | This order was covered by a mass-cancel request. |
+| POSITION_LIMIT | 7 | This order was canceled because asset position limits would be otherwise breached. |
 
 
 
