@@ -281,8 +281,8 @@ export function newOrderReject_ReasonFromJSON(object: any): NewOrderReject_Reaso
     case "UNKNOWN_TRADER":
       return NewOrderReject_Reason.UNKNOWN_TRADER;
     case 10:
-    case "PRICE_WITH_MARKET_ORDER":
-      return NewOrderReject_Reason.PRICE_WITH_MARKET_ORDER;
+    case "PRICE_WITH_MARKET_LIMIT_ORDER":
+      return NewOrderReject_Reason.PRICE_WITH_MARKET_LIMIT_ORDER;
     case 11:
     case "POST_ONLY_WITH_MARKET_ORDER":
       return NewOrderReject_Reason.POST_ONLY_WITH_MARKET_ORDER;
@@ -331,8 +331,8 @@ export function newOrderReject_ReasonToJSON(object: NewOrderReject_Reason): stri
       return "INVALID_SELF_TRADE_PREVENTION";
     case NewOrderReject_Reason.UNKNOWN_TRADER:
       return "UNKNOWN_TRADER";
-    case NewOrderReject_Reason.PRICE_WITH_MARKET_ORDER:
-      return "PRICE_WITH_MARKET_ORDER";
+    case NewOrderReject_Reason.PRICE_WITH_MARKET_LIMIT_ORDER:
+      return "PRICE_WITH_MARKET_LIMIT_ORDER";
     case NewOrderReject_Reason.POST_ONLY_WITH_MARKET_ORDER:
       return "POST_ONLY_WITH_MARKET_ORDER";
     case NewOrderReject_Reason.POST_ONLY_WITH_INVALID_TIF:

@@ -524,7 +524,7 @@ pub mod new_order_reject {
         /// Internal error: the matching engine could not find this subaccounts
         /// positions.
         UnknownTrader = 9,
-        PriceWithMarketOrder = 10,
+        PriceWithMarketLimitOrder = 10,
         PostOnlyWithMarketOrder = 11,
         PostOnlyWithInvalidTif = 12,
         /// The sum of open orders and this new-order would exceed the subaccounts
@@ -556,7 +556,7 @@ pub mod new_order_reject {
                 Reason::InvalidPostOnly => "INVALID_POST_ONLY",
                 Reason::InvalidSelfTradePrevention => "INVALID_SELF_TRADE_PREVENTION",
                 Reason::UnknownTrader => "UNKNOWN_TRADER",
-                Reason::PriceWithMarketOrder => "PRICE_WITH_MARKET_ORDER",
+                Reason::PriceWithMarketLimitOrder => "PRICE_WITH_MARKET_LIMIT_ORDER",
                 Reason::PostOnlyWithMarketOrder => "POST_ONLY_WITH_MARKET_ORDER",
                 Reason::PostOnlyWithInvalidTif => "POST_ONLY_WITH_INVALID_TIF",
                 Reason::ExceededSpotPosition => "EXCEEDED_SPOT_POSITION",
@@ -579,7 +579,7 @@ pub mod new_order_reject {
                 "INVALID_POST_ONLY" => Some(Self::InvalidPostOnly),
                 "INVALID_SELF_TRADE_PREVENTION" => Some(Self::InvalidSelfTradePrevention),
                 "UNKNOWN_TRADER" => Some(Self::UnknownTrader),
-                "PRICE_WITH_MARKET_ORDER" => Some(Self::PriceWithMarketOrder),
+                "PRICE_WITH_MARKET_LIMIT_ORDER" => Some(Self::PriceWithMarketLimitOrder),
                 "POST_ONLY_WITH_MARKET_ORDER" => Some(Self::PostOnlyWithMarketOrder),
                 "POST_ONLY_WITH_INVALID_TIF" => Some(Self::PostOnlyWithInvalidTif),
                 "EXCEEDED_SPOT_POSITION" => Some(Self::ExceededSpotPosition),
@@ -973,15 +973,20 @@ pub enum OrderType {
     /// will rest until filled or canceled.
     Limit = 0,
     /// A market limit order crosses the bid-ask spread and, if not fully filled,
-    /// becomes a limit order at the best available market price. If there is no
-    /// opposing market, the order is rejected with the NO_OPPOSING_LIMIT_ORDER
-    /// reason. Price must be null.
+    /// becomes a limit order at the best available market price.
+    /// - If there is no opposing market, the order is rejected with the
+    ///    NO_OPPOSING_LIMIT_ORDER reason.
+    /// - The price must be null.
     MarketLimit = 1,
     /// A market with protection order crosses the bid-ask spread and continues to
-    /// cross until the order is fully filled or the price protection level,
-    /// defined by the best market price widened by a market-specific protection
-    /// point count, is reached. If there is no opposing market, the order is
-    /// rejected with the NO_OPPOSING_LIMIT_ORDER reason. Price must be null.
+    /// cross until the order is fully filled or the protection price is reached.
+    /// - The protection price is defined as:
+    ///    - If the price is provided, this price is used as the protection price.
+    ///    - If the price is null, the best market price widened by a
+    ///      market-specific protection point count.
+    /// - If the protection price would not cross the resting market, the order is
+    ///    rejected with the NO_OPPOSING_LIMIT_ORDER reason instead of resting at
+    ///    that level.
     MarketWithProtection = 2,
 }
 impl OrderType {

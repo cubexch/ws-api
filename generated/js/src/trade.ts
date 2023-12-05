@@ -111,17 +111,22 @@ export enum OrderType {
   LIMIT = 0,
   /**
    * MARKET_LIMIT - A market limit order crosses the bid-ask spread and, if not fully filled,
-   * becomes a limit order at the best available market price. If there is no
-   * opposing market, the order is rejected with the NO_OPPOSING_LIMIT_ORDER
-   * reason. Price must be null.
+   * becomes a limit order at the best available market price.
+   * - If there is no opposing market, the order is rejected with the
+   *   NO_OPPOSING_LIMIT_ORDER reason.
+   * - The price must be null.
    */
   MARKET_LIMIT = 1,
   /**
    * MARKET_WITH_PROTECTION - A market with protection order crosses the bid-ask spread and continues to
-   * cross until the order is fully filled or the price protection level,
-   * defined by the best market price widened by a market-specific protection
-   * point count, is reached. If there is no opposing market, the order is
-   * rejected with the NO_OPPOSING_LIMIT_ORDER reason. Price must be null.
+   * cross until the order is fully filled or the protection price is reached.
+   * - The protection price is defined as:
+   *   - If the price is provided, this price is used as the protection price.
+   *   - If the price is null, the best market price widened by a
+   *     market-specific protection point count.
+   * - If the protection price would not cross the resting market, the order is
+   *   rejected with the NO_OPPOSING_LIMIT_ORDER reason instead of resting at
+   *   that level.
    */
   MARKET_WITH_PROTECTION = 2,
 }
@@ -539,7 +544,7 @@ export enum NewOrderReject_Reason {
    * positions.
    */
   UNKNOWN_TRADER = 9,
-  PRICE_WITH_MARKET_ORDER = 10,
+  PRICE_WITH_MARKET_LIMIT_ORDER = 10,
   POST_ONLY_WITH_MARKET_ORDER = 11,
   POST_ONLY_WITH_INVALID_TIF = 12,
   /**

@@ -301,7 +301,7 @@ class NewOrderReject(_message.Message):
         INVALID_POST_ONLY: _ClassVar[NewOrderReject.Reason]
         INVALID_SELF_TRADE_PREVENTION: _ClassVar[NewOrderReject.Reason]
         UNKNOWN_TRADER: _ClassVar[NewOrderReject.Reason]
-        PRICE_WITH_MARKET_ORDER: _ClassVar[NewOrderReject.Reason]
+        PRICE_WITH_MARKET_LIMIT_ORDER: _ClassVar[NewOrderReject.Reason]
         POST_ONLY_WITH_MARKET_ORDER: _ClassVar[NewOrderReject.Reason]
         POST_ONLY_WITH_INVALID_TIF: _ClassVar[NewOrderReject.Reason]
         EXCEEDED_SPOT_POSITION: _ClassVar[NewOrderReject.Reason]
@@ -319,7 +319,7 @@ class NewOrderReject(_message.Message):
     INVALID_POST_ONLY: NewOrderReject.Reason
     INVALID_SELF_TRADE_PREVENTION: NewOrderReject.Reason
     UNKNOWN_TRADER: NewOrderReject.Reason
-    PRICE_WITH_MARKET_ORDER: NewOrderReject.Reason
+    PRICE_WITH_MARKET_LIMIT_ORDER: NewOrderReject.Reason
     POST_ONLY_WITH_MARKET_ORDER: NewOrderReject.Reason
     POST_ONLY_WITH_INVALID_TIF: NewOrderReject.Reason
     EXCEEDED_SPOT_POSITION: NewOrderReject.Reason
