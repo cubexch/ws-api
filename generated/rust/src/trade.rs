@@ -333,6 +333,9 @@ pub struct CancelOrderAck {
     pub reason: i32,
     #[prost(uint64, tag="7")]
     pub market_id: u64,
+    /// [Exchange order ID](#exchange-order-id)
+    #[prost(uint64, tag="8")]
+    pub exchange_order_id: u64,
 }
 /// Nested message and enum types in `CancelOrderAck`.
 pub mod cancel_order_ack {
@@ -419,6 +422,9 @@ pub struct ModifyOrderAck {
     /// The cumulative filled quantity for this order.
     #[prost(uint64, tag="10")]
     pub cumulative_quantity: u64,
+    /// [Exchange order ID](#exchange-order-id)
+    #[prost(uint64, tag="11")]
+    pub exchange_order_id: u64,
 }
 /// Mass-cancel-ack confirms a mass-cancel request. If `reason` is set, the mass
 /// cancel was not applied and there are no affected orders. Individual
@@ -776,6 +782,10 @@ pub struct Fill {
     /// The cumulative filled quantity for this order after the fill is applied.
     #[prost(uint64, tag="10")]
     pub cumulative_quantity: u64,
+    #[prost(enumeration="Side", tag="11")]
+    pub side: i32,
+    #[prost(bool, tag="12")]
+    pub aggressor_indicator: bool,
 }
 /// The user's underlying asset position. These are sent asynchronously as
 /// positions are updated and broadcast through internal position channels. They

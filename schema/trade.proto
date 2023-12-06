@@ -417,6 +417,8 @@ message CancelOrderAck {
   uint64 subaccount_id = 5;
   Reason reason = 6;
   uint64 market_id = 7;
+  // [Exchange order ID](#exchange-order-id)
+  uint64 exchange_order_id = 8;
 }
 
 // Modify-order-ack confirms a modify-order request. If the modify resulted in
@@ -439,6 +441,8 @@ message ModifyOrderAck {
   uint64 quantity = 9;
   // The cumulative filled quantity for this order.
   uint64 cumulative_quantity = 10;
+  // [Exchange order ID](#exchange-order-id)
+  uint64 exchange_order_id = 11;
 }
 
 // Mass-cancel-ack confirms a mass-cancel request. If `reason` is set, the mass
@@ -603,6 +607,8 @@ message Fill {
   uint64 subaccount_id = 9;
   // The cumulative filled quantity for this order after the fill is applied.
   uint64 cumulative_quantity = 10;
+  Side side = 11;
+  bool aggressor_indicator = 12;
 }
 
 // The user's underlying asset position. These are sent asynchronously as

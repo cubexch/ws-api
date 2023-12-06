@@ -206,7 +206,7 @@ class NewOrderAck(_message.Message):
     def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., exchange_order_id: _Optional[int] = ..., market_id: _Optional[int] = ..., price: _Optional[int] = ..., quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., time_in_force: _Optional[_Union[TimeInForce, str]] = ..., order_type: _Optional[_Union[OrderType, str]] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., cancel_on_disconnect: bool = ...) -> None: ...
 
 class CancelOrderAck(_message.Message):
-    __slots__ = ["msg_seq_num", "client_order_id", "request_id", "transact_time", "subaccount_id", "reason", "market_id"]
+    __slots__ = ["msg_seq_num", "client_order_id", "request_id", "transact_time", "subaccount_id", "reason", "market_id", "exchange_order_id"]
     class Reason(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         UNCLASSIFIED: _ClassVar[CancelOrderAck.Reason]
@@ -232,6 +232,7 @@ class CancelOrderAck(_message.Message):
     SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     REASON_FIELD_NUMBER: _ClassVar[int]
     MARKET_ID_FIELD_NUMBER: _ClassVar[int]
+    EXCHANGE_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     msg_seq_num: int
     client_order_id: int
     request_id: int
@@ -239,10 +240,11 @@ class CancelOrderAck(_message.Message):
     subaccount_id: int
     reason: CancelOrderAck.Reason
     market_id: int
-    def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., reason: _Optional[_Union[CancelOrderAck.Reason, str]] = ..., market_id: _Optional[int] = ...) -> None: ...
+    exchange_order_id: int
+    def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., reason: _Optional[_Union[CancelOrderAck.Reason, str]] = ..., market_id: _Optional[int] = ..., exchange_order_id: _Optional[int] = ...) -> None: ...
 
 class ModifyOrderAck(_message.Message):
-    __slots__ = ["msg_seq_num", "client_order_id", "request_id", "transact_time", "remaining_quantity", "subaccount_id", "market_id", "price", "quantity", "cumulative_quantity"]
+    __slots__ = ["msg_seq_num", "client_order_id", "request_id", "transact_time", "remaining_quantity", "subaccount_id", "market_id", "price", "quantity", "cumulative_quantity", "exchange_order_id"]
     MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
     CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
@@ -253,6 +255,7 @@ class ModifyOrderAck(_message.Message):
     PRICE_FIELD_NUMBER: _ClassVar[int]
     QUANTITY_FIELD_NUMBER: _ClassVar[int]
     CUMULATIVE_QUANTITY_FIELD_NUMBER: _ClassVar[int]
+    EXCHANGE_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     msg_seq_num: int
     client_order_id: int
     request_id: int
@@ -263,7 +266,8 @@ class ModifyOrderAck(_message.Message):
     price: int
     quantity: int
     cumulative_quantity: int
-    def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., remaining_quantity: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., market_id: _Optional[int] = ..., price: _Optional[int] = ..., quantity: _Optional[int] = ..., cumulative_quantity: _Optional[int] = ...) -> None: ...
+    exchange_order_id: int
+    def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., remaining_quantity: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., market_id: _Optional[int] = ..., price: _Optional[int] = ..., quantity: _Optional[int] = ..., cumulative_quantity: _Optional[int] = ..., exchange_order_id: _Optional[int] = ...) -> None: ...
 
 class MassCancelAck(_message.Message):
     __slots__ = ["msg_seq_num", "subaccount_id", "request_id", "transact_time", "reason", "total_affected_orders"]
@@ -424,7 +428,7 @@ class ModifyOrderReject(_message.Message):
     def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., reason: _Optional[_Union[ModifyOrderReject.Reason, str]] = ..., market_id: _Optional[int] = ...) -> None: ...
 
 class Fill(_message.Message):
-    __slots__ = ["msg_seq_num", "market_id", "client_order_id", "exchange_order_id", "fill_price", "fill_quantity", "leaves_quantity", "transact_time", "subaccount_id", "cumulative_quantity"]
+    __slots__ = ["msg_seq_num", "market_id", "client_order_id", "exchange_order_id", "fill_price", "fill_quantity", "leaves_quantity", "transact_time", "subaccount_id", "cumulative_quantity", "side", "aggressor_indicator"]
     MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
     MARKET_ID_FIELD_NUMBER: _ClassVar[int]
     CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
@@ -435,6 +439,8 @@ class Fill(_message.Message):
     TRANSACT_TIME_FIELD_NUMBER: _ClassVar[int]
     SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     CUMULATIVE_QUANTITY_FIELD_NUMBER: _ClassVar[int]
+    SIDE_FIELD_NUMBER: _ClassVar[int]
+    AGGRESSOR_INDICATOR_FIELD_NUMBER: _ClassVar[int]
     msg_seq_num: int
     market_id: int
     client_order_id: int
@@ -445,7 +451,9 @@ class Fill(_message.Message):
     transact_time: int
     subaccount_id: int
     cumulative_quantity: int
-    def __init__(self, msg_seq_num: _Optional[int] = ..., market_id: _Optional[int] = ..., client_order_id: _Optional[int] = ..., exchange_order_id: _Optional[int] = ..., fill_price: _Optional[int] = ..., fill_quantity: _Optional[int] = ..., leaves_quantity: _Optional[int] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., cumulative_quantity: _Optional[int] = ...) -> None: ...
+    side: Side
+    aggressor_indicator: bool
+    def __init__(self, msg_seq_num: _Optional[int] = ..., market_id: _Optional[int] = ..., client_order_id: _Optional[int] = ..., exchange_order_id: _Optional[int] = ..., fill_price: _Optional[int] = ..., fill_quantity: _Optional[int] = ..., leaves_quantity: _Optional[int] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., cumulative_quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., aggressor_indicator: bool = ...) -> None: ...
 
 class AssetPosition(_message.Message):
     __slots__ = ["subaccount_id", "asset_id", "total", "available"]

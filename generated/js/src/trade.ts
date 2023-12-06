@@ -446,6 +446,8 @@ export interface CancelOrderAck {
   subaccountId: bigint;
   reason: CancelOrderAck_Reason;
   marketId: bigint;
+  /** [Exchange order ID](#exchange-order-id) */
+  exchangeOrderId: bigint;
 }
 
 export enum CancelOrderAck_Reason {
@@ -489,6 +491,8 @@ export interface ModifyOrderAck {
   quantity: bigint;
   /** The cumulative filled quantity for this order. */
   cumulativeQuantity: bigint;
+  /** [Exchange order ID](#exchange-order-id) */
+  exchangeOrderId: bigint;
 }
 
 /**
@@ -675,6 +679,8 @@ export interface Fill {
   subaccountId: bigint;
   /** The cumulative filled quantity for this order after the fill is applied. */
   cumulativeQuantity: bigint;
+  side: Side;
+  aggressorIndicator: boolean;
 }
 
 /**

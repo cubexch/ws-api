@@ -1585,6 +1585,7 @@ function createBaseCancelOrderAck(): CancelOrderAck {
     subaccountId: BigInt("0"),
     reason: 0,
     marketId: BigInt("0"),
+    exchangeOrderId: BigInt("0"),
   };
 }
 
@@ -1610,6 +1611,9 @@ export const CancelOrderAckMethods = {
     }
     if (message.marketId !== BigInt("0")) {
       writer.uint32(56).uint64(message.marketId.toString());
+    }
+    if (message.exchangeOrderId !== BigInt("0")) {
+      writer.uint32(64).uint64(message.exchangeOrderId.toString());
     }
     return writer;
   },
@@ -1670,6 +1674,13 @@ export const CancelOrderAckMethods = {
 
           message.marketId = longToBigint(reader.uint64() as Long);
           continue;
+        case 8:
+          if (tag !== 64) {
+            break;
+          }
+
+          message.exchangeOrderId = longToBigint(reader.uint64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1688,6 +1699,7 @@ export const CancelOrderAckMethods = {
       subaccountId: isSet(object.subaccountId) ? BigInt(object.subaccountId) : BigInt("0"),
       reason: isSet(object.reason) ? cancelOrderAck_ReasonFromJSON(object.reason) : 0,
       marketId: isSet(object.marketId) ? BigInt(object.marketId) : BigInt("0"),
+      exchangeOrderId: isSet(object.exchangeOrderId) ? BigInt(object.exchangeOrderId) : BigInt("0"),
     };
   },
 
@@ -1700,6 +1712,7 @@ export const CancelOrderAckMethods = {
     message.subaccountId !== undefined && (obj.subaccountId = message.subaccountId.toString());
     message.reason !== undefined && (obj.reason = cancelOrderAck_ReasonToJSON(message.reason));
     message.marketId !== undefined && (obj.marketId = message.marketId.toString());
+    message.exchangeOrderId !== undefined && (obj.exchangeOrderId = message.exchangeOrderId.toString());
     return obj;
   },
 };
@@ -1716,6 +1729,7 @@ function createBaseModifyOrderAck(): ModifyOrderAck {
     price: BigInt("0"),
     quantity: BigInt("0"),
     cumulativeQuantity: BigInt("0"),
+    exchangeOrderId: BigInt("0"),
   };
 }
 
@@ -1750,6 +1764,9 @@ export const ModifyOrderAckMethods = {
     }
     if (message.cumulativeQuantity !== BigInt("0")) {
       writer.uint32(80).uint64(message.cumulativeQuantity.toString());
+    }
+    if (message.exchangeOrderId !== BigInt("0")) {
+      writer.uint32(88).uint64(message.exchangeOrderId.toString());
     }
     return writer;
   },
@@ -1831,6 +1848,13 @@ export const ModifyOrderAckMethods = {
 
           message.cumulativeQuantity = longToBigint(reader.uint64() as Long);
           continue;
+        case 11:
+          if (tag !== 88) {
+            break;
+          }
+
+          message.exchangeOrderId = longToBigint(reader.uint64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1852,6 +1876,7 @@ export const ModifyOrderAckMethods = {
       price: isSet(object.price) ? BigInt(object.price) : BigInt("0"),
       quantity: isSet(object.quantity) ? BigInt(object.quantity) : BigInt("0"),
       cumulativeQuantity: isSet(object.cumulativeQuantity) ? BigInt(object.cumulativeQuantity) : BigInt("0"),
+      exchangeOrderId: isSet(object.exchangeOrderId) ? BigInt(object.exchangeOrderId) : BigInt("0"),
     };
   },
 
@@ -1867,6 +1892,7 @@ export const ModifyOrderAckMethods = {
     message.price !== undefined && (obj.price = message.price.toString());
     message.quantity !== undefined && (obj.quantity = message.quantity.toString());
     message.cumulativeQuantity !== undefined && (obj.cumulativeQuantity = message.cumulativeQuantity.toString());
+    message.exchangeOrderId !== undefined && (obj.exchangeOrderId = message.exchangeOrderId.toString());
     return obj;
   },
 };
@@ -2448,6 +2474,8 @@ function createBaseFill(): Fill {
     transactTime: BigInt("0"),
     subaccountId: BigInt("0"),
     cumulativeQuantity: BigInt("0"),
+    side: 0,
+    aggressorIndicator: false,
   };
 }
 
@@ -2482,6 +2510,12 @@ export const FillMethods = {
     }
     if (message.cumulativeQuantity !== BigInt("0")) {
       writer.uint32(80).uint64(message.cumulativeQuantity.toString());
+    }
+    if (message.side !== 0) {
+      writer.uint32(88).int32(message.side);
+    }
+    if (message.aggressorIndicator === true) {
+      writer.uint32(96).bool(message.aggressorIndicator);
     }
     return writer;
   },
@@ -2563,6 +2597,20 @@ export const FillMethods = {
 
           message.cumulativeQuantity = longToBigint(reader.uint64() as Long);
           continue;
+        case 11:
+          if (tag !== 88) {
+            break;
+          }
+
+          message.side = reader.int32() as any;
+          continue;
+        case 12:
+          if (tag !== 96) {
+            break;
+          }
+
+          message.aggressorIndicator = reader.bool();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2584,6 +2632,8 @@ export const FillMethods = {
       transactTime: isSet(object.transactTime) ? BigInt(object.transactTime) : BigInt("0"),
       subaccountId: isSet(object.subaccountId) ? BigInt(object.subaccountId) : BigInt("0"),
       cumulativeQuantity: isSet(object.cumulativeQuantity) ? BigInt(object.cumulativeQuantity) : BigInt("0"),
+      side: isSet(object.side) ? sideFromJSON(object.side) : 0,
+      aggressorIndicator: isSet(object.aggressorIndicator) ? Boolean(object.aggressorIndicator) : false,
     };
   },
 
@@ -2599,6 +2649,8 @@ export const FillMethods = {
     message.transactTime !== undefined && (obj.transactTime = message.transactTime.toString());
     message.subaccountId !== undefined && (obj.subaccountId = message.subaccountId.toString());
     message.cumulativeQuantity !== undefined && (obj.cumulativeQuantity = message.cumulativeQuantity.toString());
+    message.side !== undefined && (obj.side = sideToJSON(message.side));
+    message.aggressorIndicator !== undefined && (obj.aggressorIndicator = message.aggressorIndicator);
     return obj;
   },
 };

@@ -353,6 +353,7 @@ canceled as the result of a different user-initiated reason.
 | subaccount_id | [uint64](#uint64) |  |  |
 | reason | [CancelOrderAck.Reason](#cancel-order-ack-reason) |  |  |
 | market_id | [uint64](#uint64) |  |  |
+| exchange_order_id | [uint64](#uint64) |  | [Exchange order ID](#exchange-order-id) |
 
 
 
@@ -378,6 +379,7 @@ this order.
 | price | [uint64](#uint64) |  |  |
 | quantity | [uint64](#uint64) |  | The quantity submitted in the modify request. |
 | cumulative_quantity | [uint64](#uint64) |  | The cumulative filled quantity for this order. |
+| exchange_order_id | [uint64](#uint64) |  | [Exchange order ID](#exchange-order-id) |
 
 
 
@@ -487,6 +489,8 @@ A fill for an order.
 | transact_time | [uint64](#uint64) |  | [Transact time](#transact-time) |
 | subaccount_id | [uint64](#uint64) |  |  |
 | cumulative_quantity | [uint64](#uint64) |  | The cumulative filled quantity for this order after the fill is applied. |
+| side | [Side](#side) |  |  |
+| aggressor_indicator | [bool](#bool) |  |  |
 
 
 
