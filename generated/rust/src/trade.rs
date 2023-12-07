@@ -541,7 +541,8 @@ pub mod new_order_reject {
         /// The sum of open orders and this new-order would exceed the subaccounts
         /// spot limits.
         ExceededSpotPosition = 13,
-        NoOpposingLimitOrder = 14,
+        /// There are no opposing resting orders to trade against.
+        NoOpposingRestingOrder = 14,
         /// The post-only order would have crossed and traded.
         PostOnlyWouldTrade = 15,
         /// A FOK was not fully fillable against resting orders at the requested
@@ -549,6 +550,9 @@ pub mod new_order_reject {
         DidNotFullyFill = 16,
         /// An exchange accepts no now orders at this time
         OnlyOrderCancelAccepted = 17,
+        /// A more specific error code for market-with-protection orders that could
+        /// trade but have a protection price that is too tight.
+        ProtectionPriceWouldNotTrade = 18,
     }
     impl Reason {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -571,10 +575,11 @@ pub mod new_order_reject {
                 Reason::PostOnlyWithMarketOrder => "POST_ONLY_WITH_MARKET_ORDER",
                 Reason::PostOnlyWithInvalidTif => "POST_ONLY_WITH_INVALID_TIF",
                 Reason::ExceededSpotPosition => "EXCEEDED_SPOT_POSITION",
-                Reason::NoOpposingLimitOrder => "NO_OPPOSING_LIMIT_ORDER",
+                Reason::NoOpposingRestingOrder => "NO_OPPOSING_RESTING_ORDER",
                 Reason::PostOnlyWouldTrade => "POST_ONLY_WOULD_TRADE",
                 Reason::DidNotFullyFill => "DID_NOT_FULLY_FILL",
                 Reason::OnlyOrderCancelAccepted => "ONLY_ORDER_CANCEL_ACCEPTED",
+                Reason::ProtectionPriceWouldNotTrade => "PROTECTION_PRICE_WOULD_NOT_TRADE",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -594,10 +599,11 @@ pub mod new_order_reject {
                 "POST_ONLY_WITH_MARKET_ORDER" => Some(Self::PostOnlyWithMarketOrder),
                 "POST_ONLY_WITH_INVALID_TIF" => Some(Self::PostOnlyWithInvalidTif),
                 "EXCEEDED_SPOT_POSITION" => Some(Self::ExceededSpotPosition),
-                "NO_OPPOSING_LIMIT_ORDER" => Some(Self::NoOpposingLimitOrder),
+                "NO_OPPOSING_RESTING_ORDER" => Some(Self::NoOpposingRestingOrder),
                 "POST_ONLY_WOULD_TRADE" => Some(Self::PostOnlyWouldTrade),
                 "DID_NOT_FULLY_FILL" => Some(Self::DidNotFullyFill),
                 "ONLY_ORDER_CANCEL_ACCEPTED" => Some(Self::OnlyOrderCancelAccepted),
+                "PROTECTION_PRICE_WOULD_NOT_TRADE" => Some(Self::ProtectionPriceWouldNotTrade),
                 _ => None,
             }
         }
@@ -999,7 +1005,7 @@ pub enum OrderType {
     /// A market limit order crosses the bid-ask spread and, if not fully filled,
     /// becomes a limit order at the best available market price.
     /// - If there is no opposing market, the order is rejected with the
-    ///    NO_OPPOSING_LIMIT_ORDER reason.
+    ///    NO_OPPOSING_RESTING_ORDER reason.
     /// - The price must be null.
     MarketLimit = 1,
     /// A market with protection order crosses the bid-ask spread and continues to
@@ -1009,7 +1015,7 @@ pub enum OrderType {
     ///    - If the price is null, the best market price widened by a
     ///      market-specific protection point count.
     /// - If the protection price would not cross the resting market, the order is
-    ///    rejected with the NO_OPPOSING_LIMIT_ORDER reason instead of resting at
+    ///    rejected with the NO_OPPOSING_RESTING_ORDER reason instead of resting at
     ///    that level.
     MarketWithProtection = 2,
 }

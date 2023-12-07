@@ -124,7 +124,7 @@ export enum OrderType {
    * MARKET_LIMIT - A market limit order crosses the bid-ask spread and, if not fully filled,
    * becomes a limit order at the best available market price.
    * - If there is no opposing market, the order is rejected with the
-   *   NO_OPPOSING_LIMIT_ORDER reason.
+   *   NO_OPPOSING_RESTING_ORDER reason.
    * - The price must be null.
    */
   MARKET_LIMIT = 1,
@@ -136,7 +136,7 @@ export enum OrderType {
    *   - If the price is null, the best market price widened by a
    *     market-specific protection point count.
    * - If the protection price would not cross the resting market, the order is
-   *   rejected with the NO_OPPOSING_LIMIT_ORDER reason instead of resting at
+   *   rejected with the NO_OPPOSING_RESTING_ORDER reason instead of resting at
    *   that level.
    */
   MARKET_WITH_PROTECTION = 2,
@@ -572,7 +572,8 @@ export enum NewOrderReject_Reason {
    * spot limits.
    */
   EXCEEDED_SPOT_POSITION = 13,
-  NO_OPPOSING_LIMIT_ORDER = 14,
+  /** NO_OPPOSING_RESTING_ORDER - There are no opposing resting orders to trade against. */
+  NO_OPPOSING_RESTING_ORDER = 14,
   /** POST_ONLY_WOULD_TRADE - The post-only order would have crossed and traded. */
   POST_ONLY_WOULD_TRADE = 15,
   /**
@@ -582,6 +583,11 @@ export enum NewOrderReject_Reason {
   DID_NOT_FULLY_FILL = 16,
   /** ONLY_ORDER_CANCEL_ACCEPTED - An exchange accepts no now orders at this time */
   ONLY_ORDER_CANCEL_ACCEPTED = 17,
+  /**
+   * PROTECTION_PRICE_WOULD_NOT_TRADE - A more specific error code for market-with-protection orders that could
+   * trade but have a protection price that is too tight.
+   */
+  PROTECTION_PRICE_WOULD_NOT_TRADE = 18,
 }
 
 /** Cancel-order-reject indicates that a cancel-order request was not applied. */

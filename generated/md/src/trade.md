@@ -673,8 +673,8 @@ Order-type specifies how the order will be placed into the order book.
 | Name | Number | Description |
 | ---- | ------ | ----------- |
 | LIMIT | 0 | A limit order is accompanied with a price (inclusive) that specifies the upper limit to buy and the lower limit to sell. If the price is not immediately available and the TIF allows resting orders, the limit order will rest until filled or canceled. |
-| MARKET_LIMIT | 1 | A market limit order crosses the bid-ask spread and, if not fully filled, becomes a limit order at the best available market price. - If there is no opposing market, the order is rejected with the NO_OPPOSING_LIMIT_ORDER reason. - The price must be null. |
-| MARKET_WITH_PROTECTION | 2 | A market with protection order crosses the bid-ask spread and continues to cross until the order is fully filled or the protection price is reached. - The protection price is defined as: - If the price is provided, this price is used as the protection price. - If the price is null, the best market price widened by a market-specific protection point count. - If the protection price would not cross the resting market, the order is rejected with the NO_OPPOSING_LIMIT_ORDER reason instead of resting at that level. |
+| MARKET_LIMIT | 1 | A market limit order crosses the bid-ask spread and, if not fully filled, becomes a limit order at the best available market price. - If there is no opposing market, the order is rejected with the NO_OPPOSING_RESTING_ORDER reason. - The price must be null. |
+| MARKET_WITH_PROTECTION | 2 | A market with protection order crosses the bid-ask spread and continues to cross until the order is fully filled or the protection price is reached. - The protection price is defined as: - If the price is provided, this price is used as the protection price. - If the price is null, the best market price widened by a market-specific protection point count. - If the protection price would not cross the resting market, the order is rejected with the NO_OPPOSING_RESTING_ORDER reason instead of resting at that level. |
 
 
 
@@ -758,10 +758,11 @@ corresponding field did not take a valid value.
 | POST_ONLY_WITH_MARKET_ORDER | 11 |  |
 | POST_ONLY_WITH_INVALID_TIF | 12 |  |
 | EXCEEDED_SPOT_POSITION | 13 | The sum of open orders and this new-order would exceed the subaccounts spot limits. |
-| NO_OPPOSING_LIMIT_ORDER | 14 |  |
+| NO_OPPOSING_RESTING_ORDER | 14 | There are no opposing resting orders to trade against. |
 | POST_ONLY_WOULD_TRADE | 15 | The post-only order would have crossed and traded. |
 | DID_NOT_FULLY_FILL | 16 | A FOK was not fully fillable against resting orders at the requested price and quantity. |
 | ONLY_ORDER_CANCEL_ACCEPTED | 17 | An exchange accepts no now orders at this time |
+| PROTECTION_PRICE_WOULD_NOT_TRADE | 18 | A more specific error code for market-with-protection orders that could trade but have a protection price that is too tight. |
 
 
 

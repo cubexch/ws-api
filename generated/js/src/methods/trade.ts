@@ -298,8 +298,8 @@ export function newOrderReject_ReasonFromJSON(object: any): NewOrderReject_Reaso
     case "EXCEEDED_SPOT_POSITION":
       return NewOrderReject_Reason.EXCEEDED_SPOT_POSITION;
     case 14:
-    case "NO_OPPOSING_LIMIT_ORDER":
-      return NewOrderReject_Reason.NO_OPPOSING_LIMIT_ORDER;
+    case "NO_OPPOSING_RESTING_ORDER":
+      return NewOrderReject_Reason.NO_OPPOSING_RESTING_ORDER;
     case 15:
     case "POST_ONLY_WOULD_TRADE":
       return NewOrderReject_Reason.POST_ONLY_WOULD_TRADE;
@@ -309,6 +309,9 @@ export function newOrderReject_ReasonFromJSON(object: any): NewOrderReject_Reaso
     case 17:
     case "ONLY_ORDER_CANCEL_ACCEPTED":
       return NewOrderReject_Reason.ONLY_ORDER_CANCEL_ACCEPTED;
+    case 18:
+    case "PROTECTION_PRICE_WOULD_NOT_TRADE":
+      return NewOrderReject_Reason.PROTECTION_PRICE_WOULD_NOT_TRADE;
     default:
       throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum NewOrderReject_Reason");
   }
@@ -344,14 +347,16 @@ export function newOrderReject_ReasonToJSON(object: NewOrderReject_Reason): stri
       return "POST_ONLY_WITH_INVALID_TIF";
     case NewOrderReject_Reason.EXCEEDED_SPOT_POSITION:
       return "EXCEEDED_SPOT_POSITION";
-    case NewOrderReject_Reason.NO_OPPOSING_LIMIT_ORDER:
-      return "NO_OPPOSING_LIMIT_ORDER";
+    case NewOrderReject_Reason.NO_OPPOSING_RESTING_ORDER:
+      return "NO_OPPOSING_RESTING_ORDER";
     case NewOrderReject_Reason.POST_ONLY_WOULD_TRADE:
       return "POST_ONLY_WOULD_TRADE";
     case NewOrderReject_Reason.DID_NOT_FULLY_FILL:
       return "DID_NOT_FULLY_FILL";
     case NewOrderReject_Reason.ONLY_ORDER_CANCEL_ACCEPTED:
       return "ONLY_ORDER_CANCEL_ACCEPTED";
+    case NewOrderReject_Reason.PROTECTION_PRICE_WOULD_NOT_TRADE:
+      return "PROTECTION_PRICE_WOULD_NOT_TRADE";
     default:
       throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum NewOrderReject_Reason");
   }
