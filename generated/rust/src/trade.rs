@@ -1,3 +1,16 @@
+/// A fixed-point decimal number.
+/// Matches the representation preferred by the FIX protocol,
+/// except that the exponent is int32 since Protobuf does not have an int8 type.
+/// The value is computed as `mantissa * 10^exponent`;
+/// for example, `mantissa = 1234` and `exponent = -2` is `12.34`.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct FixedPointDecimal {
+    #[prost(int64, tag="1")]
+    pub mantissa: i64,
+    #[prost(int32, tag="2")]
+    pub exponent: i32,
+}
 /// Sent by client on websocket initialization. Once the websocket has been
 /// connected, the client is expected to send this credentials message
 /// immediately. The API key (UUID) and secret access key (hex-encoded 32-byte
@@ -792,6 +805,10 @@ pub struct Fill {
     pub side: i32,
     #[prost(bool, tag="12")]
     pub aggressor_indicator: bool,
+    /// Indicates the fee charged on this trade.
+    /// See \[Fees\](#fees) for details.
+    #[prost(message, optional, tag="13")]
+    pub fee_ratio: ::core::option::Option<FixedPointDecimal>,
 }
 /// The user's underlying asset position. These are sent asynchronously as
 /// positions are updated and broadcast through internal position channels. They
