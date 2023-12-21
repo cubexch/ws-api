@@ -819,6 +819,10 @@ pub struct Fill {
     /// See \[Fees\](#fees) for details.
     #[prost(message, optional, tag="13")]
     pub fee_ratio: ::core::option::Option<FixedPointDecimal>,
+    /// The unique trade ID associated with a match event. Each order
+    /// participanting in the match event will receive this trade ID
+    #[prost(uint64, tag="14")]
+    pub trade_id: u64,
 }
 /// The user's underlying asset position. These are sent asynchronously as
 /// positions are updated and broadcast through internal position channels. They

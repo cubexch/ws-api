@@ -751,7 +751,14 @@ export interface Fill {
    * Indicates the fee charged on this trade.
    * See [Fees](#fees) for details.
    */
-  feeRatio: FixedPointDecimal | undefined;
+  feeRatio:
+    | FixedPointDecimal
+    | undefined;
+  /**
+   * The unique trade ID associated with a match event. Each order
+   * participanting in the match event will receive this trade ID
+   */
+  tradeId: bigint;
 }
 
 /**

@@ -2553,6 +2553,7 @@ function createBaseFill(): Fill {
     side: 0,
     aggressorIndicator: false,
     feeRatio: undefined,
+    tradeId: BigInt("0"),
   };
 }
 
@@ -2596,6 +2597,9 @@ export const FillMethods = {
     }
     if (message.feeRatio !== undefined) {
       FixedPointDecimalMethods.encode(message.feeRatio, writer.uint32(106).fork()).ldelim();
+    }
+    if (message.tradeId !== BigInt("0")) {
+      writer.uint32(112).uint64(message.tradeId.toString());
     }
     return writer;
   },
@@ -2698,6 +2702,13 @@ export const FillMethods = {
 
           message.feeRatio = FixedPointDecimalMethods.decode(reader, reader.uint32());
           continue;
+        case 14:
+          if (tag !== 112) {
+            break;
+          }
+
+          message.tradeId = longToBigint(reader.uint64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2722,6 +2733,7 @@ export const FillMethods = {
       side: isSet(object.side) ? sideFromJSON(object.side) : 0,
       aggressorIndicator: isSet(object.aggressorIndicator) ? Boolean(object.aggressorIndicator) : false,
       feeRatio: isSet(object.feeRatio) ? FixedPointDecimalMethods.fromJSON(object.feeRatio) : undefined,
+      tradeId: isSet(object.tradeId) ? BigInt(object.tradeId) : BigInt("0"),
     };
   },
 
@@ -2741,6 +2753,7 @@ export const FillMethods = {
     message.aggressorIndicator !== undefined && (obj.aggressorIndicator = message.aggressorIndicator);
     message.feeRatio !== undefined &&
       (obj.feeRatio = message.feeRatio ? FixedPointDecimalMethods.toJSON(message.feeRatio) : undefined);
+    message.tradeId !== undefined && (obj.tradeId = message.tradeId.toString());
     return obj;
   },
 };

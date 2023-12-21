@@ -670,6 +670,9 @@ message Fill {
   // Indicates the fee charged on this trade.
   // See [Fees](#fees) for details.
   FixedPointDecimal fee_ratio = 13;
+  // The unique trade ID associated with a match event. Each order
+  // participanting in the match event will receive this trade ID
+  uint64 trade_id = 14;
 }
 
 // The user's underlying asset position. These are sent asynchronously as

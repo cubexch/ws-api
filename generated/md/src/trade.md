@@ -549,6 +549,7 @@ A fill for an order.
 | side | [Side](#side) |  |  |
 | aggressor_indicator | [bool](#bool) |  |  |
 | fee_ratio | [FixedPointDecimal](#fixed-point-decimal) |  | Indicates the fee charged on this trade. See [Fees](#fees) for details. |
+| trade_id | [uint64](#uint64) |  | The unique trade ID associated with a match event. Each order participanting in the match event will receive this trade ID |
 
 
 
