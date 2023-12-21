@@ -820,7 +820,9 @@ corresponding field did not take a valid value.
 | POST_ONLY_WOULD_TRADE | 15 | The post-only order would have crossed and traded. |
 | DID_NOT_FULLY_FILL | 16 | A FOK was not fully fillable against resting orders at the requested price and quantity. |
 | ONLY_ORDER_CANCEL_ACCEPTED | 17 | An exchange accepts no now orders at this time |
-| PROTECTION_PRICE_WOULD_NOT_TRADE | 18 | A more specific error code for market-with-protection orders that could trade but have a protection price that is too tight. |
+| PROTECTION_PRICE_WOULD_NOT_TRADE | 18 | A more specific error code for market-with-protection orders that could trade but have a user-specified protection price that is too tight. |
+| NO_REFERENCE_PRICE | 19 | Market orders cannot be place because there is currently no internal reference price |
+| SLIPPAGE_TOO_HIGH | 20 | A market order would trade beyond the internal reference price offset by protection levels in the direction of aggress. |
 
 
 

@@ -313,6 +313,12 @@ export function newOrderReject_ReasonFromJSON(object: any): NewOrderReject_Reaso
     case 18:
     case "PROTECTION_PRICE_WOULD_NOT_TRADE":
       return NewOrderReject_Reason.PROTECTION_PRICE_WOULD_NOT_TRADE;
+    case 19:
+    case "NO_REFERENCE_PRICE":
+      return NewOrderReject_Reason.NO_REFERENCE_PRICE;
+    case 20:
+    case "SLIPPAGE_TOO_HIGH":
+      return NewOrderReject_Reason.SLIPPAGE_TOO_HIGH;
     default:
       throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum NewOrderReject_Reason");
   }
@@ -358,6 +364,10 @@ export function newOrderReject_ReasonToJSON(object: NewOrderReject_Reason): stri
       return "ONLY_ORDER_CANCEL_ACCEPTED";
     case NewOrderReject_Reason.PROTECTION_PRICE_WOULD_NOT_TRADE:
       return "PROTECTION_PRICE_WOULD_NOT_TRADE";
+    case NewOrderReject_Reason.NO_REFERENCE_PRICE:
+      return "NO_REFERENCE_PRICE";
+    case NewOrderReject_Reason.SLIPPAGE_TOO_HIGH:
+      return "SLIPPAGE_TOO_HIGH";
     default:
       throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum NewOrderReject_Reason");
   }

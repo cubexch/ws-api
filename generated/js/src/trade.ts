@@ -635,9 +635,19 @@ export enum NewOrderReject_Reason {
   ONLY_ORDER_CANCEL_ACCEPTED = 17,
   /**
    * PROTECTION_PRICE_WOULD_NOT_TRADE - A more specific error code for market-with-protection orders that could
-   * trade but have a protection price that is too tight.
+   * trade but have a user-specified protection price that is too tight.
    */
   PROTECTION_PRICE_WOULD_NOT_TRADE = 18,
+  /**
+   * NO_REFERENCE_PRICE - Market orders cannot be place because there is currently no internal
+   * reference price
+   */
+  NO_REFERENCE_PRICE = 19,
+  /**
+   * SLIPPAGE_TOO_HIGH - A market order would trade beyond the internal reference price offset by
+   * protection levels in the direction of aggress.
+   */
+  SLIPPAGE_TOO_HIGH = 20,
 }
 
 /** Cancel-order-reject indicates that a cancel-order request was not applied. */

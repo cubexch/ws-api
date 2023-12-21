@@ -551,8 +551,15 @@ message NewOrderReject {
     // An exchange accepts no now orders at this time
     ONLY_ORDER_CANCEL_ACCEPTED = 17;
     // A more specific error code for market-with-protection orders that could
-    // trade but have a protection price that is too tight.
+    // trade but have a user-specified protection price that is too tight.
     PROTECTION_PRICE_WOULD_NOT_TRADE = 18;
+
+    // Market orders cannot be place because there is currently no internal
+    // reference price
+    NO_REFERENCE_PRICE = 19;
+    // A market order would trade beyond the internal reference price offset by
+    // protection levels in the direction of aggress.
+    SLIPPAGE_TOO_HIGH = 20;
   }
 
   uint64 msg_seq_num = 1;

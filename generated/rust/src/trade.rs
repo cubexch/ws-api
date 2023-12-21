@@ -564,8 +564,14 @@ pub mod new_order_reject {
         /// An exchange accepts no now orders at this time
         OnlyOrderCancelAccepted = 17,
         /// A more specific error code for market-with-protection orders that could
-        /// trade but have a protection price that is too tight.
+        /// trade but have a user-specified protection price that is too tight.
         ProtectionPriceWouldNotTrade = 18,
+        /// Market orders cannot be place because there is currently no internal
+        /// reference price
+        NoReferencePrice = 19,
+        /// A market order would trade beyond the internal reference price offset by
+        /// protection levels in the direction of aggress.
+        SlippageTooHigh = 20,
     }
     impl Reason {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -593,6 +599,8 @@ pub mod new_order_reject {
                 Reason::DidNotFullyFill => "DID_NOT_FULLY_FILL",
                 Reason::OnlyOrderCancelAccepted => "ONLY_ORDER_CANCEL_ACCEPTED",
                 Reason::ProtectionPriceWouldNotTrade => "PROTECTION_PRICE_WOULD_NOT_TRADE",
+                Reason::NoReferencePrice => "NO_REFERENCE_PRICE",
+                Reason::SlippageTooHigh => "SLIPPAGE_TOO_HIGH",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -617,6 +625,8 @@ pub mod new_order_reject {
                 "DID_NOT_FULLY_FILL" => Some(Self::DidNotFullyFill),
                 "ONLY_ORDER_CANCEL_ACCEPTED" => Some(Self::OnlyOrderCancelAccepted),
                 "PROTECTION_PRICE_WOULD_NOT_TRADE" => Some(Self::ProtectionPriceWouldNotTrade),
+                "NO_REFERENCE_PRICE" => Some(Self::NoReferencePrice),
+                "SLIPPAGE_TOO_HIGH" => Some(Self::SlippageTooHigh),
                 _ => None,
             }
         }
