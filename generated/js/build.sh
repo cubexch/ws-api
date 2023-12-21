@@ -93,3 +93,6 @@ protoc \
   --proto_path="$SCHEMAS" "$SCHEMAS"/codes.proto
 
 cleanupMethods ./src/methods/codes.ts ./src/codes.ts codes
+
+echo 'Rebuilding lib...'
+yarn tsc
