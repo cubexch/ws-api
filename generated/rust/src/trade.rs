@@ -3,6 +3,9 @@
 /// except that the exponent is int32 since Protobuf does not have an int8 type.
 /// The value is computed as `mantissa * 10^exponent`;
 /// for example, `mantissa = 1234` and `exponent = -2` is `12.34`.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FixedPointDecimal {
@@ -66,6 +69,9 @@ pub struct FixedPointDecimal {
 /// ```
 ///
 ///
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Credentials {
@@ -81,6 +87,9 @@ pub struct Credentials {
 }
 /// Every client message, aside from Credentials, must be wrapped as an
 /// OrderRequest.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OrderRequest {
@@ -89,6 +98,9 @@ pub struct OrderRequest {
 }
 /// Nested message and enum types in `OrderRequest`.
 pub mod order_request {
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
     #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Inner {
@@ -105,6 +117,9 @@ pub mod order_request {
     }
 }
 /// Place a new order.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NewOrder {
@@ -150,6 +165,9 @@ pub struct NewOrder {
 /// Cancel a resting order.
 /// Note that this can be done before the order is acknowledged (an aggressive
 /// cancel) since the identifying field is the `client_order_id`.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CancelOrder {
@@ -190,6 +208,9 @@ pub struct CancelOrder {
 ///
 /// Regardless of IFM, the invariant for order quantity is that `quantity =
 /// remaining_quantity + cumulative_quantity`.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ModifyOrder {
@@ -215,6 +236,9 @@ pub struct ModifyOrder {
 }
 /// Cancel all resting orders, optionally limiting to a particular market and /
 /// or order book side.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MassCancel {
@@ -239,6 +263,9 @@ pub struct MassCancel {
 /// Latency can be estimated from this, but only the relative difference between
 /// successive server messages should be used. In particular, the client and
 /// server clock should not be expected to be synchronized.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Heartbeat {
@@ -250,6 +277,9 @@ pub struct Heartbeat {
 }
 /// Every exchange message after the initial bootstrap will be wrapped as an
 /// OrderResponse.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OrderResponse {
@@ -258,6 +288,9 @@ pub struct OrderResponse {
 }
 /// Nested message and enum types in `OrderResponse`.
 pub mod order_response {
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
     #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Inner {
@@ -285,6 +318,9 @@ pub mod order_response {
 }
 /// New-order-ack confirms a new-order request. The ack will be ordered before
 /// any fills for this order.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NewOrderAck {
@@ -324,6 +360,9 @@ pub struct NewOrderAck {
 }
 /// Cancel-order-ack confirms a cancel request, or that an order has been
 /// canceled as the result of a different user-initiated reason.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CancelOrderAck {
@@ -352,6 +391,9 @@ pub struct CancelOrderAck {
 }
 /// Nested message and enum types in `CancelOrderAck`.
 pub mod cancel_order_ack {
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
     #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
     #[repr(i32)]
     pub enum Reason {
@@ -407,6 +449,9 @@ pub mod cancel_order_ack {
 /// Modify-order-ack confirms a modify-order request. If the modify resulted in
 /// an aggressing cancel-replace, the ack will be ordered before any fills for
 /// this order.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ModifyOrderAck {
@@ -442,6 +487,9 @@ pub struct ModifyOrderAck {
 /// Mass-cancel-ack confirms a mass-cancel request. If `reason` is set, the mass
 /// cancel was not applied and there are no affected orders. Individual
 /// CancelOrderAck's will be sent for each order that was affected.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MassCancelAck {
@@ -463,6 +511,9 @@ pub struct MassCancelAck {
 }
 /// Nested message and enum types in `MassCancelAck`.
 pub mod mass_cancel_ack {
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
     #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
     #[repr(i32)]
     pub enum Reason {
@@ -494,6 +545,9 @@ pub mod mass_cancel_ack {
     }
 }
 /// New-order-reject indicates that a new-order request was not applied.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NewOrderReject {
@@ -529,6 +583,9 @@ pub struct NewOrderReject {
 pub mod new_order_reject {
     /// Reasons that are prefixed with `INVALID_` normally indicate that the
     /// corresponding field did not take a valid value.
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
     #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
     #[repr(i32)]
     pub enum Reason {
@@ -633,6 +690,9 @@ pub mod new_order_reject {
     }
 }
 /// Cancel-order-reject indicates that a cancel-order request was not applied.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CancelOrderReject {
@@ -656,6 +716,9 @@ pub struct CancelOrderReject {
 }
 /// Nested message and enum types in `CancelOrderReject`.
 pub mod cancel_order_reject {
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
     #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
     #[repr(i32)]
     pub enum Reason {
@@ -690,6 +753,9 @@ pub mod cancel_order_reject {
     }
 }
 /// Modify-order-reject indicates that a modify-order request was not applied.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ModifyOrderReject {
@@ -715,6 +781,9 @@ pub struct ModifyOrderReject {
 pub mod modify_order_reject {
     /// Reasons that are prefixed with `INVALID_` normally indicate that the
     /// corresponding field did not take a valid value.
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
     #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
     #[repr(i32)]
     pub enum Reason {
@@ -781,6 +850,9 @@ pub mod modify_order_reject {
     }
 }
 /// A fill for an order.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Fill {
@@ -827,6 +899,9 @@ pub struct Fill {
 /// The user's underlying asset position. These are sent asynchronously as
 /// positions are updated and broadcast through internal position channels. They
 /// can also be tracked by applying other OrderResponse messages individually.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AssetPosition {
@@ -846,6 +921,9 @@ pub struct AssetPosition {
 ///
 /// The number is interpreted in 'little-endian' as `[word0, word1, word2,
 /// word3]`.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RawUnits {
@@ -864,6 +942,9 @@ pub struct RawUnits {
 /// `Done` is received and every message after that will be an `OrderResponse`.
 /// Multiple messages may be received for `RestingOrders` and `AssetPositions`
 /// and these should be concatenated.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Bootstrap {
@@ -872,6 +953,9 @@ pub struct Bootstrap {
 }
 /// Nested message and enum types in `Bootstrap`.
 pub mod bootstrap {
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
     #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Inner {
@@ -884,6 +968,9 @@ pub mod bootstrap {
     }
 }
 /// A chunk of resting orders. Sent on bootstrap.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RestingOrders {
@@ -891,6 +978,9 @@ pub struct RestingOrders {
     pub orders: ::prost::alloc::vec::Vec<RestingOrder>,
 }
 /// A chunk of asset positions. Sent on bootstrap.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AssetPositions {
@@ -898,6 +988,9 @@ pub struct AssetPositions {
     pub positions: ::prost::alloc::vec::Vec<AssetPosition>,
 }
 /// An indication that bootstrap is complete.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Done {
@@ -908,6 +1001,9 @@ pub struct Done {
     pub read_only: bool,
 }
 /// A resting order. Sent on bootstrap in `RestingOrders`.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RestingOrder {
@@ -949,6 +1045,9 @@ pub struct RestingOrder {
 /// is matched when a buyer (BID) and a seller (ASK) agree on a price (cross).
 /// The bid-ask spread is the gap between the highest bid price and lowest ask
 /// price on the orderbook.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum Side {
@@ -978,6 +1077,9 @@ impl Side {
     }
 }
 /// Time-in-force (TIF) specifies how long the order remains in effect.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum TimeInForce {
@@ -1025,6 +1127,9 @@ impl TimeInForce {
 ///    pre-flight check and a submitted order will be partially filled up until
 ///    the subaccount's position limit. The remaining quantity will be canceled
 ///    with the POSITION_LIMIT reason.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum OrderType {
@@ -1078,6 +1183,9 @@ impl OrderType {
 /// about to occur between the two orders. That is, if the aggressing order is
 /// fully filled before reaching the resting order in FIFO order, no STP cancels
 /// will happen.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum SelfTradePrevention {
@@ -1117,6 +1225,9 @@ impl SelfTradePrevention {
 /// Post-only specifies whether a new order is allowed to immediately execute.
 /// Post-only cannot be enabled with market orders or with a TIF that does not
 /// allow resting orders.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum PostOnly {

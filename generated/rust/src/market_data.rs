@@ -1,5 +1,8 @@
 /// Every exchange message from `/book/:market_id` will be wrapped as an
 /// \[`MdMessages`\](#md-messages) which contains multiple `MdMessage`'s.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MdMessage {
@@ -8,6 +11,9 @@ pub struct MdMessage {
 }
 /// Nested message and enum types in `MdMessage`.
 pub mod md_message {
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
     #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Inner {
@@ -42,6 +48,9 @@ pub mod md_message {
 /// concatened until `chunk = num_chunks - 1`. Currently, the chunks and levels
 /// are streamed from tightest price level outwards with interleaved Bid and Ask
 /// levels, but no ordering is guaranteed.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MarketByPrice {
@@ -56,6 +65,9 @@ pub struct MarketByPrice {
 pub mod market_by_price {
     /// Each price level is the aggregate total quantity of orders placed at that
     /// price.
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
     #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Level {
@@ -70,6 +82,9 @@ pub mod market_by_price {
 /// Market by price diff message. Book updates for the MBP feed are sent as diffs
 /// after the initial snapshot. The number of total side levels are for
 /// reconciliation.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MarketByPriceDiff {
@@ -85,6 +100,9 @@ pub struct MarketByPriceDiff {
 /// Nested message and enum types in `MarketByPriceDiff`.
 pub mod market_by_price_diff {
     /// A price level diff overwrites the existing price level.
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
     #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Diff {
@@ -99,6 +117,9 @@ pub mod market_by_price_diff {
     }
     /// The operation to apply for this price level. Currently, new price levels
     /// are created with `REPLACE`.
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
     #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
     #[repr(i32)]
     pub enum DiffOp {
@@ -134,6 +155,9 @@ pub mod market_by_price_diff {
 /// concatened until `chunk = num_chunks - 1`. Orders are sent in order of FIFO
 /// queue priority so the first order of a level should be the first order to be
 /// matched when that level is aggressed.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MarketByOrder {
@@ -147,6 +171,9 @@ pub struct MarketByOrder {
 /// Nested message and enum types in `MarketByOrder`.
 pub mod market_by_order {
     /// A resting order.
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
     #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Order {
@@ -174,6 +201,9 @@ pub mod market_by_order {
 /// Note that for orders that are cancel-replace'd (a modify that lost queue
 /// priority), the new price and quantity will be reported as a `REPLACE` but the
 /// exchange order ID will not change.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MarketByOrderDiff {
@@ -196,6 +226,9 @@ pub struct MarketByOrderDiff {
 pub mod market_by_order_diff {
     /// An order diff creates, updates, or deletes a resting order based on the
     /// `exchange_order_id`
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
     #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Diff {
@@ -217,6 +250,9 @@ pub mod market_by_order_diff {
     /// The operation to apply for this price level. For example, an resting order
     /// that gets filled will be `REPLACE`'d with the new resting quantity. An
     /// order is `REMOVE`'d when it is fully filled or canceled.
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
     #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
     #[repr(i32)]
     pub enum DiffOp {
@@ -250,6 +286,9 @@ pub mod market_by_order_diff {
 /// Trades since the latest `Trades` message. The result of the trades will also
 /// appear in the MBP and MBO feeds independently as updates to the resting
 /// orders and levels, respectively.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Trades {
@@ -258,6 +297,9 @@ pub struct Trades {
 }
 /// Nested message and enum types in `Trades`.
 pub mod trades {
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
     #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Trade {
@@ -289,6 +331,9 @@ pub mod trades {
     }
 }
 /// Rolling 24h stats.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Summary {
@@ -318,6 +363,9 @@ pub struct Summary {
     pub quote_volume_hi: u64,
 }
 /// Candlestick bar.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Kline {
@@ -347,6 +395,9 @@ pub struct Kline {
 }
 /// A client and server heartbeat. The heartbeat reply, including the timestamp
 /// value, comes from the market data service.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Heartbeat {
@@ -356,6 +407,9 @@ pub struct Heartbeat {
     #[prost(uint64, tag="2")]
     pub timestamp: u64,
 }
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MdMessages {
@@ -363,6 +417,9 @@ pub struct MdMessages {
     pub messages: ::prost::alloc::vec::Vec<MdMessage>,
 }
 /// Every exchange message from `/tops` will be wrapped as an `AggMessage`.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AggMessage {
@@ -371,6 +428,9 @@ pub struct AggMessage {
 }
 /// Nested message and enum types in `AggMessage`.
 pub mod agg_message {
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
     #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Inner {
@@ -386,6 +446,9 @@ pub mod agg_message {
     }
 }
 /// Top of book
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TopOfBook {
@@ -416,6 +479,9 @@ pub struct TopOfBook {
 }
 /// Top of books for all books that were updates since the last top-of-books
 /// message.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TopOfBooks {
@@ -426,6 +492,9 @@ pub struct TopOfBooks {
 /// that divisor. Rate's should not be used alone. For example, given a
 /// RateUpdate for `assetId = BTC, updateSide = BASE` of `r1`, and `assetId =
 /// EUR, updateSide = QUOTE` of `r2`, the BTC-EUR price estimate is `r1 * r2`.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RateUpdate {
@@ -442,6 +511,9 @@ pub struct RateUpdate {
 }
 /// Rates for all assets. Published on connect and updates since the last
 /// rate-updates message.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RateUpdates {
@@ -451,6 +523,9 @@ pub struct RateUpdates {
 /// Client heartbeats and configs. This wrapper is used for both
 /// `/book/:market_id` and `/tops`, but `config` messages are ignored on the
 /// latter.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClientMessage {
@@ -459,6 +534,9 @@ pub struct ClientMessage {
 }
 /// Nested message and enum types in `ClientMessage`.
 pub mod client_message {
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
     #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Inner {
@@ -470,6 +548,9 @@ pub mod client_message {
 }
 /// Set the message subscriptions for `/book/:market_id`. At most one of `mbp`
 /// and `mbo` can be set.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Config {
@@ -491,6 +572,9 @@ pub struct Config {
 }
 /// Side specifies whether the level, order, or diff, is for buying or selling
 /// the base asset.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum Side {
@@ -520,6 +604,9 @@ impl Side {
     }
 }
 /// The candlestick interval.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum KlineInterval {
@@ -566,6 +653,9 @@ impl KlineInterval {
 }
 /// The side of the rate update. Given a `BASE` rate of `r`, the `QUOTE` rate is
 /// `1 / r`, and vice versa.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum RateUpdateSide {

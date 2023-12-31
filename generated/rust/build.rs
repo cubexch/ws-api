@@ -19,6 +19,13 @@ fn main() {
     }
 
     prost_build::Config::new()
+        .type_attribute(
+            ".",
+            "#[cfg_attr(feature = \"serde\", derive(serde::Serialize, serde::Deserialize))]\n\
+             #[cfg_attr(feature = \"serde\", serde(rename_all = \"camelCase\"))]\n\
+             #[cfg_attr(feature = \"schemars\", derive(schemars::JsonSchema))]\
+            "
+        )
         .out_dir(Path::new("src/"))
         .compile_protos(
             proto_inputs,
