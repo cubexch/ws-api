@@ -73,7 +73,7 @@ export const protobufPackage = "trade";
  *
  * ...in which case:
  * - The fee ratio would be 0.0011, or 11 pips.
- * - The fee would be equal to 0.00055 BTC.
+ * - The fee would be equal to 0.0055 BTC.
  * - The total amount credited at settlement would be 4.9945 BTC.
  *
  * If you need exact granularity at time of trade, you can replicate the fee calculation performed by the exchange.
@@ -87,7 +87,7 @@ export const protobufPackage = "trade";
  *
  * Since the fee is expressed with a decimal exponent, it's highly likely that this calculation results in a whole number.
  * In the unlikely case that the final division results in a non-whole number, the result should be truncated,
- * i.e. the fee is rounded down to the nearest `RawUnit`.
+ * hence the division at the end: i.e. the fee is rounded down to the nearest `RawUnit`.
  *
  * ### Exchange Order ID
  *
