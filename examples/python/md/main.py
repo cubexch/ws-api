@@ -6,35 +6,32 @@ import logging
 import settings
 import price_book
 import md_client
-
-def config_logging():
-    rootLogger = logging.getLogger()
-    rootLogger.addHandler(logging.StreamHandler())
-    rootLogger.addHandler(logging.FileHandler(settings.LOG_FILE))
-    rootLogger.setLevel(settings.LOG_LEVEL)
-    logging.getLogger('websockets').setLevel(logging.INFO)
+import util
 
 async def main():
-    market_id = 300001
+    market_id = settings.MARKET_ID
     book_conn_str = f"{settings.CUBE_MD_WS}/book/{market_id}?mbp=true"
     try:
         async with ws_connect(book_conn_str) as ws:
             prc_bk = price_book.PriceBook()
-            book_task = asyncio.create_task(md_client.handle_md(ws, prc_bk.process_md_messages))
-            hb_task = asyncio.create_task(md_client.do_heartbeat(ws))
-            await book_task
-            await hb_task
+            book_coro = md_client.handle_md(ws, prc_bk.process_md_messages)
+            hb_coro = md_client.do_heartbeat(ws)
+            group = asyncio.gather(book_coro, hb_coro)
+            await group
     except ConnectionClosed as e:
         logging.error(f'Connection closed unexpectedly: {e})')
-        if hb_task is not None:
-            if hb_task.done():
-                hb_e = hb_task.exception()
-                if hb_e is not None:
-                    logging.info(f'Heartbeat task exception: {hb_e}')
+        if group is not None:
+            if group.done():
+                ex = group.exception()
+                if ex is not None:
+                    logging.info(f'Task exception: {ex}')
             else:
-                hb_task.cancel()
-                logging.info(f'Heartbeat task canceled')
+                group.cancel()
+                logging.info(f'Task group canceled')
 
 if __name__ == '__main__':
-    config_logging()
-    asyncio.run(main())
+    util.config_logging()
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        logging.info("exit.")
