@@ -528,7 +528,7 @@ class Done(_message.Message):
     def __init__(self, latest_transact_time: _Optional[int] = ..., read_only: bool = ...) -> None: ...
 
 class RestingOrder(_message.Message):
-    __slots__ = ["client_order_id", "exchange_order_id", "market_id", "price", "order_quantity", "side", "time_in_force", "order_type", "remaining_quantity", "rest_time", "subaccount_id", "cumulative_quantity"]
+    __slots__ = ["client_order_id", "exchange_order_id", "market_id", "price", "order_quantity", "side", "time_in_force", "order_type", "remaining_quantity", "rest_time", "subaccount_id", "cumulative_quantity", "cancel_on_disconnect"]
     CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     EXCHANGE_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     MARKET_ID_FIELD_NUMBER: _ClassVar[int]
@@ -541,6 +541,7 @@ class RestingOrder(_message.Message):
     REST_TIME_FIELD_NUMBER: _ClassVar[int]
     SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     CUMULATIVE_QUANTITY_FIELD_NUMBER: _ClassVar[int]
+    CANCEL_ON_DISCONNECT_FIELD_NUMBER: _ClassVar[int]
     client_order_id: int
     exchange_order_id: int
     market_id: int
@@ -553,4 +554,5 @@ class RestingOrder(_message.Message):
     rest_time: int
     subaccount_id: int
     cumulative_quantity: int
-    def __init__(self, client_order_id: _Optional[int] = ..., exchange_order_id: _Optional[int] = ..., market_id: _Optional[int] = ..., price: _Optional[int] = ..., order_quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., time_in_force: _Optional[_Union[TimeInForce, str]] = ..., order_type: _Optional[_Union[OrderType, str]] = ..., remaining_quantity: _Optional[int] = ..., rest_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., cumulative_quantity: _Optional[int] = ...) -> None: ...
+    cancel_on_disconnect: bool
+    def __init__(self, client_order_id: _Optional[int] = ..., exchange_order_id: _Optional[int] = ..., market_id: _Optional[int] = ..., price: _Optional[int] = ..., order_quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., time_in_force: _Optional[_Union[TimeInForce, str]] = ..., order_type: _Optional[_Union[OrderType, str]] = ..., remaining_quantity: _Optional[int] = ..., rest_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., cumulative_quantity: _Optional[int] = ..., cancel_on_disconnect: bool = ...) -> None: ...

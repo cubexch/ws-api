@@ -680,6 +680,7 @@ A resting order. Sent on bootstrap in `RestingOrders`.
 | rest_time | [uint64](#uint64) |  | [Transact time](#transact-time) of the NewOrderAck |
 | subaccount_id | [uint64](#uint64) |  |  |
 | cumulative_quantity | [uint64](#uint64) |  | The cumulative filled quantity for this order. |
+| cancel_on_disconnect | [bool](#bool) |  |  |
 
 
 

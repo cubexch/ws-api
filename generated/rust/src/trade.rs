@@ -1040,6 +1040,8 @@ pub struct RestingOrder {
     /// The cumulative filled quantity for this order.
     #[prost(uint64, tag="12")]
     pub cumulative_quantity: u64,
+    #[prost(bool, tag="13")]
+    pub cancel_on_disconnect: bool,
 }
 /// Side specifies whether the order is buying or selling the base asset. A trade
 /// is matched when a buyer (BID) and a seller (ASK) agree on a price (cross).

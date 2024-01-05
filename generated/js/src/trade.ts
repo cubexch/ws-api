@@ -847,4 +847,5 @@ export interface RestingOrder {
   subaccountId: bigint;
   /** The cumulative filled quantity for this order. */
   cumulativeQuantity: bigint;
+  cancelOnDisconnect: boolean;
 }

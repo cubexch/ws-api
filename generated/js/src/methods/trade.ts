@@ -3177,6 +3177,7 @@ function createBaseRestingOrder(): RestingOrder {
     restTime: BigInt("0"),
     subaccountId: BigInt("0"),
     cumulativeQuantity: BigInt("0"),
+    cancelOnDisconnect: false,
   };
 }
 
@@ -3217,6 +3218,9 @@ export const RestingOrderMethods = {
     }
     if (message.cumulativeQuantity !== BigInt("0")) {
       writer.uint32(96).uint64(message.cumulativeQuantity.toString());
+    }
+    if (message.cancelOnDisconnect === true) {
+      writer.uint32(104).bool(message.cancelOnDisconnect);
     }
     return writer;
   },
@@ -3312,6 +3316,13 @@ export const RestingOrderMethods = {
 
           message.cumulativeQuantity = longToBigint(reader.uint64() as Long);
           continue;
+        case 13:
+          if (tag !== 104) {
+            break;
+          }
+
+          message.cancelOnDisconnect = reader.bool();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -3335,6 +3346,7 @@ export const RestingOrderMethods = {
       restTime: isSet(object.restTime) ? BigInt(object.restTime) : BigInt("0"),
       subaccountId: isSet(object.subaccountId) ? BigInt(object.subaccountId) : BigInt("0"),
       cumulativeQuantity: isSet(object.cumulativeQuantity) ? BigInt(object.cumulativeQuantity) : BigInt("0"),
+      cancelOnDisconnect: isSet(object.cancelOnDisconnect) ? Boolean(object.cancelOnDisconnect) : false,
     };
   },
 
@@ -3352,6 +3364,7 @@ export const RestingOrderMethods = {
     message.restTime !== undefined && (obj.restTime = message.restTime.toString());
     message.subaccountId !== undefined && (obj.subaccountId = message.subaccountId.toString());
     message.cumulativeQuantity !== undefined && (obj.cumulativeQuantity = message.cumulativeQuantity.toString());
+    message.cancelOnDisconnect !== undefined && (obj.cancelOnDisconnect = message.cancelOnDisconnect);
     return obj;
   },
 };

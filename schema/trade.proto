@@ -757,4 +757,5 @@ message RestingOrder {
 
   // The cumulative filled quantity for this order.
   uint64 cumulative_quantity = 12;
+  bool cancel_on_disconnect = 13;
 }
