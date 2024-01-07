@@ -34,11 +34,12 @@ class PriceBook:
                     best_ask = next(iter(self.asks))
                     if price > best_bid and price < best_ask:
                         self.logger.error(f"REPLACE price {price} between BBO ({best_bid} {best_ask})")
+                    # still try to insert in pricelevels to achieve eventual consistency
+                    # due to out of order sequence of diff events
+                    if diff.side == market_data_pb2.ASK:
+                        self.asks[price] = qty
                     else:
-                        if diff.side == market_data_pb2.ASK:
-                            self.asks[price] = qty
-                        else:
-                            self.bids[price] = qty
+                        self.bids[price] = qty
         act_bid_lvs, act_ask_lvs = len(self.bids), len(self.asks)
         if act_bid_lvs != exp_bid_lvs:
             self.logger.error(f"Expected bid levels: {exp_bid_lvs}, actual bid levels: {act_bid_lvs}")
