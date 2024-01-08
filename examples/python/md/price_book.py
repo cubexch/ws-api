@@ -1,11 +1,11 @@
 import logging
-from collections import OrderedDict
+from sortedcontainers import SortedDict
 from cube_ws_api import market_data_pb2
 
 class PriceBook:
     def __init__(self):
-        self.bids = OrderedDict()
-        self.asks = OrderedDict()
+        self.bids = SortedDict()
+        self.asks = SortedDict()
         self.logger = logging.getLogger('pricebook')
 
     def apply_mbp_diff(self, mbp_diff: market_data_pb2.MarketByPriceDiff):
