@@ -486,9 +486,9 @@ are created with `REPLACE`.
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |
-| ADD | 0 |  |
-| REMOVE | 1 |  |
-| REPLACE | 2 |  |
+| ADD | 0 | This operation is NOT used for MBP. The operation of adding a new price level is specified as `REPLACE`. |
+| REMOVE | 1 | This operation is used when a price level is removed from the book. |
+| REPLACE | 2 | This operation is used when a new price level is added or an existing price level is modified. |
 
 
 

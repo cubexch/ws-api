@@ -107,8 +107,13 @@ message MarketByPriceDiff {
   // The operation to apply for this price level. Currently, new price levels
   // are created with `REPLACE`.
   enum DiffOp {
+    // This operation is NOT used for MBP.
+    // The operation of adding a new price level is specified as `REPLACE`.
     ADD = 0;
+    // This operation is used when a price level is removed from the book.
     REMOVE = 1;
+    // This operation is used when a new price level is added or 
+    // an existing price level is modified.
     REPLACE = 2;
   }
 

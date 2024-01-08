@@ -143,8 +143,17 @@ export interface MarketByPriceDiff {
  * are created with `REPLACE`.
  */
 export enum MarketByPriceDiff_DiffOp {
+  /**
+   * ADD - This operation is NOT used for MBP.
+   * The operation of adding a new price level is specified as `REPLACE`.
+   */
   ADD = 0,
+  /** REMOVE - This operation is used when a price level is removed from the book. */
   REMOVE = 1,
+  /**
+   * REPLACE - This operation is used when a new price level is added or
+   * an existing price level is modified.
+   */
   REPLACE = 2,
 }
 

@@ -123,8 +123,13 @@ pub mod market_by_price_diff {
     #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
     #[repr(i32)]
     pub enum DiffOp {
+        /// This operation is NOT used for MBP.
+        /// The operation of adding a new price level is specified as `REPLACE`.
         Add = 0,
+        /// This operation is used when a price level is removed from the book.
         Remove = 1,
+        /// This operation is used when a new price level is added or 
+        /// an existing price level is modified.
         Replace = 2,
     }
     impl DiffOp {

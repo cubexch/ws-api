@@ -19,9 +19,8 @@ _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'trade_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
-
-  DESCRIPTOR._options = None
-  DESCRIPTOR._serialized_options = b'Z\003go/\252\002\nCube.Trade'
+  _globals['DESCRIPTOR']._options = None
+  _globals['DESCRIPTOR']._serialized_options = b'Z\003go/\252\002\nCube.Trade'
   _globals['_SIDE']._serialized_start=5963
   _globals['_SIDE']._serialized_end=5987
   _globals['_TIMEINFORCE']._serialized_start=5989
