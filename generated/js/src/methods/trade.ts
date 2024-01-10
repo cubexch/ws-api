@@ -319,6 +319,9 @@ export function newOrderReject_ReasonFromJSON(object: any): NewOrderReject_Reaso
     case 20:
     case "SLIPPAGE_TOO_HIGH":
       return NewOrderReject_Reason.SLIPPAGE_TOO_HIGH;
+    case 21:
+    case "OUTSIDE_PRICE_BAND":
+      return NewOrderReject_Reason.OUTSIDE_PRICE_BAND;
     default:
       throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum NewOrderReject_Reason");
   }
@@ -368,6 +371,8 @@ export function newOrderReject_ReasonToJSON(object: NewOrderReject_Reason): stri
       return "NO_REFERENCE_PRICE";
     case NewOrderReject_Reason.SLIPPAGE_TOO_HIGH:
       return "SLIPPAGE_TOO_HIGH";
+    case NewOrderReject_Reason.OUTSIDE_PRICE_BAND:
+      return "OUTSIDE_PRICE_BAND";
     default:
       throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum NewOrderReject_Reason");
   }
@@ -437,6 +442,9 @@ export function modifyOrderReject_ReasonFromJSON(object: any): ModifyOrderReject
     case 17:
     case "ONLY_ORDER_CANCEL_ACCEPTED":
       return ModifyOrderReject_Reason.ONLY_ORDER_CANCEL_ACCEPTED;
+    case 11:
+    case "OUTSIDE_PRICE_BAND":
+      return ModifyOrderReject_Reason.OUTSIDE_PRICE_BAND;
     default:
       throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum ModifyOrderReject_Reason");
   }
@@ -466,6 +474,8 @@ export function modifyOrderReject_ReasonToJSON(object: ModifyOrderReject_Reason)
       return "POST_ONLY_WOULD_TRADE";
     case ModifyOrderReject_Reason.ONLY_ORDER_CANCEL_ACCEPTED:
       return "ONLY_ORDER_CANCEL_ACCEPTED";
+    case ModifyOrderReject_Reason.OUTSIDE_PRICE_BAND:
+      return "OUTSIDE_PRICE_BAND";
     default:
       throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum ModifyOrderReject_Reason");
   }

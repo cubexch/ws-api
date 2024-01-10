@@ -629,6 +629,9 @@ pub mod new_order_reject {
         /// A market order would trade beyond the internal reference price offset by
         /// protection levels in the direction of aggress.
         SlippageTooHigh = 20,
+        /// Limit orders cannot have bid price too low or ask price too high that
+        /// is multiple times away from the internal reference price.
+        OutsidePriceBand = 21,
     }
     impl Reason {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -658,6 +661,7 @@ pub mod new_order_reject {
                 Reason::ProtectionPriceWouldNotTrade => "PROTECTION_PRICE_WOULD_NOT_TRADE",
                 Reason::NoReferencePrice => "NO_REFERENCE_PRICE",
                 Reason::SlippageTooHigh => "SLIPPAGE_TOO_HIGH",
+                Reason::OutsidePriceBand => "OUTSIDE_PRICE_BAND",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -684,6 +688,7 @@ pub mod new_order_reject {
                 "PROTECTION_PRICE_WOULD_NOT_TRADE" => Some(Self::ProtectionPriceWouldNotTrade),
                 "NO_REFERENCE_PRICE" => Some(Self::NoReferencePrice),
                 "SLIPPAGE_TOO_HIGH" => Some(Self::SlippageTooHigh),
+                "OUTSIDE_PRICE_BAND" => Some(Self::OutsidePriceBand),
                 _ => None,
             }
         }
@@ -809,6 +814,9 @@ pub mod modify_order_reject {
         PostOnlyWouldTrade = 9,
         /// An exchange accepts no order modifications at this time
         OnlyOrderCancelAccepted = 17,
+        /// Limit orders cannot have bid price too low or ask price too high that
+        /// is multiple times away from the internal reference price.
+        OutsidePriceBand = 11,
     }
     impl Reason {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -828,6 +836,7 @@ pub mod modify_order_reject {
                 Reason::ExceededSpotPosition => "EXCEEDED_SPOT_POSITION",
                 Reason::PostOnlyWouldTrade => "POST_ONLY_WOULD_TRADE",
                 Reason::OnlyOrderCancelAccepted => "ONLY_ORDER_CANCEL_ACCEPTED",
+                Reason::OutsidePriceBand => "OUTSIDE_PRICE_BAND",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -844,6 +853,7 @@ pub mod modify_order_reject {
                 "EXCEEDED_SPOT_POSITION" => Some(Self::ExceededSpotPosition),
                 "POST_ONLY_WOULD_TRADE" => Some(Self::PostOnlyWouldTrade),
                 "ONLY_ORDER_CANCEL_ACCEPTED" => Some(Self::OnlyOrderCancelAccepted),
+                "OUTSIDE_PRICE_BAND" => Some(Self::OutsidePriceBand),
                 _ => None,
             }
         }

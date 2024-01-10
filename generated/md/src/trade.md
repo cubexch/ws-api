@@ -825,6 +825,7 @@ corresponding field did not take a valid value.
 | PROTECTION_PRICE_WOULD_NOT_TRADE | 18 | A more specific error code for market-with-protection orders that could trade but have a user-specified protection price that is too tight. |
 | NO_REFERENCE_PRICE | 19 | Market orders cannot be place because there is currently no internal reference price |
 | SLIPPAGE_TOO_HIGH | 20 | A market order would trade beyond the internal reference price offset by protection levels in the direction of aggress. |
+| OUTSIDE_PRICE_BAND | 21 | Limit orders cannot have bid price too low or ask price too high that is multiple times away from the internal reference price. |
 
 
 
@@ -858,6 +859,7 @@ corresponding field did not take a valid value.
 | EXCEEDED_SPOT_POSITION | 8 | If the modify-order would cause a cancel-replace, the sum of open orders and this replacement order would exceed the subaccounts spot limits. |
 | POST_ONLY_WOULD_TRADE | 9 | If the modify-order would cause a cancel-replace, the post-only replacement would have crossed and traded. |
 | ONLY_ORDER_CANCEL_ACCEPTED | 17 | An exchange accepts no order modifications at this time |
+| OUTSIDE_PRICE_BAND | 11 | Limit orders cannot have bid price too low or ask price too high that is multiple times away from the internal reference price. |
 
 
 

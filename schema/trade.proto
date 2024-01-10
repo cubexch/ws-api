@@ -560,6 +560,9 @@ message NewOrderReject {
     // A market order would trade beyond the internal reference price offset by
     // protection levels in the direction of aggress.
     SLIPPAGE_TOO_HIGH = 20;
+    // Limit orders cannot have bid price too low or ask price too high that
+    // is multiple times away from the internal reference price.
+    OUTSIDE_PRICE_BAND = 21;
   }
 
   uint64 msg_seq_num = 1;
@@ -632,6 +635,9 @@ message ModifyOrderReject {
     // An exchange accepts no order modifications at this time
     ONLY_ORDER_CANCEL_ACCEPTED = 17;
 
+    // Limit orders cannot have bid price too low or ask price too high that
+    // is multiple times away from the internal reference price.
+    OUTSIDE_PRICE_BAND = 11;
   }
 
   uint64 msg_seq_num = 1;
