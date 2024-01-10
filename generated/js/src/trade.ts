@@ -734,6 +734,11 @@ export enum ModifyOrderReject_Reason {
    * is multiple times away from the internal reference price.
    */
   OUTSIDE_PRICE_BAND = 11,
+  /**
+   * NO_REFERENCE_PRICE - Limit orders cannot be placed because there is currently no internal
+   * reference price
+   */
+  NO_REFERENCE_PRICE = 12,
 }
 
 /** A fill for an order. */

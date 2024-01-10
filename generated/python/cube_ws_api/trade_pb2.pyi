@@ -417,6 +417,7 @@ class ModifyOrderReject(_message.Message):
         POST_ONLY_WOULD_TRADE: _ClassVar[ModifyOrderReject.Reason]
         ONLY_ORDER_CANCEL_ACCEPTED: _ClassVar[ModifyOrderReject.Reason]
         OUTSIDE_PRICE_BAND: _ClassVar[ModifyOrderReject.Reason]
+        NO_REFERENCE_PRICE: _ClassVar[ModifyOrderReject.Reason]
     UNCLASSIFIED: ModifyOrderReject.Reason
     INVALID_QUANTITY: ModifyOrderReject.Reason
     INVALID_MARKET_ID: ModifyOrderReject.Reason
@@ -429,6 +430,7 @@ class ModifyOrderReject(_message.Message):
     POST_ONLY_WOULD_TRADE: ModifyOrderReject.Reason
     ONLY_ORDER_CANCEL_ACCEPTED: ModifyOrderReject.Reason
     OUTSIDE_PRICE_BAND: ModifyOrderReject.Reason
+    NO_REFERENCE_PRICE: ModifyOrderReject.Reason
     MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
     CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     REQUEST_ID_FIELD_NUMBER: _ClassVar[int]

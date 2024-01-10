@@ -638,6 +638,9 @@ message ModifyOrderReject {
     // Limit orders cannot have bid price too low or ask price too high that
     // is multiple times away from the internal reference price.
     OUTSIDE_PRICE_BAND = 11;
+    // Limit orders cannot be placed because there is currently no internal
+    // reference price
+    NO_REFERENCE_PRICE = 12;
   }
 
   uint64 msg_seq_num = 1;
