@@ -860,7 +860,6 @@ corresponding field did not take a valid value.
 | POST_ONLY_WOULD_TRADE | 9 | If the modify-order would cause a cancel-replace, the post-only replacement would have crossed and traded. |
 | ONLY_ORDER_CANCEL_ACCEPTED | 17 | An exchange accepts no order modifications at this time |
 | OUTSIDE_PRICE_BAND | 11 | Limit orders cannot have bid price too low or ask price too high that is multiple times away from the internal reference price. |
-| NO_REFERENCE_PRICE | 12 | Limit orders cannot be placed because there is currently no internal reference price |
 
 
 

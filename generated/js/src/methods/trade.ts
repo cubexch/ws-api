@@ -445,9 +445,6 @@ export function modifyOrderReject_ReasonFromJSON(object: any): ModifyOrderReject
     case 11:
     case "OUTSIDE_PRICE_BAND":
       return ModifyOrderReject_Reason.OUTSIDE_PRICE_BAND;
-    case 12:
-    case "NO_REFERENCE_PRICE":
-      return ModifyOrderReject_Reason.NO_REFERENCE_PRICE;
     default:
       throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum ModifyOrderReject_Reason");
   }
@@ -479,8 +476,6 @@ export function modifyOrderReject_ReasonToJSON(object: ModifyOrderReject_Reason)
       return "ONLY_ORDER_CANCEL_ACCEPTED";
     case ModifyOrderReject_Reason.OUTSIDE_PRICE_BAND:
       return "OUTSIDE_PRICE_BAND";
-    case ModifyOrderReject_Reason.NO_REFERENCE_PRICE:
-      return "NO_REFERENCE_PRICE";
     default:
       throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum ModifyOrderReject_Reason");
   }

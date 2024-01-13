@@ -817,9 +817,6 @@ pub mod modify_order_reject {
         /// Limit orders cannot have bid price too low or ask price too high that
         /// is multiple times away from the internal reference price.
         OutsidePriceBand = 11,
-        /// Limit orders cannot be placed because there is currently no internal
-        /// reference price
-        NoReferencePrice = 12,
     }
     impl Reason {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -840,7 +837,6 @@ pub mod modify_order_reject {
                 Reason::PostOnlyWouldTrade => "POST_ONLY_WOULD_TRADE",
                 Reason::OnlyOrderCancelAccepted => "ONLY_ORDER_CANCEL_ACCEPTED",
                 Reason::OutsidePriceBand => "OUTSIDE_PRICE_BAND",
-                Reason::NoReferencePrice => "NO_REFERENCE_PRICE",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -858,7 +854,6 @@ pub mod modify_order_reject {
                 "POST_ONLY_WOULD_TRADE" => Some(Self::PostOnlyWouldTrade),
                 "ONLY_ORDER_CANCEL_ACCEPTED" => Some(Self::OnlyOrderCancelAccepted),
                 "OUTSIDE_PRICE_BAND" => Some(Self::OutsidePriceBand),
-                "NO_REFERENCE_PRICE" => Some(Self::NoReferencePrice),
                 _ => None,
             }
         }
