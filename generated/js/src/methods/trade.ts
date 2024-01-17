@@ -4,7 +4,6 @@ import {
   OrderType,
   SelfTradePrevention,
   PostOnly,
-  FixedPointDecimal,
   Credentials,
   OrderRequest,
   NewOrder,
@@ -26,6 +25,7 @@ import {
   ModifyOrderReject,
   ModifyOrderReject_Reason,
   Fill,
+  FixedPointDecimal,
   AssetPosition,
   RawUnits,
   Bootstrap,
@@ -481,66 +481,6 @@ export function modifyOrderReject_ReasonToJSON(object: ModifyOrderReject_Reason)
   }
 }
 
-
-function createBaseFixedPointDecimal(): FixedPointDecimal {
-  return { mantissa: BigInt("0"), exponent: 0 };
-}
-
-export const FixedPointDecimalMethods = {
-  encode(message: FixedPointDecimal, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.mantissa !== BigInt("0")) {
-      writer.uint32(8).int64(message.mantissa.toString());
-    }
-    if (message.exponent !== 0) {
-      writer.uint32(16).int32(message.exponent);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): FixedPointDecimal {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseFixedPointDecimal();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 8) {
-            break;
-          }
-
-          message.mantissa = longToBigint(reader.int64() as Long);
-          continue;
-        case 2:
-          if (tag !== 16) {
-            break;
-          }
-
-          message.exponent = reader.int32();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): FixedPointDecimal {
-    return {
-      mantissa: isSet(object.mantissa) ? BigInt(object.mantissa) : BigInt("0"),
-      exponent: isSet(object.exponent) ? Number(object.exponent) : 0,
-    };
-  },
-
-  toJSON(message: FixedPointDecimal): unknown {
-    const obj: any = {};
-    message.mantissa !== undefined && (obj.mantissa = message.mantissa.toString());
-    message.exponent !== undefined && (obj.exponent = Math.round(message.exponent));
-    return obj;
-  },
-};
 
 function createBaseCredentials(): Credentials {
   return { accessKeyId: "", signature: "", timestamp: BigInt("0") };
@@ -2764,6 +2704,66 @@ export const FillMethods = {
     message.feeRatio !== undefined &&
       (obj.feeRatio = message.feeRatio ? FixedPointDecimalMethods.toJSON(message.feeRatio) : undefined);
     message.tradeId !== undefined && (obj.tradeId = message.tradeId.toString());
+    return obj;
+  },
+};
+
+function createBaseFixedPointDecimal(): FixedPointDecimal {
+  return { mantissa: BigInt("0"), exponent: 0 };
+}
+
+export const FixedPointDecimalMethods = {
+  encode(message: FixedPointDecimal, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.mantissa !== BigInt("0")) {
+      writer.uint32(8).int64(message.mantissa.toString());
+    }
+    if (message.exponent !== 0) {
+      writer.uint32(16).int32(message.exponent);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): FixedPointDecimal {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseFixedPointDecimal();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.mantissa = longToBigint(reader.int64() as Long);
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.exponent = reader.int32();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): FixedPointDecimal {
+    return {
+      mantissa: isSet(object.mantissa) ? BigInt(object.mantissa) : BigInt("0"),
+      exponent: isSet(object.exponent) ? Number(object.exponent) : 0,
+    };
+  },
+
+  toJSON(message: FixedPointDecimal): unknown {
+    const obj: any = {};
+    message.mantissa !== undefined && (obj.mantissa = message.mantissa.toString());
+    message.exponent !== undefined && (obj.exponent = Math.round(message.exponent));
     return obj;
   },
 };

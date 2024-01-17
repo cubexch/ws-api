@@ -7,30 +7,30 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Side(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-    __slots__ = []
+    __slots__ = ()
     BID: _ClassVar[Side]
     ASK: _ClassVar[Side]
 
 class TimeInForce(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-    __slots__ = []
+    __slots__ = ()
     IMMEDIATE_OR_CANCEL: _ClassVar[TimeInForce]
     GOOD_FOR_SESSION: _ClassVar[TimeInForce]
     FILL_OR_KILL: _ClassVar[TimeInForce]
 
 class OrderType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-    __slots__ = []
+    __slots__ = ()
     LIMIT: _ClassVar[OrderType]
     MARKET_LIMIT: _ClassVar[OrderType]
     MARKET_WITH_PROTECTION: _ClassVar[OrderType]
 
 class SelfTradePrevention(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-    __slots__ = []
+    __slots__ = ()
     CANCEL_RESTING: _ClassVar[SelfTradePrevention]
     CANCEL_AGGRESSING: _ClassVar[SelfTradePrevention]
     ALLOW_SELF_TRADE: _ClassVar[SelfTradePrevention]
 
 class PostOnly(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-    __slots__ = []
+    __slots__ = ()
     DISABLED: _ClassVar[PostOnly]
     ENABLED: _ClassVar[PostOnly]
 BID: Side
@@ -47,16 +47,8 @@ ALLOW_SELF_TRADE: SelfTradePrevention
 DISABLED: PostOnly
 ENABLED: PostOnly
 
-class FixedPointDecimal(_message.Message):
-    __slots__ = ["mantissa", "exponent"]
-    MANTISSA_FIELD_NUMBER: _ClassVar[int]
-    EXPONENT_FIELD_NUMBER: _ClassVar[int]
-    mantissa: int
-    exponent: int
-    def __init__(self, mantissa: _Optional[int] = ..., exponent: _Optional[int] = ...) -> None: ...
-
 class Credentials(_message.Message):
-    __slots__ = ["access_key_id", "signature", "timestamp"]
+    __slots__ = ("access_key_id", "signature", "timestamp")
     ACCESS_KEY_ID_FIELD_NUMBER: _ClassVar[int]
     SIGNATURE_FIELD_NUMBER: _ClassVar[int]
     TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
@@ -66,7 +58,7 @@ class Credentials(_message.Message):
     def __init__(self, access_key_id: _Optional[str] = ..., signature: _Optional[str] = ..., timestamp: _Optional[int] = ...) -> None: ...
 
 class OrderRequest(_message.Message):
-    __slots__ = ["new", "cancel", "modify", "heartbeat", "mc"]
+    __slots__ = ("new", "cancel", "modify", "heartbeat", "mc")
     NEW_FIELD_NUMBER: _ClassVar[int]
     CANCEL_FIELD_NUMBER: _ClassVar[int]
     MODIFY_FIELD_NUMBER: _ClassVar[int]
@@ -80,7 +72,7 @@ class OrderRequest(_message.Message):
     def __init__(self, new: _Optional[_Union[NewOrder, _Mapping]] = ..., cancel: _Optional[_Union[CancelOrder, _Mapping]] = ..., modify: _Optional[_Union[ModifyOrder, _Mapping]] = ..., heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., mc: _Optional[_Union[MassCancel, _Mapping]] = ...) -> None: ...
 
 class NewOrder(_message.Message):
-    __slots__ = ["client_order_id", "request_id", "market_id", "price", "quantity", "side", "time_in_force", "order_type", "subaccount_id", "self_trade_prevention", "post_only", "cancel_on_disconnect"]
+    __slots__ = ("client_order_id", "request_id", "market_id", "price", "quantity", "side", "time_in_force", "order_type", "subaccount_id", "self_trade_prevention", "post_only", "cancel_on_disconnect")
     CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
     MARKET_ID_FIELD_NUMBER: _ClassVar[int]
@@ -108,7 +100,7 @@ class NewOrder(_message.Message):
     def __init__(self, client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., market_id: _Optional[int] = ..., price: _Optional[int] = ..., quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., time_in_force: _Optional[_Union[TimeInForce, str]] = ..., order_type: _Optional[_Union[OrderType, str]] = ..., subaccount_id: _Optional[int] = ..., self_trade_prevention: _Optional[_Union[SelfTradePrevention, str]] = ..., post_only: _Optional[_Union[PostOnly, str]] = ..., cancel_on_disconnect: bool = ...) -> None: ...
 
 class CancelOrder(_message.Message):
-    __slots__ = ["market_id", "client_order_id", "request_id", "subaccount_id"]
+    __slots__ = ("market_id", "client_order_id", "request_id", "subaccount_id")
     MARKET_ID_FIELD_NUMBER: _ClassVar[int]
     CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
@@ -120,7 +112,7 @@ class CancelOrder(_message.Message):
     def __init__(self, market_id: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., subaccount_id: _Optional[int] = ...) -> None: ...
 
 class ModifyOrder(_message.Message):
-    __slots__ = ["market_id", "client_order_id", "request_id", "new_price", "new_quantity", "subaccount_id", "self_trade_prevention", "post_only"]
+    __slots__ = ("market_id", "client_order_id", "request_id", "new_price", "new_quantity", "subaccount_id", "self_trade_prevention", "post_only")
     MARKET_ID_FIELD_NUMBER: _ClassVar[int]
     CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
@@ -140,7 +132,7 @@ class ModifyOrder(_message.Message):
     def __init__(self, market_id: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., new_price: _Optional[int] = ..., new_quantity: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., self_trade_prevention: _Optional[_Union[SelfTradePrevention, str]] = ..., post_only: _Optional[_Union[PostOnly, str]] = ...) -> None: ...
 
 class MassCancel(_message.Message):
-    __slots__ = ["subaccount_id", "request_id", "market_id", "side"]
+    __slots__ = ("subaccount_id", "request_id", "market_id", "side")
     SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
     MARKET_ID_FIELD_NUMBER: _ClassVar[int]
@@ -152,7 +144,7 @@ class MassCancel(_message.Message):
     def __init__(self, subaccount_id: _Optional[int] = ..., request_id: _Optional[int] = ..., market_id: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ...) -> None: ...
 
 class Heartbeat(_message.Message):
-    __slots__ = ["request_id", "timestamp"]
+    __slots__ = ("request_id", "timestamp")
     REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
     TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
     request_id: int
@@ -160,7 +152,7 @@ class Heartbeat(_message.Message):
     def __init__(self, request_id: _Optional[int] = ..., timestamp: _Optional[int] = ...) -> None: ...
 
 class OrderResponse(_message.Message):
-    __slots__ = ["new_ack", "cancel_ack", "modify_ack", "new_reject", "cancel_reject", "modify_reject", "fill", "heartbeat", "position", "mass_cancel_ack"]
+    __slots__ = ("new_ack", "cancel_ack", "modify_ack", "new_reject", "cancel_reject", "modify_reject", "fill", "heartbeat", "position", "mass_cancel_ack")
     NEW_ACK_FIELD_NUMBER: _ClassVar[int]
     CANCEL_ACK_FIELD_NUMBER: _ClassVar[int]
     MODIFY_ACK_FIELD_NUMBER: _ClassVar[int]
@@ -184,7 +176,7 @@ class OrderResponse(_message.Message):
     def __init__(self, new_ack: _Optional[_Union[NewOrderAck, _Mapping]] = ..., cancel_ack: _Optional[_Union[CancelOrderAck, _Mapping]] = ..., modify_ack: _Optional[_Union[ModifyOrderAck, _Mapping]] = ..., new_reject: _Optional[_Union[NewOrderReject, _Mapping]] = ..., cancel_reject: _Optional[_Union[CancelOrderReject, _Mapping]] = ..., modify_reject: _Optional[_Union[ModifyOrderReject, _Mapping]] = ..., fill: _Optional[_Union[Fill, _Mapping]] = ..., heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., position: _Optional[_Union[AssetPosition, _Mapping]] = ..., mass_cancel_ack: _Optional[_Union[MassCancelAck, _Mapping]] = ...) -> None: ...
 
 class NewOrderAck(_message.Message):
-    __slots__ = ["msg_seq_num", "client_order_id", "request_id", "exchange_order_id", "market_id", "price", "quantity", "side", "time_in_force", "order_type", "transact_time", "subaccount_id", "cancel_on_disconnect"]
+    __slots__ = ("msg_seq_num", "client_order_id", "request_id", "exchange_order_id", "market_id", "price", "quantity", "side", "time_in_force", "order_type", "transact_time", "subaccount_id", "cancel_on_disconnect")
     MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
     CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
@@ -214,9 +206,9 @@ class NewOrderAck(_message.Message):
     def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., exchange_order_id: _Optional[int] = ..., market_id: _Optional[int] = ..., price: _Optional[int] = ..., quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., time_in_force: _Optional[_Union[TimeInForce, str]] = ..., order_type: _Optional[_Union[OrderType, str]] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., cancel_on_disconnect: bool = ...) -> None: ...
 
 class CancelOrderAck(_message.Message):
-    __slots__ = ["msg_seq_num", "client_order_id", "request_id", "transact_time", "subaccount_id", "reason", "market_id", "exchange_order_id"]
+    __slots__ = ("msg_seq_num", "client_order_id", "request_id", "transact_time", "subaccount_id", "reason", "market_id", "exchange_order_id")
     class Reason(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = []
+        __slots__ = ()
         UNCLASSIFIED: _ClassVar[CancelOrderAck.Reason]
         DISCONNECT: _ClassVar[CancelOrderAck.Reason]
         REQUESTED: _ClassVar[CancelOrderAck.Reason]
@@ -252,7 +244,7 @@ class CancelOrderAck(_message.Message):
     def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., reason: _Optional[_Union[CancelOrderAck.Reason, str]] = ..., market_id: _Optional[int] = ..., exchange_order_id: _Optional[int] = ...) -> None: ...
 
 class ModifyOrderAck(_message.Message):
-    __slots__ = ["msg_seq_num", "client_order_id", "request_id", "transact_time", "remaining_quantity", "subaccount_id", "market_id", "price", "quantity", "cumulative_quantity", "exchange_order_id"]
+    __slots__ = ("msg_seq_num", "client_order_id", "request_id", "transact_time", "remaining_quantity", "subaccount_id", "market_id", "price", "quantity", "cumulative_quantity", "exchange_order_id")
     MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
     CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
@@ -278,9 +270,9 @@ class ModifyOrderAck(_message.Message):
     def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., remaining_quantity: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., market_id: _Optional[int] = ..., price: _Optional[int] = ..., quantity: _Optional[int] = ..., cumulative_quantity: _Optional[int] = ..., exchange_order_id: _Optional[int] = ...) -> None: ...
 
 class MassCancelAck(_message.Message):
-    __slots__ = ["msg_seq_num", "subaccount_id", "request_id", "transact_time", "reason", "total_affected_orders"]
+    __slots__ = ("msg_seq_num", "subaccount_id", "request_id", "transact_time", "reason", "total_affected_orders")
     class Reason(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = []
+        __slots__ = ()
         UNCLASSIFIED: _ClassVar[MassCancelAck.Reason]
         INVALID_MARKET_ID: _ClassVar[MassCancelAck.Reason]
         INVALID_SIDE: _ClassVar[MassCancelAck.Reason]
@@ -302,9 +294,9 @@ class MassCancelAck(_message.Message):
     def __init__(self, msg_seq_num: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., request_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., reason: _Optional[_Union[MassCancelAck.Reason, str]] = ..., total_affected_orders: _Optional[int] = ...) -> None: ...
 
 class NewOrderReject(_message.Message):
-    __slots__ = ["msg_seq_num", "client_order_id", "request_id", "transact_time", "subaccount_id", "reason", "market_id", "price", "quantity", "side", "time_in_force", "order_type"]
+    __slots__ = ("msg_seq_num", "client_order_id", "request_id", "transact_time", "subaccount_id", "reason", "market_id", "price", "quantity", "side", "time_in_force", "order_type")
     class Reason(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = []
+        __slots__ = ()
         UNCLASSIFIED: _ClassVar[NewOrderReject.Reason]
         INVALID_QUANTITY: _ClassVar[NewOrderReject.Reason]
         INVALID_MARKET_ID: _ClassVar[NewOrderReject.Reason]
@@ -376,9 +368,9 @@ class NewOrderReject(_message.Message):
     def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., reason: _Optional[_Union[NewOrderReject.Reason, str]] = ..., market_id: _Optional[int] = ..., price: _Optional[int] = ..., quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., time_in_force: _Optional[_Union[TimeInForce, str]] = ..., order_type: _Optional[_Union[OrderType, str]] = ...) -> None: ...
 
 class CancelOrderReject(_message.Message):
-    __slots__ = ["msg_seq_num", "client_order_id", "request_id", "transact_time", "subaccount_id", "reason", "market_id"]
+    __slots__ = ("msg_seq_num", "client_order_id", "request_id", "transact_time", "subaccount_id", "reason", "market_id")
     class Reason(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = []
+        __slots__ = ()
         UNCLASSIFIED: _ClassVar[CancelOrderReject.Reason]
         INVALID_MARKET_ID: _ClassVar[CancelOrderReject.Reason]
         ORDER_NOT_FOUND: _ClassVar[CancelOrderReject.Reason]
@@ -402,9 +394,9 @@ class CancelOrderReject(_message.Message):
     def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., reason: _Optional[_Union[CancelOrderReject.Reason, str]] = ..., market_id: _Optional[int] = ...) -> None: ...
 
 class ModifyOrderReject(_message.Message):
-    __slots__ = ["msg_seq_num", "client_order_id", "request_id", "transact_time", "subaccount_id", "reason", "market_id"]
+    __slots__ = ("msg_seq_num", "client_order_id", "request_id", "transact_time", "subaccount_id", "reason", "market_id")
     class Reason(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = []
+        __slots__ = ()
         UNCLASSIFIED: _ClassVar[ModifyOrderReject.Reason]
         INVALID_QUANTITY: _ClassVar[ModifyOrderReject.Reason]
         INVALID_MARKET_ID: _ClassVar[ModifyOrderReject.Reason]
@@ -446,7 +438,7 @@ class ModifyOrderReject(_message.Message):
     def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., reason: _Optional[_Union[ModifyOrderReject.Reason, str]] = ..., market_id: _Optional[int] = ...) -> None: ...
 
 class Fill(_message.Message):
-    __slots__ = ["msg_seq_num", "market_id", "client_order_id", "exchange_order_id", "fill_price", "fill_quantity", "leaves_quantity", "transact_time", "subaccount_id", "cumulative_quantity", "side", "aggressor_indicator", "fee_ratio", "trade_id"]
+    __slots__ = ("msg_seq_num", "market_id", "client_order_id", "exchange_order_id", "fill_price", "fill_quantity", "leaves_quantity", "transact_time", "subaccount_id", "cumulative_quantity", "side", "aggressor_indicator", "fee_ratio", "trade_id")
     MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
     MARKET_ID_FIELD_NUMBER: _ClassVar[int]
     CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
@@ -477,8 +469,16 @@ class Fill(_message.Message):
     trade_id: int
     def __init__(self, msg_seq_num: _Optional[int] = ..., market_id: _Optional[int] = ..., client_order_id: _Optional[int] = ..., exchange_order_id: _Optional[int] = ..., fill_price: _Optional[int] = ..., fill_quantity: _Optional[int] = ..., leaves_quantity: _Optional[int] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., cumulative_quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., aggressor_indicator: bool = ..., fee_ratio: _Optional[_Union[FixedPointDecimal, _Mapping]] = ..., trade_id: _Optional[int] = ...) -> None: ...
 
+class FixedPointDecimal(_message.Message):
+    __slots__ = ("mantissa", "exponent")
+    MANTISSA_FIELD_NUMBER: _ClassVar[int]
+    EXPONENT_FIELD_NUMBER: _ClassVar[int]
+    mantissa: int
+    exponent: int
+    def __init__(self, mantissa: _Optional[int] = ..., exponent: _Optional[int] = ...) -> None: ...
+
 class AssetPosition(_message.Message):
-    __slots__ = ["subaccount_id", "asset_id", "total", "available"]
+    __slots__ = ("subaccount_id", "asset_id", "total", "available")
     SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     ASSET_ID_FIELD_NUMBER: _ClassVar[int]
     TOTAL_FIELD_NUMBER: _ClassVar[int]
@@ -490,7 +490,7 @@ class AssetPosition(_message.Message):
     def __init__(self, subaccount_id: _Optional[int] = ..., asset_id: _Optional[int] = ..., total: _Optional[_Union[RawUnits, _Mapping]] = ..., available: _Optional[_Union[RawUnits, _Mapping]] = ...) -> None: ...
 
 class RawUnits(_message.Message):
-    __slots__ = ["word0", "word1", "word2", "word3"]
+    __slots__ = ("word0", "word1", "word2", "word3")
     WORD0_FIELD_NUMBER: _ClassVar[int]
     WORD1_FIELD_NUMBER: _ClassVar[int]
     WORD2_FIELD_NUMBER: _ClassVar[int]
@@ -502,7 +502,7 @@ class RawUnits(_message.Message):
     def __init__(self, word0: _Optional[int] = ..., word1: _Optional[int] = ..., word2: _Optional[int] = ..., word3: _Optional[int] = ...) -> None: ...
 
 class Bootstrap(_message.Message):
-    __slots__ = ["done", "resting", "position"]
+    __slots__ = ("done", "resting", "position")
     DONE_FIELD_NUMBER: _ClassVar[int]
     RESTING_FIELD_NUMBER: _ClassVar[int]
     POSITION_FIELD_NUMBER: _ClassVar[int]
@@ -512,19 +512,19 @@ class Bootstrap(_message.Message):
     def __init__(self, done: _Optional[_Union[Done, _Mapping]] = ..., resting: _Optional[_Union[RestingOrders, _Mapping]] = ..., position: _Optional[_Union[AssetPositions, _Mapping]] = ...) -> None: ...
 
 class RestingOrders(_message.Message):
-    __slots__ = ["orders"]
+    __slots__ = ("orders",)
     ORDERS_FIELD_NUMBER: _ClassVar[int]
     orders: _containers.RepeatedCompositeFieldContainer[RestingOrder]
     def __init__(self, orders: _Optional[_Iterable[_Union[RestingOrder, _Mapping]]] = ...) -> None: ...
 
 class AssetPositions(_message.Message):
-    __slots__ = ["positions"]
+    __slots__ = ("positions",)
     POSITIONS_FIELD_NUMBER: _ClassVar[int]
     positions: _containers.RepeatedCompositeFieldContainer[AssetPosition]
     def __init__(self, positions: _Optional[_Iterable[_Union[AssetPosition, _Mapping]]] = ...) -> None: ...
 
 class Done(_message.Message):
-    __slots__ = ["latest_transact_time", "read_only"]
+    __slots__ = ("latest_transact_time", "read_only")
     LATEST_TRANSACT_TIME_FIELD_NUMBER: _ClassVar[int]
     READ_ONLY_FIELD_NUMBER: _ClassVar[int]
     latest_transact_time: int
@@ -532,7 +532,7 @@ class Done(_message.Message):
     def __init__(self, latest_transact_time: _Optional[int] = ..., read_only: bool = ...) -> None: ...
 
 class RestingOrder(_message.Message):
-    __slots__ = ["client_order_id", "exchange_order_id", "market_id", "price", "order_quantity", "side", "time_in_force", "order_type", "remaining_quantity", "rest_time", "subaccount_id", "cumulative_quantity", "cancel_on_disconnect"]
+    __slots__ = ("client_order_id", "exchange_order_id", "market_id", "price", "order_quantity", "side", "time_in_force", "order_type", "remaining_quantity", "rest_time", "subaccount_id", "cumulative_quantity", "cancel_on_disconnect")
     CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     EXCHANGE_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     MARKET_ID_FIELD_NUMBER: _ClassVar[int]

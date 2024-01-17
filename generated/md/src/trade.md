@@ -1,8 +1,8 @@
 # WebSocket: Trade API
 
-## trade.proto
 This schema defines the Protobuf messages used for communication with the
-Cube Order Service (Osmium, OS).
+Cube Order Service (Osmium, OS). The `proto` definition file can be found
+[here](https://github.com/cubexch/ws-api/blob/main/schema/trade.proto).
 
 ### Connection
 
@@ -103,25 +103,6 @@ from the perspective of the matching engine.
 
 
 
-## FixedPointDecimal
-A fixed-point decimal number.
-Matches the representation preferred by the FIX protocol,
-except that the exponent is int32 since Protobuf does not have an int8 type.
-The value is computed as `mantissa * 10^exponent`;
-for example, `mantissa = 1234` and `exponent = -2` is `12.34`.
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| mantissa | [int64](#int64) |  |  |
-| exponent | [int32](#int32) |  |  |
-
-
-
-
-
-
-
 ## Credentials
 Sent by client on websocket initialization. Once the websocket has been
 connected, the client is expected to send this credentials message
@@ -131,7 +112,7 @@ signature should be calculated as the concatenation of the byte string
 `cube.xyz` and the current unix epoch in seconds interpreted at a
 little-endian 64-bit number.
 
-Implementation notes:
+### Implementation notes:
 - The signature is base-64 encoded with the 'standard' alphabet and
   padding.
 
@@ -142,15 +123,26 @@ Implementation notes:
 - The secret key should be decoded from a hex string into a 32-byte array of
   bytes
 
+If the credentials provided are incorrect, the server will drop the connection with a close code of 4401.
+
+### Examples
+
+In the following examples, replace "cafecafecafe..." with your secret key.
+When calculated for:
+  secret key: "cafecafecafecafecafecafecafecafecafecafecafecafecafecafecafecafe"
+  timestamp: 1706546268
+...the resulting signature should be:
+  "tmtSP4NIzTLXyVUHIOfinotGnPWyfM8JefxivBdSjc8="
 
 #### Rust
 
 ```rust compile_fail
+// With crates hmac, base64, hex:
 use base64::Engine;
 use hmac::{Hmac, Mac, NewMac};
 use std::time::SystemTime;
 
-let secret_key = [...];
+let secret_key = hex::decode("cafecafecafecafecafecafecafecafecafecafecafecafecafecafecafecafe").expect("secret key valid hex").as_slice();
 
 let timestamp: u64 = SystemTime::now().duration_since(SystemTime::UNIX_EPOCH).unwrap().as_secs();
 
@@ -553,6 +545,25 @@ A fill for an order.
 
 
 
+### FixedPointDecimal
+A fixed-point decimal number.
+Matches the representation preferred by the FIX protocol,
+except that the exponent is int32 since Protobuf does not have an int8 type.
+The value is computed as `mantissa * 10^exponent`;
+for example, `mantissa = 1234` and `exponent = -2` is `12.34`.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| mantissa | [int64](#int64) |  |  |
+| exponent | [int32](#int32) |  |  |
+
+
+
+
+
+
+
 ### AssetPosition
 The user's underlying asset position. These are sent asynchronously as
 positions are updated and broadcast through internal position channels. They
@@ -685,7 +696,6 @@ A resting order. Sent on bootstrap in `RestingOrders`.
 
 
 ## Enums
-
 
 
 ### Side

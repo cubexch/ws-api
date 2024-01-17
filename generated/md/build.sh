@@ -48,6 +48,7 @@ ONCE=(
   CancelOrderReject
   ModifyOrderReject
   Fill
+  FixedPointDecimal
   AssetPosition
   RawUnits
   MassCancelAck
@@ -56,17 +57,6 @@ ONCE=(
   RestingOrders
   RestingOrder
   AssetPositions
-  # enums
-  Side
-  TimeInForce
-  OrderType
-  SelfTradePrevention
-  PostOnly
-  CancelOrderAck.Reason
-  MassCancelAck.Reason
-  NewOrderReject.Reason
-  CancelOrderReject.Reason
-  ModifyOrderReject.Reason
 )
 
 for STRUCT in "${ONCE[@]}"; do
@@ -84,7 +74,7 @@ sed -i '' '1i\
 # WebSocket: Market Data API' ./src/market_data.md
 
 ONCE=(
-  # md message
+  # md messages
   MarketByPrice
   MarketByPrice.Level
   MarketByPriceDiff
@@ -102,13 +92,10 @@ ONCE=(
   # agg message
   TopOfBook
   TopOfBooks
+  RateUpdate
+  RateUpdates
   # client message
   Config
-  # enums
-  Side
-  KlineInterval
-  MarketByPriceDiff.DiffOp
-  MarketByOrderDiff.DiffOp
 )
 
 for STRUCT in "${ONCE[@]}"; do
