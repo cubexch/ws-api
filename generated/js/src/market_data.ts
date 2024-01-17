@@ -13,13 +13,13 @@ export const protobufPackage = "market_data";
  * price level through the Market by Price (MBP) and order-by-order through the
  * Market by Order (MBO). In addition, clients can subscribe to the trade stream
  * and price candlesticks. Clients should submit a [`Config`](#config) and then
- * process [`MdMessage`'s](#md-message).
+ * process [`MdMessage`](#mdmessage)'s.
  *
  * ### Aggregate Book Tops Data
  *
  * The market data service exposes a websocket endpoint for aggregated
  * tops-of-book for all markets at `/tops`. Client should process
- * [`AggMessage`](#agg-message).
+ * [`AggMessage`](#aggmessage).
  *
  * ### Heartbeats
  *
@@ -67,7 +67,7 @@ export enum RateUpdateSide {
 
 /**
  * Every exchange message from `/book/:market_id` will be wrapped as an
- * [`MdMessages`](#md-messages) which contains multiple `MdMessage`'s.
+ * [`MdMessages`](#mdmessages) which contains multiple `MdMessage`'s.
  */
 export interface MdMessage {
   /** Server heartbeat reply */
@@ -182,7 +182,7 @@ export interface MarketByOrder {
 export interface MarketByOrder_Order {
   price: bigint;
   quantity: bigint;
-  /** [Exchange order ID](/docs/api_reference/trade#exchange-order-id) */
+  /** [Exchange order ID](./websocket-trade-api.md#exchange-order-id) */
   exchangeOrderId: bigint;
   side: Side;
   /**
@@ -233,11 +233,11 @@ export enum MarketByOrderDiff_DiffOp {
 export interface MarketByOrderDiff_Diff {
   price: bigint;
   quantity: bigint;
-  /** [Exchange order ID](/docs/api_reference/trade#exchange-order-id) */
+  /** [Exchange order ID](./websocket-trade-api.md#exchange-order-id) */
   exchangeOrderId: bigint;
   side: Side;
   op: MarketByOrderDiff_DiffOp;
-  /** See [`MarketByOrder.Order`](#market-by-order-order) */
+  /** See [`MarketByOrder.Order`](#marketbyorder.order) */
   priority: bigint;
 }
 
@@ -261,19 +261,19 @@ export interface Trades_Trade {
   /** The side of the aggressing order. */
   aggressingSide: Side;
   /**
-   * The [Exchange order ID](/docs/api_reference/trade#exchange-order-id) of
+   * The [Exchange order ID](./websocket-trade-api.md#exchange-order-id) of
    * the resting order.
    */
   restingExchangeOrderId: bigint;
   fillQuantity: bigint;
   /**
-   * The [transact time](/docs/api_reference/trade#transact-time) assigned by
+   * The [transact time](./websocket-trade-api.md#transact-time) assigned by
    * the matching engine for this trade. All trades that occur from the same
    * event will be assigned the same transact time.
    */
   transactTime: bigint;
   /**
-   * The [Exchange order ID](/docs/api_reference/trade#exchange-order-id) of
+   * The [Exchange order ID](./websocket-trade-api.md#exchange-order-id) of
    * the aggressing order.
    */
   aggressingExchangeOrderId: bigint;
@@ -350,7 +350,7 @@ export interface AggMessage {
 export interface TopOfBook {
   marketId: bigint;
   /**
-   * The [transact time](/docs/api_reference/trade#transact-time) of the latest
+   * The [transact time](./websocket-trade-api.md#transact-time) of the latest
    * book update on this market.
    */
   transactTime: bigint;

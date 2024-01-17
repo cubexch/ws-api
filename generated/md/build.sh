@@ -31,11 +31,7 @@ protoc \
   --proto_path="$SCHEMAS" "$SCHEMAS"/trade.proto
 
 sed -i '' '1i\
----\
-title: Trade API\
-pageTitle: Cube - Trade API\
-description: Trade crypto at microsecond speeds so your market making code never misses a tick.\
----' ./src/trade.md
+# WebSocket: Trade API' ./src/trade.md
 
 ONCE=(
   # order request
@@ -85,11 +81,7 @@ protoc \
   --proto_path="$SCHEMAS" "$SCHEMAS"/market_data.proto
 
 sed -i '' '1i\
----\
-title: Market Data API\
-pageTitle: Cube - Market Data API\
-description: Trade crypto at microsecond speeds, so your market maker code never miss a tick.\
----' ./src/market_data.md
+# WebSocket: Market Data API' ./src/market_data.md
 
 ONCE=(
   # md message

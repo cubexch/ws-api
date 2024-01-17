@@ -1,5 +1,5 @@
 /// Every exchange message from `/book/:market_id` will be wrapped as an
-/// \[`MdMessages`\](#md-messages) which contains multiple `MdMessage`'s.
+/// \[`MdMessages`\](#mdmessages) which contains multiple `MdMessage`'s.
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
@@ -128,7 +128,7 @@ pub mod market_by_price_diff {
         Add = 0,
         /// This operation is used when a price level is removed from the book.
         Remove = 1,
-        /// This operation is used when a new price level is added or 
+        /// This operation is used when a new price level is added or
         /// an existing price level is modified.
         Replace = 2,
     }
@@ -186,7 +186,7 @@ pub mod market_by_order {
         pub price: u64,
         #[prost(uint64, tag="2")]
         pub quantity: u64,
-        /// [Exchange order ID](/docs/api_reference/trade#exchange-order-id)
+        /// [Exchange order ID](./websocket-trade-api.md#exchange-order-id)
         #[prost(uint64, tag="3")]
         pub exchange_order_id: u64,
         #[prost(enumeration="super::Side", tag="4")]
@@ -241,14 +241,14 @@ pub mod market_by_order_diff {
         pub price: u64,
         #[prost(uint64, tag="2")]
         pub quantity: u64,
-        /// [Exchange order ID](/docs/api_reference/trade#exchange-order-id)
+        /// [Exchange order ID](./websocket-trade-api.md#exchange-order-id)
         #[prost(uint64, tag="3")]
         pub exchange_order_id: u64,
         #[prost(enumeration="super::Side", tag="4")]
         pub side: i32,
         #[prost(enumeration="DiffOp", tag="5")]
         pub op: i32,
-        /// See \[`MarketByOrder.Order`\](#market-by-order-order)
+        /// See \[`MarketByOrder.Order`\](#marketbyorder.order)
         #[prost(uint64, tag="6")]
         pub priority: u64,
     }
@@ -318,18 +318,18 @@ pub mod trades {
         /// The side of the aggressing order.
         #[prost(enumeration="super::Side", tag="3")]
         pub aggressing_side: i32,
-        /// The [Exchange order ID](/docs/api_reference/trade#exchange-order-id) of
+        /// The [Exchange order ID](./websocket-trade-api.md#exchange-order-id) of
         /// the resting order.
         #[prost(uint64, tag="4")]
         pub resting_exchange_order_id: u64,
         #[prost(uint64, tag="5")]
         pub fill_quantity: u64,
-        /// The [transact time](/docs/api_reference/trade#transact-time) assigned by
+        /// The [transact time](./websocket-trade-api.md#transact-time) assigned by
         /// the matching engine for this trade. All trades that occur from the same
         /// event will be assigned the same transact time.
         #[prost(uint64, tag="6")]
         pub transact_time: u64,
-        /// The [Exchange order ID](/docs/api_reference/trade#exchange-order-id) of
+        /// The [Exchange order ID](./websocket-trade-api.md#exchange-order-id) of
         /// the aggressing order.
         #[prost(uint64, tag="7")]
         pub aggressing_exchange_order_id: u64,
@@ -459,7 +459,7 @@ pub mod agg_message {
 pub struct TopOfBook {
     #[prost(uint64, tag="1")]
     pub market_id: u64,
-    /// The [transact time](/docs/api_reference/trade#transact-time) of the latest
+    /// The [transact time](./websocket-trade-api.md#transact-time) of the latest
     /// book update on this market.
     #[prost(uint64, tag="2")]
     pub transact_time: u64,

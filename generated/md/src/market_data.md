@@ -1,8 +1,4 @@
----
-title: Market Data API
-pageTitle: Cube - Market Data API
-description: Trade crypto at microsecond speeds, so your market maker code never miss a tick.
----
+# WebSocket: Market Data API
 
 ## market_data.proto
 This schema defines the Protobuf messages used for communication with the
@@ -15,13 +11,13 @@ a given market at `/book/:market_id`. The order book can be consumed by both
 price level through the Market by Price (MBP) and order-by-order through the
 Market by Order (MBO). In addition, clients can subscribe to the trade stream
 and price candlesticks. Clients should submit a [`Config`](#config) and then
-process [`MdMessage`'s](#md-message).
+process [`MdMessage`](#mdmessage)'s.
 
 ### Aggregate Book Tops Data
 
 The market data service exposes a websocket endpoint for aggregated
 tops-of-book for all markets at `/tops`. Client should process
-[`AggMessage`](#agg-message).
+[`AggMessage`](#aggmessage).
 
 ### Heartbeats
 
@@ -32,7 +28,7 @@ interval is missed, the market data service will disconnect the websocket.
 
 ## MdMessage
 Every exchange message from `/book/:market_id` will be wrapped as an
-[`MdMessages`](#md-messages) which contains multiple `MdMessage`'s.
+[`MdMessages`](#mdmessages) which contains multiple `MdMessage`'s.
 
 
 | Field | Type | Label | Description |
@@ -40,10 +36,10 @@ Every exchange message from `/book/:market_id` will be wrapped as an
 | heartbeat | [Heartbeat](#heartbeat) |  | Server heartbeat reply |
 | summary | [Summary](#summary) |  | 24h summary |
 | trades | [Trades](#trades) |  | Recent trades |
-| mbo_snapshot | [MarketByOrder](#market-by-order) |  | Market by order snapshot |
-| mbo_diff | [MarketByOrderDiff](#market-by-order-diff) |  | Market by order diff |
-| mbp_snapshot | [MarketByPrice](#market-by-price) |  | Market by price snapshot |
-| mbp_diff | [MarketByPriceDiff](#market-by-price-diff) |  | Market by price diff |
+| mbo_snapshot | [MarketByOrder](#marketbyorder) |  | Market by order snapshot |
+| mbo_diff | [MarketByOrderDiff](#marketbyorderdiff) |  | Market by order diff |
+| mbp_snapshot | [MarketByPrice](#marketbyprice) |  | Market by price snapshot |
+| mbp_diff | [MarketByPriceDiff](#marketbypricediff) |  | Market by price diff |
 | kline | [Kline](#kline) |  | Candlestick |
 
 
@@ -62,7 +58,7 @@ levels, but no ordering is guaranteed.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| levels | [MarketByPrice.Level](#market-by-price-level) | repeated |  |
+| levels | [MarketByPrice.Level](#marketbyprice.level) | repeated |  |
 | chunk | [uint32](#uint32) |  |  |
 | num_chunks | [uint32](#uint32) |  |  |
 
@@ -97,7 +93,7 @@ reconciliation.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| diffs | [MarketByPriceDiff.Diff](#market-by-price-diff-diff) | repeated |  |
+| diffs | [MarketByPriceDiff.Diff](#marketbypricediff.diff) | repeated |  |
 | total_bid_levels | [uint32](#uint32) |  | Total number of bid levels after this diff is applied. |
 | total_ask_levels | [uint32](#uint32) |  | Total number of ask levels after this diff is applied. |
 
@@ -116,7 +112,7 @@ A price level diff overwrites the existing price level.
 | price | [uint64](#uint64) |  |  |
 | quantity | [uint64](#uint64) |  |  |
 | side | [Side](#side) |  |  |
-| op | [MarketByPriceDiff.DiffOp](#market-by-price-diff-diff-op) |  |  |
+| op | [MarketByPriceDiff.DiffOp](#marketbypricediff.diffop) |  |  |
 
 
 
@@ -134,7 +130,7 @@ matched when that level is aggressed.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| orders | [MarketByOrder.Order](#market-by-order-order) | repeated |  |
+| orders | [MarketByOrder.Order](#marketbyorder.order) | repeated |  |
 | chunk | [uint32](#uint32) |  |  |
 | num_chunks | [uint32](#uint32) |  |  |
 
@@ -152,7 +148,7 @@ A resting order.
 | ----- | ---- | ----- | ----------- |
 | price | [uint64](#uint64) |  |  |
 | quantity | [uint64](#uint64) |  |  |
-| exchange_order_id | [uint64](#uint64) |  | [Exchange order ID](/docs/api_reference/trade#exchange-order-id) |
+| exchange_order_id | [uint64](#uint64) |  | [Exchange order ID](./websocket-trade-api.md#exchange-order-id) |
 | side | [Side](#side) |  |  |
 | priority | [uint64](#uint64) |  | Order priority for execution. Valid within a price level and side. That is, orders must first be sorted by side and price (in descending order for bids and ascending for asks), and then the OrderPriority within the level. A lower value is a higher priority. |
 
@@ -174,7 +170,7 @@ exchange order ID will not change.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| diffs | [MarketByOrderDiff.Diff](#market-by-order-diff-diff) | repeated |  |
+| diffs | [MarketByOrderDiff.Diff](#marketbyorderdiff.diff) | repeated |  |
 | total_bid_levels | [uint32](#uint32) |  | Total number of bid levels after this diff is applied. |
 | total_ask_levels | [uint32](#uint32) |  | Total number of ask levels after this diff is applied. |
 | total_bid_orders | [uint32](#uint32) |  | Total number of bid orders after this diff is applied. |
@@ -195,10 +191,10 @@ An order diff creates, updates, or deletes a resting order based on the
 | ----- | ---- | ----- | ----------- |
 | price | [uint64](#uint64) |  |  |
 | quantity | [uint64](#uint64) |  |  |
-| exchange_order_id | [uint64](#uint64) |  | [Exchange order ID](/docs/api_reference/trade#exchange-order-id) |
+| exchange_order_id | [uint64](#uint64) |  | [Exchange order ID](./websocket-trade-api.md#exchange-order-id) |
 | side | [Side](#side) |  |  |
-| op | [MarketByOrderDiff.DiffOp](#market-by-order-diff-diff-op) |  |  |
-| priority | [uint64](#uint64) |  | See [`MarketByOrder.Order`](#market-by-order-order) |
+| op | [MarketByOrderDiff.DiffOp](#marketbyorderdiff.diffop) |  |  |
+| priority | [uint64](#uint64) |  | See [`MarketByOrder.Order`](#marketbyorder.order) |
 
 
 
@@ -214,7 +210,7 @@ orders and levels, respectively.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| trades | [Trades.Trade](#trades-trade) | repeated |  |
+| trades | [Trades.Trade](#trades.trade) | repeated |  |
 
 
 
@@ -231,10 +227,10 @@ orders and levels, respectively.
 | tradeId | [uint64](#uint64) |  | The ID assigned to this trade. All trades that occur from the same event will be assigned the same ID, and are considered to be an atomic batch. |
 | price | [uint64](#uint64) |  | The price that this trade occurred at. |
 | aggressing_side | [Side](#side) |  | The side of the aggressing order. |
-| resting_exchange_order_id | [uint64](#uint64) |  | The [Exchange order ID](/docs/api_reference/trade#exchange-order-id) of the resting order. |
+| resting_exchange_order_id | [uint64](#uint64) |  | The [Exchange order ID](./websocket-trade-api.md#exchange-order-id) of the resting order. |
 | fill_quantity | [uint64](#uint64) |  |  |
-| transact_time | [uint64](#uint64) |  | The [transact time](/docs/api_reference/trade#transact-time) assigned by the matching engine for this trade. All trades that occur from the same event will be assigned the same transact time. |
-| aggressing_exchange_order_id | [uint64](#uint64) |  | The [Exchange order ID](/docs/api_reference/trade#exchange-order-id) of the aggressing order. |
+| transact_time | [uint64](#uint64) |  | The [transact time](./websocket-trade-api.md#transact-time) assigned by the matching engine for this trade. All trades that occur from the same event will be assigned the same transact time. |
+| aggressing_exchange_order_id | [uint64](#uint64) |  | The [Exchange order ID](./websocket-trade-api.md#exchange-order-id) of the aggressing order. |
 
 
 
@@ -269,7 +265,7 @@ Candlestick bar.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| interval | [KlineInterval](#kline-interval) |  |  |
+| interval | [KlineInterval](#klineinterval) |  |  |
 | start_time | [uint64](#uint64) |  | The unix nanosecond timestamp that this kline covers. |
 | open | [uint64](#uint64) |  | Kline open price. |
 | close | [uint64](#uint64) |  | Kline close price. |
@@ -306,7 +302,7 @@ value, comes from the market data service.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| messages | [MdMessage](#md-message) | repeated |  |
+| messages | [MdMessage](#mdmessage) | repeated |  |
 
 
 
@@ -321,8 +317,8 @@ Every exchange message from `/tops` will be wrapped as an `AggMessage`.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | heartbeat | [Heartbeat](#heartbeat) |  | Server heartbeat reply |
-| top_of_books | [TopOfBooks](#top-of-books) |  | Top of books |
-| rate_updates | [RateUpdates](#rate-updates) |  | Rates for all assets |
+| top_of_books | [TopOfBooks](#topofbooks) |  | Top of books |
+| rate_updates | [RateUpdates](#rateupdates) |  | Rates for all assets |
 
 
 
@@ -337,7 +333,7 @@ Top of book
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | market_id | [uint64](#uint64) |  |  |
-| transact_time | [uint64](#uint64) |  | The [transact time](/docs/api_reference/trade#transact-time) of the latest book update on this market. |
+| transact_time | [uint64](#uint64) |  | The [transact time](./websocket-trade-api.md#transact-time) of the latest book update on this market. |
 | bid_price | [uint64](#uint64) |  | The best bid price. |
 | bid_quantity | [uint64](#uint64) |  | The total bid quantity at the best bid price. |
 | ask_price | [uint64](#uint64) |  | The best ask price. |
@@ -358,7 +354,7 @@ message.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| tops | [TopOfBook](#top-of-book) | repeated |  |
+| tops | [TopOfBook](#topofbook) | repeated |  |
 
 
 
@@ -378,7 +374,7 @@ EUR, updateSide = QUOTE` of `r2`, the BTC-EUR price estimate is `r1 * r2`.
 | asset_id | [uint64](#uint64) |  |  |
 | timestamp | [uint64](#uint64) |  | The nanosecond timestamp of the update. |
 | rate | [uint64](#uint64) |  | The asset rate at the given timestamp. |
-| side | [RateUpdateSide](#rate-update-side) |  |  |
+| side | [RateUpdateSide](#rateupdateside) |  |  |
 
 
 
@@ -393,7 +389,7 @@ rate-updates message.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| updates | [RateUpdate](#rate-update) | repeated |  |
+| updates | [RateUpdate](#rateupdate) | repeated |  |
 
 
 
@@ -429,7 +425,7 @@ and `mbo` can be set.
 | mbo | [bool](#bool) |  | Enable MBO feeds |
 | trades | [bool](#bool) |  | Enable recent trades |
 | summary | [bool](#bool) |  | Enable 24h summary |
-| klines | [KlineInterval](#kline-interval) | repeated | Enable price klines |
+| klines | [KlineInterval](#klineinterval) | repeated | Enable price klines |
 
 
 
