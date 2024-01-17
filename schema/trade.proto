@@ -7,8 +7,8 @@
 // Once connected, clients should submit a [`Credentials`](#credentials)
 // message, listen for [`Bootstrap`](#bootstrap) messages for resting orders
 // and positions, and then can begin submitting
-// [`OrderRequest`](#order-request) and processing
-// [`OrderResponse`](#order-response).
+// [`OrderRequest`](#orderrequest) and processing
+// [`OrderResponse`](#orderresponse).
 //
 // ### Heartbeats
 //
@@ -73,7 +73,7 @@
 //
 // If you need exact granularity at time of trade, you can replicate the fee calculation performed by the exchange.
 // To avoid rounding errors, this entire process is performed in integer math using the exponent as a devisor.
-// In the example above, the full fee amount in indivisible [RawUnits](#raw-units) would be calculated as:
+// In the example above, the full fee amount in indivisible [RawUnits](#rawunits) would be calculated as:
 // ```text
 // 5 * 100_000_000 * 11 / 10_000 = 550_000 RawUnits
 //

@@ -8,13 +8,13 @@
 // price level through the Market by Price (MBP) and order-by-order through the
 // Market by Order (MBO). In addition, clients can subscribe to the trade stream
 // and price candlesticks. Clients should submit a [`Config`](#config) and then
-// process [`MdMessage`'s](#md-message).
+// process [`MdMessage`](#mdmessage)'s.
 //
 // ### Aggregate Book Tops Data
 //
 // The market data service exposes a websocket endpoint for aggregated
 // tops-of-book for all markets at `/tops`. Client should process
-// [`AggMessage`](#agg-message).
+// [`AggMessage`](#aggmessage).
 //
 // ### Heartbeats
 //
@@ -53,7 +53,7 @@ enum KlineInterval {
 }
 
 // Every exchange message from `/book/:market_id` will be wrapped as an
-// [`MdMessages`](#md-messages) which contains multiple `MdMessage`'s.
+// [`MdMessages`](#mdmessages) which contains multiple `MdMessage`'s.
 message MdMessage {
   oneof inner {
     // Server heartbeat reply
@@ -112,7 +112,7 @@ message MarketByPriceDiff {
     ADD = 0;
     // This operation is used when a price level is removed from the book.
     REMOVE = 1;
-    // This operation is used when a new price level is added or 
+    // This operation is used when a new price level is added or
     // an existing price level is modified.
     REPLACE = 2;
   }
@@ -140,7 +140,7 @@ message MarketByOrder {
   message Order {
     uint64 price = 1;
     uint64 quantity = 2;
-    // [Exchange order ID](/docs/api_reference/trade#exchange-order-id)
+    // [Exchange order ID](./websocket-trade-api.md#exchange-order-id)
     uint64 exchange_order_id = 3;
     Side side = 4;
     // Order priority for execution. Valid within a price level and side. That
@@ -183,11 +183,11 @@ message MarketByOrderDiff {
   message Diff {
     uint64 price = 1;
     uint64 quantity = 2;
-    // [Exchange order ID](/docs/api_reference/trade#exchange-order-id)
+    // [Exchange order ID](./websocket-trade-api.md#exchange-order-id)
     uint64 exchange_order_id = 3;
     Side side = 4;
     DiffOp op = 5;
-    // See [`MarketByOrder.Order`](#market-by-order-order)
+    // See [`MarketByOrder.Order`](#marketbyorder.order)
     uint64 priority = 6;
   }
 }
@@ -206,15 +206,15 @@ message Trades {
     uint64 price = 2;
     // The side of the aggressing order.
     Side aggressing_side = 3;
-    // The [Exchange order ID](/docs/api_reference/trade#exchange-order-id) of
+    // The [Exchange order ID](./websocket-trade-api.md#exchange-order-id) of
     // the resting order.
     uint64 resting_exchange_order_id = 4;
     uint64 fill_quantity = 5;
-    // The [transact time](/docs/api_reference/trade#transact-time) assigned by
+    // The [transact time](./websocket-trade-api.md#transact-time) assigned by
     // the matching engine for this trade. All trades that occur from the same
     // event will be assigned the same transact time.
     uint64 transact_time = 6;
-    // The [Exchange order ID](/docs/api_reference/trade#exchange-order-id) of
+    // The [Exchange order ID](./websocket-trade-api.md#exchange-order-id) of
     // the aggressing order.
     uint64 aggressing_exchange_order_id = 7;
   }
@@ -286,7 +286,7 @@ message AggMessage {
 // Top of book
 message TopOfBook {
   uint64 market_id = 1;
-  // The [transact time](/docs/api_reference/trade#transact-time) of the latest
+  // The [transact time](./websocket-trade-api.md#transact-time) of the latest
   // book update on this market.
   uint64 transact_time = 2;
   // The best bid price.
