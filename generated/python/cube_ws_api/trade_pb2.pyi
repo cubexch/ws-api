@@ -326,6 +326,7 @@ class NewOrderReject(_message.Message):
         PROTECTION_PRICE_WOULD_NOT_TRADE: _ClassVar[NewOrderReject.Reason]
         NO_REFERENCE_PRICE: _ClassVar[NewOrderReject.Reason]
         SLIPPAGE_TOO_HIGH: _ClassVar[NewOrderReject.Reason]
+        OUTSIDE_PRICE_BAND: _ClassVar[NewOrderReject.Reason]
     UNCLASSIFIED: NewOrderReject.Reason
     INVALID_QUANTITY: NewOrderReject.Reason
     INVALID_MARKET_ID: NewOrderReject.Reason
@@ -347,6 +348,7 @@ class NewOrderReject(_message.Message):
     PROTECTION_PRICE_WOULD_NOT_TRADE: NewOrderReject.Reason
     NO_REFERENCE_PRICE: NewOrderReject.Reason
     SLIPPAGE_TOO_HIGH: NewOrderReject.Reason
+    OUTSIDE_PRICE_BAND: NewOrderReject.Reason
     MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
     CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
@@ -414,6 +416,7 @@ class ModifyOrderReject(_message.Message):
         EXCEEDED_SPOT_POSITION: _ClassVar[ModifyOrderReject.Reason]
         POST_ONLY_WOULD_TRADE: _ClassVar[ModifyOrderReject.Reason]
         ONLY_ORDER_CANCEL_ACCEPTED: _ClassVar[ModifyOrderReject.Reason]
+        OUTSIDE_PRICE_BAND: _ClassVar[ModifyOrderReject.Reason]
     UNCLASSIFIED: ModifyOrderReject.Reason
     INVALID_QUANTITY: ModifyOrderReject.Reason
     INVALID_MARKET_ID: ModifyOrderReject.Reason
@@ -425,6 +428,7 @@ class ModifyOrderReject(_message.Message):
     EXCEEDED_SPOT_POSITION: ModifyOrderReject.Reason
     POST_ONLY_WOULD_TRADE: ModifyOrderReject.Reason
     ONLY_ORDER_CANCEL_ACCEPTED: ModifyOrderReject.Reason
+    OUTSIDE_PRICE_BAND: ModifyOrderReject.Reason
     MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
     CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
     REQUEST_ID_FIELD_NUMBER: _ClassVar[int]

@@ -648,6 +648,11 @@ export enum NewOrderReject_Reason {
    * protection levels in the direction of aggress.
    */
   SLIPPAGE_TOO_HIGH = 20,
+  /**
+   * OUTSIDE_PRICE_BAND - Limit orders cannot have bid price too low or ask price too high that
+   * is multiple times away from the internal reference price.
+   */
+  OUTSIDE_PRICE_BAND = 21,
 }
 
 /** Cancel-order-reject indicates that a cancel-order request was not applied. */
@@ -724,6 +729,11 @@ export enum ModifyOrderReject_Reason {
   POST_ONLY_WOULD_TRADE = 9,
   /** ONLY_ORDER_CANCEL_ACCEPTED - An exchange accepts no order modifications at this time */
   ONLY_ORDER_CANCEL_ACCEPTED = 17,
+  /**
+   * OUTSIDE_PRICE_BAND - Limit orders cannot have bid price too low or ask price too high that
+   * is multiple times away from the internal reference price.
+   */
+  OUTSIDE_PRICE_BAND = 11,
 }
 
 /** A fill for an order. */
