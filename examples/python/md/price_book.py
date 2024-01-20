@@ -42,7 +42,7 @@ class PriceBook:
         if act_bid_lvs != exp_bid_lvs:
             self.logger.error(f"Expected bid levels: {exp_bid_lvs}, actual bid levels: {act_bid_lvs}")
         if act_ask_lvs != exp_ask_lvs:
-            self.logger.error(f"Expected bid levels: {exp_ask_lvs}, actual bid levels: {act_ask_lvs}")
+            self.logger.error(f"Expected ask levels: {exp_ask_lvs}, actual ask levels: {act_ask_lvs}")
 
     def process_md_messages(self, md: market_data_pb2.MdMessages):
         for md_msg in md.messages:
