@@ -13,6 +13,9 @@ def config_logging():
     # pricebook logger
     logger = logging.getLogger('pricebook')
     logger.setLevel(logging.DEBUG)
+    # orderbook logger
+    logger = logging.getLogger('orderbook')
+    logger.setLevel(logging.DEBUG)
     # console
     handler = logging.StreamHandler()
     handler.setLevel(logging.WARN)

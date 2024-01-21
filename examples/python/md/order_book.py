@@ -46,6 +46,8 @@ class OrderBook:
                     break
             if found_oid_idx != -1:
                 self.bids[old_order.price].pop(i)
+                if len(self.bids[old_order.price]) == 0:
+                    self.bids.pop(old_order.price, None)
                 self.bids[price].append(new_order)
         else:
             for i, order in enumerate(self.asks[old_order.price]):
@@ -54,10 +56,13 @@ class OrderBook:
                     break
             if found_oid_idx != -1:
                 self.asks[old_order.price].pop(i)
+                if len(self.asks[old_order.price]) == 0:
+                    self.asks.pop(old_order.price, None)
                 self.asks[price].append(new_order)
         if found_oid_idx == -1:
             self.logger.error(f"Replace {oid} not found")
         self.orders.pop(oid, None)
+        self.orders[oid] = new_order
 
     def remove_order(self, side, oid, price, qty):
         if oid not in self.orders:
@@ -65,8 +70,8 @@ class OrderBook:
             return
         old_order: Order
         old_order = self.orders[oid]
-        if qty != 0 or old_order.quantity != qty:
-            self.logger.error(f"Remove {oid} with incorrect quantity {qty}")
+        if qty != 0 and old_order.quantity != qty:
+            self.logger.error(f"Remove {oid} with incorrect quantity {qty} vs {old_order.quantity}")
         found_oid_idx = -1
         order: Order
         if side == market_data_pb2.BID:
@@ -76,6 +81,8 @@ class OrderBook:
                     break
             if found_oid_idx != -1:
                 self.bids[old_order.price].pop(i)
+                if len(self.bids[old_order.price]) == 0:
+                    self.bids.pop(old_order.price, None)
         else:
             for i, order in enumerate(self.asks[old_order.price]):
                 if oid == order.exchange_order_id:
@@ -83,6 +90,8 @@ class OrderBook:
                     break
             if found_oid_idx != -1:
                 self.asks[old_order.price].pop(i)
+                if len(self.asks[old_order.price]) == 0:
+                    self.asks.pop(old_order.price, None)
         if found_oid_idx == -1:
             self.logger.error(f"Remove {oid} not found")
         self.orders.pop(oid, None)
