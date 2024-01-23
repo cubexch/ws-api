@@ -194,6 +194,17 @@ message MarketByOrderDiff {
   }
 }
 
+
+// The side of the aggressing order. This also indicates if the aggressing order
+// was an implied order (i.e aggressed into a different market and executed into
+// this one through implieds)
+enum AggressingSide {
+  AGGRESSING_BID = 0;
+  AGGRESSING_ASK = 1;
+  AGGRESSING_IMPLIED_BID = 2;
+  AGGRESSING_IMPLIED_ASK = 3;
+}
+
 // Trades since the latest `Trades` message. The result of the trades will also
 // appear in the MBP and MBO feeds independently as updates to the resting
 // orders and levels, respectively.
@@ -207,7 +218,7 @@ message Trades {
     // The price that this trade occurred at.
     uint64 price = 2;
     // The side of the aggressing order.
-    Side aggressing_side = 3;
+    AggressingSide aggressing_side = 3;
     // The [Exchange order ID](./websocket-trade-api.md#exchange-order-id) of
     // the resting order.
     uint64 resting_exchange_order_id = 4;

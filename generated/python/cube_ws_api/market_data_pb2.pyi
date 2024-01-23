@@ -20,6 +20,13 @@ class KlineInterval(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     H4: _ClassVar[KlineInterval]
     D1: _ClassVar[KlineInterval]
 
+class AggressingSide(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = []
+    AGGRESSING_BID: _ClassVar[AggressingSide]
+    AGGRESSING_ASK: _ClassVar[AggressingSide]
+    AGGRESSING_IMPLIED_BID: _ClassVar[AggressingSide]
+    AGGRESSING_IMPLIED_ASK: _ClassVar[AggressingSide]
+
 class RateUpdateSide(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = ()
     BASE: _ClassVar[RateUpdateSide]
@@ -32,6 +39,10 @@ M15: KlineInterval
 H1: KlineInterval
 H4: KlineInterval
 D1: KlineInterval
+AGGRESSING_BID: AggressingSide
+AGGRESSING_ASK: AggressingSide
+AGGRESSING_IMPLIED_BID: AggressingSide
+AGGRESSING_IMPLIED_ASK: AggressingSide
 BASE: RateUpdateSide
 QUOTE: RateUpdateSide
 
@@ -176,12 +187,12 @@ class Trades(_message.Message):
         AGGRESSING_EXCHANGE_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
         tradeId: int
         price: int
-        aggressing_side: Side
+        aggressing_side: AggressingSide
         resting_exchange_order_id: int
         fill_quantity: int
         transact_time: int
         aggressing_exchange_order_id: int
-        def __init__(self, tradeId: _Optional[int] = ..., price: _Optional[int] = ..., aggressing_side: _Optional[_Union[Side, str]] = ..., resting_exchange_order_id: _Optional[int] = ..., fill_quantity: _Optional[int] = ..., transact_time: _Optional[int] = ..., aggressing_exchange_order_id: _Optional[int] = ...) -> None: ...
+        def __init__(self, tradeId: _Optional[int] = ..., price: _Optional[int] = ..., aggressing_side: _Optional[_Union[AggressingSide, str]] = ..., resting_exchange_order_id: _Optional[int] = ..., fill_quantity: _Optional[int] = ..., transact_time: _Optional[int] = ..., aggressing_exchange_order_id: _Optional[int] = ...) -> None: ...
     TRADES_FIELD_NUMBER: _ClassVar[int]
     trades: _containers.RepeatedCompositeFieldContainer[Trades.Trade]
     def __init__(self, trades: _Optional[_Iterable[_Union[Trades.Trade, _Mapping]]] = ...) -> None: ...

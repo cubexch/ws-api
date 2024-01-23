@@ -57,6 +57,18 @@ export enum KlineInterval {
 }
 
 /**
+ * The side of the aggressing order. This also indicates if the aggressing order
+ * was an implied order (i.e aggressed into a different market and executed into
+ * this one through implieds)
+ */
+export enum AggressingSide {
+  AGGRESSING_BID = 0,
+  AGGRESSING_ASK = 1,
+  AGGRESSING_IMPLIED_BID = 2,
+  AGGRESSING_IMPLIED_ASK = 3,
+}
+
+/**
  * The side of the rate update. Given a `BASE` rate of `r`, the `QUOTE` rate is
  * `1 / r`, and vice versa.
  */
@@ -261,7 +273,7 @@ export interface Trades_Trade {
   /** The price that this trade occurred at. */
   price: bigint;
   /** The side of the aggressing order. */
-  aggressingSide: Side;
+  aggressingSide: AggressingSide;
   /**
    * The [Exchange order ID](./websocket-trade-api.md#exchange-order-id) of
    * the resting order.

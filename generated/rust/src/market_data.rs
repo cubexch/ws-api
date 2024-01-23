@@ -316,7 +316,7 @@ pub mod trades {
         #[prost(uint64, tag="2")]
         pub price: u64,
         /// The side of the aggressing order.
-        #[prost(enumeration="super::Side", tag="3")]
+        #[prost(enumeration="super::AggressingSide", tag="3")]
         pub aggressing_side: i32,
         /// The [Exchange order ID](./websocket-trade-api.md#exchange-order-id) of
         /// the resting order.
@@ -652,6 +652,44 @@ impl KlineInterval {
             "H1" => Some(Self::H1),
             "H4" => Some(Self::H4),
             "D1" => Some(Self::D1),
+            _ => None,
+        }
+    }
+}
+/// The side of the aggressing order. This also indicates if the aggressing order
+/// was an implied order (i.e aggressed into a different market and executed into
+/// this one through implieds)
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum AggressingSide {
+    AggressingBid = 0,
+    AggressingAsk = 1,
+    AggressingImpliedBid = 2,
+    AggressingImpliedAsk = 3,
+}
+impl AggressingSide {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            AggressingSide::AggressingBid => "AGGRESSING_BID",
+            AggressingSide::AggressingAsk => "AGGRESSING_ASK",
+            AggressingSide::AggressingImpliedBid => "AGGRESSING_IMPLIED_BID",
+            AggressingSide::AggressingImpliedAsk => "AGGRESSING_IMPLIED_ASK",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "AGGRESSING_BID" => Some(Self::AggressingBid),
+            "AGGRESSING_ASK" => Some(Self::AggressingAsk),
+            "AGGRESSING_IMPLIED_BID" => Some(Self::AggressingImpliedBid),
+            "AGGRESSING_IMPLIED_ASK" => Some(Self::AggressingImpliedAsk),
             _ => None,
         }
     }

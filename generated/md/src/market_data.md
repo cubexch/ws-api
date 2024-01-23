@@ -227,7 +227,7 @@ orders and levels, respectively.
 | ----- | ---- | ----- | ----------- |
 | tradeId | [uint64](#uint64) |  | The ID assigned to this trade. All trades that occur from the same event will be assigned the same ID, and are considered to be an atomic batch. |
 | price | [uint64](#uint64) |  | The price that this trade occurred at. |
-| aggressing_side | [Side](#side) |  | The side of the aggressing order. |
+| aggressing_side | [AggressingSide](#aggressingside) |  | The side of the aggressing order. |
 | resting_exchange_order_id | [uint64](#uint64) |  | The [Exchange order ID](./websocket-trade-api.md#exchange-order-id) of the resting order. |
 | fill_quantity | [uint64](#uint64) |  |  |
 | transact_time | [uint64](#uint64) |  | The [transact time](./websocket-trade-api.md#transact-time) assigned by the matching engine for this trade. All trades that occur from the same event will be assigned the same transact time. |
@@ -464,7 +464,22 @@ The candlestick interval.
 
 
 
-### RateUpdateSide
+## AggressingSide
+The side of the aggressing order. This also indicates if the aggressing order
+was an implied order (i.e aggressed into a different market and executed into
+this one through implieds)
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| AGGRESSING_BID | 0 |  |
+| AGGRESSING_ASK | 1 |  |
+| AGGRESSING_IMPLIED_BID | 2 |  |
+| AGGRESSING_IMPLIED_ASK | 3 |  |
+
+
+
+
+## RateUpdateSide
 The side of the rate update. Given a `BASE` rate of `r`, the `QUOTE` rate is
 `1 / r`, and vice versa.
 
@@ -526,4 +541,3 @@ order is `REMOVE`'d when it is fully filled or canceled.
 | bool |  | bool | bool | boolean | bool |
 | string | A string must always contain UTF-8 encoded or 7-bit ASCII text. | String | string | str/unicode | string |
 | bytes | May contain any arbitrary sequence of bytes. | Vec<u8> | string | str | []byte |
-

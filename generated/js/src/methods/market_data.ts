@@ -1,6 +1,7 @@
 import {
   Side,
   KlineInterval,
+  AggressingSide,
   RateUpdateSide,
   MdMessage,
   MarketByPrice,
@@ -94,6 +95,40 @@ export function klineIntervalToJSON(object: KlineInterval): string {
       return "D1";
     default:
       throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum KlineInterval");
+  }
+}
+
+export function aggressingSideFromJSON(object: any): AggressingSide {
+  switch (object) {
+    case 0:
+    case "AGGRESSING_BID":
+      return AggressingSide.AGGRESSING_BID;
+    case 1:
+    case "AGGRESSING_ASK":
+      return AggressingSide.AGGRESSING_ASK;
+    case 2:
+    case "AGGRESSING_IMPLIED_BID":
+      return AggressingSide.AGGRESSING_IMPLIED_BID;
+    case 3:
+    case "AGGRESSING_IMPLIED_ASK":
+      return AggressingSide.AGGRESSING_IMPLIED_ASK;
+    default:
+      throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum AggressingSide");
+  }
+}
+
+export function aggressingSideToJSON(object: AggressingSide): string {
+  switch (object) {
+    case AggressingSide.AGGRESSING_BID:
+      return "AGGRESSING_BID";
+    case AggressingSide.AGGRESSING_ASK:
+      return "AGGRESSING_ASK";
+    case AggressingSide.AGGRESSING_IMPLIED_BID:
+      return "AGGRESSING_IMPLIED_BID";
+    case AggressingSide.AGGRESSING_IMPLIED_ASK:
+      return "AGGRESSING_IMPLIED_ASK";
+    default:
+      throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum AggressingSide");
   }
 }
 
@@ -1178,7 +1213,7 @@ export const Trades_TradeMethods = {
     return {
       tradeId: isSet(object.tradeId) ? BigInt(object.tradeId) : BigInt("0"),
       price: isSet(object.price) ? BigInt(object.price) : BigInt("0"),
-      aggressingSide: isSet(object.aggressingSide) ? sideFromJSON(object.aggressingSide) : 0,
+      aggressingSide: isSet(object.aggressingSide) ? aggressingSideFromJSON(object.aggressingSide) : 0,
       restingExchangeOrderId: isSet(object.restingExchangeOrderId)
         ? BigInt(object.restingExchangeOrderId)
         : BigInt("0"),
@@ -1194,7 +1229,7 @@ export const Trades_TradeMethods = {
     const obj: any = {};
     message.tradeId !== undefined && (obj.tradeId = message.tradeId.toString());
     message.price !== undefined && (obj.price = message.price.toString());
-    message.aggressingSide !== undefined && (obj.aggressingSide = sideToJSON(message.aggressingSide));
+    message.aggressingSide !== undefined && (obj.aggressingSide = aggressingSideToJSON(message.aggressingSide));
     message.restingExchangeOrderId !== undefined &&
       (obj.restingExchangeOrderId = message.restingExchangeOrderId.toString());
     message.fillQuantity !== undefined && (obj.fillQuantity = message.fillQuantity.toString());
