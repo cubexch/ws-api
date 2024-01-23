@@ -2,6 +2,7 @@ import asyncio
 from websockets.client import connect as ws_connect
 from websockets.exceptions import ConnectionClosed
 import logging
+import argparse
 
 import settings
 import price_book
@@ -51,9 +52,19 @@ async def order_book_main():
                 group.cancel()
                 logging.info(f'Task group canceled')
 
+def parse_args():
+    parser = argparse.ArgumentParser(
+                prog='Cube Market Data',
+                description='example program to stream and process Cube market data')
+    parser.add_argument('-t', '--book_type', default='mbo', choices=['mbo', 'mbp'])
+    args = parser.parse_args()
+    return args
+
 if __name__ == '__main__':
     util.config_logging()
+    args = parse_args()
+    book_coro = order_book_main if args.book_type == 'mbo' else price_book_main
     try:
-        asyncio.run(order_book_main())
+        asyncio.run(book_coro())
     except KeyboardInterrupt:
         logging.info("exit.")
