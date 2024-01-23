@@ -11,23 +11,31 @@ def config_logging():
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
     # pricebook logger
-    logger = logging.getLogger('pricebook')
-    logger.setLevel(logging.DEBUG)
+    pb_logger = logging.getLogger('pricebook')
+    pb_logger.setLevel(logging.DEBUG)
+    # orderbook logger
+    ob_logger = logging.getLogger('orderbook')
+    ob_logger.setLevel(logging.DEBUG)
+    # loggers
+    loggers = [logger, pb_logger, ob_logger]
     # console
     handler = logging.StreamHandler()
     handler.setLevel(logging.WARN)
-    logger.addHandler(handler)
+    for lgr in loggers:
+        lgr.addHandler(handler)
     # data file
     handler = logging.FileHandler(settings.LOG_FILE, 'w')
     handler.setLevel(settings.LOG_LEVEL)
     formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     handler.setFormatter(formatter)
-    logger.addHandler(handler)
+    for lgr in loggers:
+        lgr.addHandler(handler)
     # error file
     handler = logging.FileHandler(settings.ERR_LOG_FILE, 'w')
     handler.setLevel(settings.ERR_LOG_LEVEL)
     handler.setFormatter(formatter)
-    logger.addHandler(handler)
+    for lgr in loggers:
+        lgr.addHandler(handler)
     # other loggers
     logging.getLogger('websockets').setLevel(logging.INFO)
     logging.getLogger('asyncio').setLevel(logging.INFO)
