@@ -3,6 +3,9 @@ from google.protobuf import json_format, message
 import logging
 import settings
 
+BIDS_HEADER = f"{'-'*10} BIDS {'-'*10}\n"
+ASKS_HEADER = f"{'-'*10} ASKS {'-'*10}\n"
+
 def as_debug_string(msg: message.Message) -> str:
     return json.dumps(json_format.MessageToDict(msg))
 
