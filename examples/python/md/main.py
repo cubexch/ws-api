@@ -62,10 +62,12 @@ def parse_args():
     parser = argparse.ArgumentParser(
                 prog='main.py',
                 description='example program to stream and process Cube market data')
-    parser.add_argument('-t', '--book_type', default='mbo', choices=['mbo', 'mbp'])
-    parser.add_argument('-d', '--dump', help="dump the book at intervals", default=True, action="store_true")
+    parser.add_argument('-t', '--book_type', default='mbo', choices=['mbo', 'mbp'], 
+                        help="MBO(market by order) or MBP(market by price)")
+    parser.add_argument('-d', '--dump', help="dump the book at intervals", action="store_true")
     parser.add_argument('-i', '--interval', default=2, help="book dump interval in number of seconds")
-    parser.add_argument('-l', '--levels', help="for an order book, only dump levels", default=True, action="store_true")
+    parser.add_argument('-o', '--orders', help="for an order book, only dump orders instead of levels", 
+                        action="store_true")
     args = parser.parse_args()
     return args
 
@@ -75,6 +77,6 @@ if __name__ == '__main__':
     print(args)
     book_coro = order_book_main if args.book_type == 'mbo' else price_book_main
     try:
-        asyncio.run(book_coro(args.dump, args.interval, args.levels))
+        asyncio.run(book_coro(args.dump, args.interval, not args.orders))
     except KeyboardInterrupt:
         logging.info("exit.")
