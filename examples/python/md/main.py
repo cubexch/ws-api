@@ -54,7 +54,7 @@ async def order_book_main():
 
 def parse_args():
     parser = argparse.ArgumentParser(
-                prog='Cube Market Data',
+                prog='main.py',
                 description='example program to stream and process Cube market data')
     parser.add_argument('-t', '--book_type', default='mbo', choices=['mbo', 'mbp'])
     args = parser.parse_args()
