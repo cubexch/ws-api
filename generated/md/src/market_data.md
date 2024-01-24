@@ -42,6 +42,7 @@ Every exchange message from `/book/:market_id` will be wrapped as an
 | mbp_snapshot | [MarketByPrice](#marketbyprice) |  | Market by price snapshot |
 | mbp_diff | [MarketByPriceDiff](#marketbypricediff) |  | Market by price diff |
 | kline | [Kline](#kline) |  | Candlestick |
+| implied | [ImpliedMarketByPrice](#impliedmarketbyprice) |  |  |
 
 
 
@@ -196,6 +197,53 @@ An order diff creates, updates, or deletes a resting order based on the
 | side | [Side](#side) |  |  |
 | op | [MarketByOrderDiff.DiffOp](#marketbyorderdiff.diffop) |  |  |
 | priority | [uint64](#uint64) |  | See [`MarketByOrder.Order`](#marketbyorder.order) |
+
+
+
+
+
+
+
+## ImpliedMarketByPrice
+The implied prices and quantities for the subscribed market. These are
+matched as the last quantity at the price level.
+
+Note that changes in implied quantity are likely to change all levels wider.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| bids | [ImpliedMarketByPrice.ImpliedLevels](#impliedmarketbyprice.impliedlevels) | optional |  |
+| asks | [ImpliedMarketByPrice.ImpliedLevels](#impliedmarketbyprice.impliedlevels) | optional |  |
+
+
+
+
+
+
+
+## ImpliedMarketByPrice.ImpliedLevels
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| levels | [ImpliedMarketByPrice.Level](#impliedmarketbyprice.level) | repeated |  |
+
+
+
+
+
+
+
+## ImpliedMarketByPrice.Level
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| price | [uint64](#uint64) |  |  |
+| quantity | [uint64](#uint64) |  |  |
 
 
 
@@ -427,6 +475,7 @@ and `mbo` can be set.
 | trades | [bool](#bool) |  | Enable recent trades |
 | summary | [bool](#bool) |  | Enable 24h summary |
 | klines | [KlineInterval](#klineinterval) | repeated | Enable price klines |
+| implied_levels | [uint32](#uint32) |  | Enable implied prices for this many levels. Note that high levels of implied calculation will be expensive for bandwith, and may require additional permissions. |
 
 
 
