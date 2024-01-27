@@ -389,6 +389,10 @@ Top of book
 | ask_quantity | [uint64](#uint64) | optional | The total ask quantity at the best ask price. |
 | last_price | [uint64](#uint64) | optional | The last trade price. |
 | rolling24h_price | [uint64](#uint64) | optional | The 24h open price. |
+| implied_bid_price | [uint64](#uint64) | optional |  |
+| implied_bid_quantity | [uint64](#uint64) | optional |  |
+| implied_ask_price | [uint64](#uint64) | optional |  |
+| implied_ask_quantity | [uint64](#uint64) | optional |  |
 
 
 

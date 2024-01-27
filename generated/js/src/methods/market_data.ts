@@ -1910,6 +1910,10 @@ function createBaseTopOfBook(): TopOfBook {
     askQuantity: undefined,
     lastPrice: undefined,
     rolling24hPrice: undefined,
+    impliedBidPrice: undefined,
+    impliedBidQuantity: undefined,
+    impliedAskPrice: undefined,
+    impliedAskQuantity: undefined,
   };
 }
 
@@ -1938,6 +1942,18 @@ export const TopOfBookMethods = {
     }
     if (message.rolling24hPrice !== undefined) {
       writer.uint32(64).uint64(message.rolling24hPrice.toString());
+    }
+    if (message.impliedBidPrice !== undefined) {
+      writer.uint32(72).uint64(message.impliedBidPrice.toString());
+    }
+    if (message.impliedBidQuantity !== undefined) {
+      writer.uint32(80).uint64(message.impliedBidQuantity.toString());
+    }
+    if (message.impliedAskPrice !== undefined) {
+      writer.uint32(88).uint64(message.impliedAskPrice.toString());
+    }
+    if (message.impliedAskQuantity !== undefined) {
+      writer.uint32(96).uint64(message.impliedAskQuantity.toString());
     }
     return writer;
   },
@@ -2005,6 +2021,34 @@ export const TopOfBookMethods = {
 
           message.rolling24hPrice = longToBigint(reader.uint64() as Long);
           continue;
+        case 9:
+          if (tag !== 72) {
+            break;
+          }
+
+          message.impliedBidPrice = longToBigint(reader.uint64() as Long);
+          continue;
+        case 10:
+          if (tag !== 80) {
+            break;
+          }
+
+          message.impliedBidQuantity = longToBigint(reader.uint64() as Long);
+          continue;
+        case 11:
+          if (tag !== 88) {
+            break;
+          }
+
+          message.impliedAskPrice = longToBigint(reader.uint64() as Long);
+          continue;
+        case 12:
+          if (tag !== 96) {
+            break;
+          }
+
+          message.impliedAskQuantity = longToBigint(reader.uint64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2024,6 +2068,10 @@ export const TopOfBookMethods = {
       askQuantity: isSet(object.askQuantity) ? BigInt(object.askQuantity) : undefined,
       lastPrice: isSet(object.lastPrice) ? BigInt(object.lastPrice) : undefined,
       rolling24hPrice: isSet(object.rolling24hPrice) ? BigInt(object.rolling24hPrice) : undefined,
+      impliedBidPrice: isSet(object.impliedBidPrice) ? BigInt(object.impliedBidPrice) : undefined,
+      impliedBidQuantity: isSet(object.impliedBidQuantity) ? BigInt(object.impliedBidQuantity) : undefined,
+      impliedAskPrice: isSet(object.impliedAskPrice) ? BigInt(object.impliedAskPrice) : undefined,
+      impliedAskQuantity: isSet(object.impliedAskQuantity) ? BigInt(object.impliedAskQuantity) : undefined,
     };
   },
 
@@ -2037,6 +2085,10 @@ export const TopOfBookMethods = {
     message.askQuantity !== undefined && (obj.askQuantity = message.askQuantity.toString());
     message.lastPrice !== undefined && (obj.lastPrice = message.lastPrice.toString());
     message.rolling24hPrice !== undefined && (obj.rolling24hPrice = message.rolling24hPrice.toString());
+    message.impliedBidPrice !== undefined && (obj.impliedBidPrice = message.impliedBidPrice.toString());
+    message.impliedBidQuantity !== undefined && (obj.impliedBidQuantity = message.impliedBidQuantity.toString());
+    message.impliedAskPrice !== undefined && (obj.impliedAskPrice = message.impliedAskPrice.toString());
+    message.impliedAskQuantity !== undefined && (obj.impliedAskQuantity = message.impliedAskQuantity.toString());
     return obj;
   },
 };

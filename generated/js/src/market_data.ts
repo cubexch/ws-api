@@ -427,6 +427,10 @@ export interface TopOfBook {
     | undefined;
   /** The 24h open price. */
   rolling24hPrice?: bigint | undefined;
+  impliedBidPrice?: bigint | undefined;
+  impliedBidQuantity?: bigint | undefined;
+  impliedAskPrice?: bigint | undefined;
+  impliedAskQuantity?: bigint | undefined;
 }
 
 /**

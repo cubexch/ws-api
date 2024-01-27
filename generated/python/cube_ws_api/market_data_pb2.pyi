@@ -284,7 +284,7 @@ class AggMessage(_message.Message):
     def __init__(self, heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., top_of_books: _Optional[_Union[TopOfBooks, _Mapping]] = ..., rate_updates: _Optional[_Union[RateUpdates, _Mapping]] = ...) -> None: ...
 
 class TopOfBook(_message.Message):
-    __slots__ = ("market_id", "transact_time", "bid_price", "bid_quantity", "ask_price", "ask_quantity", "last_price", "rolling24h_price")
+    __slots__ = ["market_id", "transact_time", "bid_price", "bid_quantity", "ask_price", "ask_quantity", "last_price", "rolling24h_price", "implied_bid_price", "implied_bid_quantity", "implied_ask_price", "implied_ask_quantity"]
     MARKET_ID_FIELD_NUMBER: _ClassVar[int]
     TRANSACT_TIME_FIELD_NUMBER: _ClassVar[int]
     BID_PRICE_FIELD_NUMBER: _ClassVar[int]
@@ -293,6 +293,10 @@ class TopOfBook(_message.Message):
     ASK_QUANTITY_FIELD_NUMBER: _ClassVar[int]
     LAST_PRICE_FIELD_NUMBER: _ClassVar[int]
     ROLLING24H_PRICE_FIELD_NUMBER: _ClassVar[int]
+    IMPLIED_BID_PRICE_FIELD_NUMBER: _ClassVar[int]
+    IMPLIED_BID_QUANTITY_FIELD_NUMBER: _ClassVar[int]
+    IMPLIED_ASK_PRICE_FIELD_NUMBER: _ClassVar[int]
+    IMPLIED_ASK_QUANTITY_FIELD_NUMBER: _ClassVar[int]
     market_id: int
     transact_time: int
     bid_price: int
@@ -301,7 +305,11 @@ class TopOfBook(_message.Message):
     ask_quantity: int
     last_price: int
     rolling24h_price: int
-    def __init__(self, market_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., bid_price: _Optional[int] = ..., bid_quantity: _Optional[int] = ..., ask_price: _Optional[int] = ..., ask_quantity: _Optional[int] = ..., last_price: _Optional[int] = ..., rolling24h_price: _Optional[int] = ...) -> None: ...
+    implied_bid_price: int
+    implied_bid_quantity: int
+    implied_ask_price: int
+    implied_ask_quantity: int
+    def __init__(self, market_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., bid_price: _Optional[int] = ..., bid_quantity: _Optional[int] = ..., ask_price: _Optional[int] = ..., ask_quantity: _Optional[int] = ..., last_price: _Optional[int] = ..., rolling24h_price: _Optional[int] = ..., implied_bid_price: _Optional[int] = ..., implied_bid_quantity: _Optional[int] = ..., implied_ask_price: _Optional[int] = ..., implied_ask_quantity: _Optional[int] = ...) -> None: ...
 
 class TopOfBooks(_message.Message):
     __slots__ = ("tops",)

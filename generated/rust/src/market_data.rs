@@ -521,6 +521,14 @@ pub struct TopOfBook {
     /// The 24h open price.
     #[prost(uint64, optional, tag="8")]
     pub rolling24h_price: ::core::option::Option<u64>,
+    #[prost(uint64, optional, tag="9")]
+    pub implied_bid_price: ::core::option::Option<u64>,
+    #[prost(uint64, optional, tag="10")]
+    pub implied_bid_quantity: ::core::option::Option<u64>,
+    #[prost(uint64, optional, tag="11")]
+    pub implied_ask_price: ::core::option::Option<u64>,
+    #[prost(uint64, optional, tag="12")]
+    pub implied_ask_quantity: ::core::option::Option<u64>,
 }
 /// Top of books for all books that were updates since the last top-of-books
 /// message.

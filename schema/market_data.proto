@@ -333,6 +333,11 @@ message TopOfBook {
   optional uint64 last_price = 7;
   // The 24h open price.
   optional uint64 rolling24h_price = 8;
+
+  optional uint64 implied_bid_price = 9;
+  optional uint64 implied_bid_quantity = 10;
+  optional uint64 implied_ask_price = 11;
+  optional uint64 implied_ask_quantity = 12;
 }
 
 // Top of books for all books that were updates since the last top-of-books
