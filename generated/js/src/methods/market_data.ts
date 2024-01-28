@@ -1,6 +1,7 @@
 import {
   Side,
   KlineInterval,
+  MarketState,
   AggressingSide,
   RateUpdateSide,
   MdMessage,
@@ -17,6 +18,7 @@ import {
   ImpliedMarketByPrice,
   ImpliedMarketByPrice_ImpliedLevels,
   ImpliedMarketByPrice_Level,
+  MarketStatus,
   Trades,
   Trades_Trade,
   Summary,
@@ -98,6 +100,35 @@ export function klineIntervalToJSON(object: KlineInterval): string {
       return "D1";
     default:
       throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum KlineInterval");
+  }
+}
+
+export function marketStateFromJSON(object: any): MarketState {
+  switch (object) {
+    case 0:
+    case "UNSPECIFIED":
+      return MarketState.UNSPECIFIED;
+    case 1:
+    case "NORMAL_OPERATION":
+      return MarketState.NORMAL_OPERATION;
+    case 2:
+    case "CANCEL_ONLY":
+      return MarketState.CANCEL_ONLY;
+    default:
+      throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum MarketState");
+  }
+}
+
+export function marketStateToJSON(object: MarketState): string {
+  switch (object) {
+    case MarketState.UNSPECIFIED:
+      return "UNSPECIFIED";
+    case MarketState.NORMAL_OPERATION:
+      return "NORMAL_OPERATION";
+    case MarketState.CANCEL_ONLY:
+      return "CANCEL_ONLY";
+    default:
+      throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum MarketState");
   }
 }
 
@@ -229,6 +260,7 @@ function createBaseMdMessage(): MdMessage {
     mbpDiff: undefined,
     kline: undefined,
     implied: undefined,
+    marketStatus: undefined,
   };
 }
 
@@ -260,6 +292,9 @@ export const MdMessageMethods = {
     }
     if (message.implied !== undefined) {
       ImpliedMarketByPriceMethods.encode(message.implied, writer.uint32(74).fork()).ldelim();
+    }
+    if (message.marketStatus !== undefined) {
+      MarketStatusMethods.encode(message.marketStatus, writer.uint32(82).fork()).ldelim();
     }
     return writer;
   },
@@ -334,6 +369,13 @@ export const MdMessageMethods = {
 
           message.implied = ImpliedMarketByPriceMethods.decode(reader, reader.uint32());
           continue;
+        case 10:
+          if (tag !== 82) {
+            break;
+          }
+
+          message.marketStatus = MarketStatusMethods.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -354,6 +396,7 @@ export const MdMessageMethods = {
       mbpDiff: isSet(object.mbpDiff) ? MarketByPriceDiffMethods.fromJSON(object.mbpDiff) : undefined,
       kline: isSet(object.kline) ? KlineMethods.fromJSON(object.kline) : undefined,
       implied: isSet(object.implied) ? ImpliedMarketByPriceMethods.fromJSON(object.implied) : undefined,
+      marketStatus: isSet(object.marketStatus) ? MarketStatusMethods.fromJSON(object.marketStatus) : undefined,
     };
   },
 
@@ -374,6 +417,8 @@ export const MdMessageMethods = {
     message.kline !== undefined && (obj.kline = message.kline ? KlineMethods.toJSON(message.kline) : undefined);
     message.implied !== undefined &&
       (obj.implied = message.implied ? ImpliedMarketByPriceMethods.toJSON(message.implied) : undefined);
+    message.marketStatus !== undefined &&
+      (obj.marketStatus = message.marketStatus ? MarketStatusMethods.toJSON(message.marketStatus) : undefined);
     return obj;
   },
 };
@@ -1249,6 +1294,66 @@ export const ImpliedMarketByPrice_LevelMethods = {
   },
 };
 
+function createBaseMarketStatus(): MarketStatus {
+  return { transactTime: BigInt("0"), marketState: 0 };
+}
+
+export const MarketStatusMethods = {
+  encode(message: MarketStatus, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.transactTime !== BigInt("0")) {
+      writer.uint32(8).uint64(message.transactTime.toString());
+    }
+    if (message.marketState !== 0) {
+      writer.uint32(16).int32(message.marketState);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MarketStatus {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMarketStatus();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.transactTime = longToBigint(reader.uint64() as Long);
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.marketState = reader.int32() as any;
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MarketStatus {
+    return {
+      transactTime: isSet(object.transactTime) ? BigInt(object.transactTime) : BigInt("0"),
+      marketState: isSet(object.marketState) ? marketStateFromJSON(object.marketState) : 0,
+    };
+  },
+
+  toJSON(message: MarketStatus): unknown {
+    const obj: any = {};
+    message.transactTime !== undefined && (obj.transactTime = message.transactTime.toString());
+    message.marketState !== undefined && (obj.marketState = marketStateToJSON(message.marketState));
+    return obj;
+  },
+};
+
 function createBaseTrades(): Trades {
   return { trades: [] };
 }
@@ -1914,6 +2019,7 @@ function createBaseTopOfBook(): TopOfBook {
     impliedBidQuantity: undefined,
     impliedAskPrice: undefined,
     impliedAskQuantity: undefined,
+    marketState: 0,
   };
 }
 
@@ -1954,6 +2060,9 @@ export const TopOfBookMethods = {
     }
     if (message.impliedAskQuantity !== undefined) {
       writer.uint32(96).uint64(message.impliedAskQuantity.toString());
+    }
+    if (message.marketState !== 0) {
+      writer.uint32(104).int32(message.marketState);
     }
     return writer;
   },
@@ -2049,6 +2158,13 @@ export const TopOfBookMethods = {
 
           message.impliedAskQuantity = longToBigint(reader.uint64() as Long);
           continue;
+        case 13:
+          if (tag !== 104) {
+            break;
+          }
+
+          message.marketState = reader.int32() as any;
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2072,6 +2188,7 @@ export const TopOfBookMethods = {
       impliedBidQuantity: isSet(object.impliedBidQuantity) ? BigInt(object.impliedBidQuantity) : undefined,
       impliedAskPrice: isSet(object.impliedAskPrice) ? BigInt(object.impliedAskPrice) : undefined,
       impliedAskQuantity: isSet(object.impliedAskQuantity) ? BigInt(object.impliedAskQuantity) : undefined,
+      marketState: isSet(object.marketState) ? marketStateFromJSON(object.marketState) : 0,
     };
   },
 
@@ -2089,6 +2206,7 @@ export const TopOfBookMethods = {
     message.impliedBidQuantity !== undefined && (obj.impliedBidQuantity = message.impliedBidQuantity.toString());
     message.impliedAskPrice !== undefined && (obj.impliedAskPrice = message.impliedAskPrice.toString());
     message.impliedAskQuantity !== undefined && (obj.impliedAskQuantity = message.impliedAskQuantity.toString());
+    message.marketState !== undefined && (obj.marketState = marketStateToJSON(message.marketState));
     return obj;
   },
 };

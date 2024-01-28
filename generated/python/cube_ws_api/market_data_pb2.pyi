@@ -20,6 +20,12 @@ class KlineInterval(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     H4: _ClassVar[KlineInterval]
     D1: _ClassVar[KlineInterval]
 
+class MarketState(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = []
+    UNSPECIFIED: _ClassVar[MarketState]
+    NORMAL_OPERATION: _ClassVar[MarketState]
+    CANCEL_ONLY: _ClassVar[MarketState]
+
 class AggressingSide(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = []
     AGGRESSING_BID: _ClassVar[AggressingSide]
@@ -39,6 +45,9 @@ M15: KlineInterval
 H1: KlineInterval
 H4: KlineInterval
 D1: KlineInterval
+UNSPECIFIED: MarketState
+NORMAL_OPERATION: MarketState
+CANCEL_ONLY: MarketState
 AGGRESSING_BID: AggressingSide
 AGGRESSING_ASK: AggressingSide
 AGGRESSING_IMPLIED_BID: AggressingSide
@@ -47,7 +56,7 @@ BASE: RateUpdateSide
 QUOTE: RateUpdateSide
 
 class MdMessage(_message.Message):
-    __slots__ = ["heartbeat", "summary", "trades", "mbo_snapshot", "mbo_diff", "mbp_snapshot", "mbp_diff", "kline", "implied"]
+    __slots__ = ["heartbeat", "summary", "trades", "mbo_snapshot", "mbo_diff", "mbp_snapshot", "mbp_diff", "kline", "implied", "market_status"]
     HEARTBEAT_FIELD_NUMBER: _ClassVar[int]
     SUMMARY_FIELD_NUMBER: _ClassVar[int]
     TRADES_FIELD_NUMBER: _ClassVar[int]
@@ -57,6 +66,7 @@ class MdMessage(_message.Message):
     MBP_DIFF_FIELD_NUMBER: _ClassVar[int]
     KLINE_FIELD_NUMBER: _ClassVar[int]
     IMPLIED_FIELD_NUMBER: _ClassVar[int]
+    MARKET_STATUS_FIELD_NUMBER: _ClassVar[int]
     heartbeat: Heartbeat
     summary: Summary
     trades: Trades
@@ -66,7 +76,8 @@ class MdMessage(_message.Message):
     mbp_diff: MarketByPriceDiff
     kline: Kline
     implied: ImpliedMarketByPrice
-    def __init__(self, heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., summary: _Optional[_Union[Summary, _Mapping]] = ..., trades: _Optional[_Union[Trades, _Mapping]] = ..., mbo_snapshot: _Optional[_Union[MarketByOrder, _Mapping]] = ..., mbo_diff: _Optional[_Union[MarketByOrderDiff, _Mapping]] = ..., mbp_snapshot: _Optional[_Union[MarketByPrice, _Mapping]] = ..., mbp_diff: _Optional[_Union[MarketByPriceDiff, _Mapping]] = ..., kline: _Optional[_Union[Kline, _Mapping]] = ..., implied: _Optional[_Union[ImpliedMarketByPrice, _Mapping]] = ...) -> None: ...
+    market_status: MarketStatus
+    def __init__(self, heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., summary: _Optional[_Union[Summary, _Mapping]] = ..., trades: _Optional[_Union[Trades, _Mapping]] = ..., mbo_snapshot: _Optional[_Union[MarketByOrder, _Mapping]] = ..., mbo_diff: _Optional[_Union[MarketByOrderDiff, _Mapping]] = ..., mbp_snapshot: _Optional[_Union[MarketByPrice, _Mapping]] = ..., mbp_diff: _Optional[_Union[MarketByPriceDiff, _Mapping]] = ..., kline: _Optional[_Union[Kline, _Mapping]] = ..., implied: _Optional[_Union[ImpliedMarketByPrice, _Mapping]] = ..., market_status: _Optional[_Union[MarketStatus, _Mapping]] = ...) -> None: ...
 
 class MarketByPrice(_message.Message):
     __slots__ = ("levels", "chunk", "num_chunks")
@@ -196,6 +207,14 @@ class ImpliedMarketByPrice(_message.Message):
     asks: ImpliedMarketByPrice.ImpliedLevels
     def __init__(self, bids: _Optional[_Union[ImpliedMarketByPrice.ImpliedLevels, _Mapping]] = ..., asks: _Optional[_Union[ImpliedMarketByPrice.ImpliedLevels, _Mapping]] = ...) -> None: ...
 
+class MarketStatus(_message.Message):
+    __slots__ = ["transact_time", "market_state"]
+    TRANSACT_TIME_FIELD_NUMBER: _ClassVar[int]
+    MARKET_STATE_FIELD_NUMBER: _ClassVar[int]
+    transact_time: int
+    market_state: MarketState
+    def __init__(self, transact_time: _Optional[int] = ..., market_state: _Optional[_Union[MarketState, str]] = ...) -> None: ...
+
 class Trades(_message.Message):
     __slots__ = ("trades",)
     class Trade(_message.Message):
@@ -284,7 +303,7 @@ class AggMessage(_message.Message):
     def __init__(self, heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., top_of_books: _Optional[_Union[TopOfBooks, _Mapping]] = ..., rate_updates: _Optional[_Union[RateUpdates, _Mapping]] = ...) -> None: ...
 
 class TopOfBook(_message.Message):
-    __slots__ = ["market_id", "transact_time", "bid_price", "bid_quantity", "ask_price", "ask_quantity", "last_price", "rolling24h_price", "implied_bid_price", "implied_bid_quantity", "implied_ask_price", "implied_ask_quantity"]
+    __slots__ = ["market_id", "transact_time", "bid_price", "bid_quantity", "ask_price", "ask_quantity", "last_price", "rolling24h_price", "implied_bid_price", "implied_bid_quantity", "implied_ask_price", "implied_ask_quantity", "market_state"]
     MARKET_ID_FIELD_NUMBER: _ClassVar[int]
     TRANSACT_TIME_FIELD_NUMBER: _ClassVar[int]
     BID_PRICE_FIELD_NUMBER: _ClassVar[int]
@@ -297,6 +316,7 @@ class TopOfBook(_message.Message):
     IMPLIED_BID_QUANTITY_FIELD_NUMBER: _ClassVar[int]
     IMPLIED_ASK_PRICE_FIELD_NUMBER: _ClassVar[int]
     IMPLIED_ASK_QUANTITY_FIELD_NUMBER: _ClassVar[int]
+    MARKET_STATE_FIELD_NUMBER: _ClassVar[int]
     market_id: int
     transact_time: int
     bid_price: int
@@ -309,7 +329,8 @@ class TopOfBook(_message.Message):
     implied_bid_quantity: int
     implied_ask_price: int
     implied_ask_quantity: int
-    def __init__(self, market_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., bid_price: _Optional[int] = ..., bid_quantity: _Optional[int] = ..., ask_price: _Optional[int] = ..., ask_quantity: _Optional[int] = ..., last_price: _Optional[int] = ..., rolling24h_price: _Optional[int] = ..., implied_bid_price: _Optional[int] = ..., implied_bid_quantity: _Optional[int] = ..., implied_ask_price: _Optional[int] = ..., implied_ask_quantity: _Optional[int] = ...) -> None: ...
+    market_state: MarketState
+    def __init__(self, market_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., bid_price: _Optional[int] = ..., bid_quantity: _Optional[int] = ..., ask_price: _Optional[int] = ..., ask_quantity: _Optional[int] = ..., last_price: _Optional[int] = ..., rolling24h_price: _Optional[int] = ..., implied_bid_price: _Optional[int] = ..., implied_bid_quantity: _Optional[int] = ..., implied_ask_price: _Optional[int] = ..., implied_ask_quantity: _Optional[int] = ..., market_state: _Optional[_Union[MarketState, str]] = ...) -> None: ...
 
 class TopOfBooks(_message.Message):
     __slots__ = ("tops",)

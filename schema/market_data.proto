@@ -75,6 +75,7 @@ message MdMessage {
     // Candlestick
     Kline kline = 8;
     ImpliedMarketByPrice implied = 9;
+    MarketStatus market_status = 10;
   }
 }
 
@@ -214,6 +215,24 @@ message ImpliedMarketByPrice {
   }
 }
 
+// The per-market matching engine state. Affects order-entry.
+enum MarketState {
+  // Sentinel
+  UNSPECIFIED = 0;
+  // The market is in its normal operating state. All order operations are
+  // supported.
+  NORMAL_OPERATION = 1;
+  // The market is in cancel-only mode. Existing orders are not automatically
+  // canceled, and may be filled when the market transitions back to
+  // normal-operation.
+  CANCEL_ONLY = 2;
+}
+
+message MarketStatus {
+  uint64 transact_time = 1;
+  MarketState market_state = 2;
+}
+
 // The side of the aggressing order. This also indicates if the aggressing order
 // was an implied order (i.e aggressed into a different market and executed into
 // this one through implieds)
@@ -338,6 +357,8 @@ message TopOfBook {
   optional uint64 implied_bid_quantity = 10;
   optional uint64 implied_ask_price = 11;
   optional uint64 implied_ask_quantity = 12;
+
+  MarketState market_state = 13;
 }
 
 // Top of books for all books that were updates since the last top-of-books

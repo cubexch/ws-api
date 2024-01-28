@@ -56,6 +56,23 @@ export enum KlineInterval {
   D1 = 5,
 }
 
+/** The per-market matching engine state. Affects order-entry. */
+export enum MarketState {
+  /** UNSPECIFIED - Sentinel */
+  UNSPECIFIED = 0,
+  /**
+   * NORMAL_OPERATION - The market is in its normal operating state. All order operations are
+   * supported.
+   */
+  NORMAL_OPERATION = 1,
+  /**
+   * CANCEL_ONLY - The market is in cancel-only mode. Existing orders are not automatically
+   * canceled, and may be filled when the market transitions back to
+   * normal-operation.
+   */
+  CANCEL_ONLY = 2,
+}
+
 /**
  * The side of the aggressing order. This also indicates if the aggressing order
  * was an implied order (i.e aggressed into a different market and executed into
@@ -115,6 +132,7 @@ export interface MdMessage {
   /** Candlestick */
   kline?: Kline | undefined;
   implied?: ImpliedMarketByPrice | undefined;
+  marketStatus?: MarketStatus | undefined;
 }
 
 /**
@@ -276,6 +294,11 @@ export interface ImpliedMarketByPrice_Level {
   quantity: bigint;
 }
 
+export interface MarketStatus {
+  transactTime: bigint;
+  marketState: MarketState;
+}
+
 /**
  * Trades since the latest `Trades` message. The result of the trades will also
  * appear in the MBP and MBO feeds independently as updates to the resting
@@ -431,6 +454,7 @@ export interface TopOfBook {
   impliedBidQuantity?: bigint | undefined;
   impliedAskPrice?: bigint | undefined;
   impliedAskQuantity?: bigint | undefined;
+  marketState: MarketState;
 }
 
 /**

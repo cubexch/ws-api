@@ -6,7 +6,7 @@
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MdMessage {
-    #[prost(oneof="md_message::Inner", tags="1, 2, 3, 4, 5, 6, 7, 8, 9")]
+    #[prost(oneof="md_message::Inner", tags="1, 2, 3, 4, 5, 6, 7, 8, 9, 10")]
     pub inner: ::core::option::Option<md_message::Inner>,
 }
 /// Nested message and enum types in `MdMessage`.
@@ -43,6 +43,8 @@ pub mod md_message {
         Kline(super::Kline),
         #[prost(message, tag="9")]
         Implied(super::ImpliedMarketByPrice),
+        #[prost(message, tag="10")]
+        MarketStatus(super::MarketStatus),
     }
 }
 /// Market by price snapshot message. This is chunked into `num_chunks` and starts
@@ -328,6 +330,17 @@ pub mod implied_market_by_price {
         pub quantity: u64,
     }
 }
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MarketStatus {
+    #[prost(uint64, tag="1")]
+    pub transact_time: u64,
+    #[prost(enumeration="MarketState", tag="2")]
+    pub market_state: i32,
+}
 /// Trades since the latest `Trades` message. The result of the trades will also
 /// appear in the MBP and MBO feeds independently as updates to the resting
 /// orders and levels, respectively.
@@ -529,6 +542,8 @@ pub struct TopOfBook {
     pub implied_ask_price: ::core::option::Option<u64>,
     #[prost(uint64, optional, tag="12")]
     pub implied_ask_quantity: ::core::option::Option<u64>,
+    #[prost(enumeration="MarketState", tag="13")]
+    pub market_state: i32,
 }
 /// Top of books for all books that were updates since the last top-of-books
 /// message.
@@ -705,6 +720,45 @@ impl KlineInterval {
             "H1" => Some(Self::H1),
             "H4" => Some(Self::H4),
             "D1" => Some(Self::D1),
+            _ => None,
+        }
+    }
+}
+/// The per-market matching engine state. Affects order-entry.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum MarketState {
+    /// Sentinel
+    Unspecified = 0,
+    /// The market is in its normal operating state. All order operations are
+    /// supported.
+    NormalOperation = 1,
+    /// The market is in cancel-only mode. Existing orders are not automatically
+    /// canceled, and may be filled when the market transitions back to
+    /// normal-operation.
+    CancelOnly = 2,
+}
+impl MarketState {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            MarketState::Unspecified => "UNSPECIFIED",
+            MarketState::NormalOperation => "NORMAL_OPERATION",
+            MarketState::CancelOnly => "CANCEL_ONLY",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "UNSPECIFIED" => Some(Self::Unspecified),
+            "NORMAL_OPERATION" => Some(Self::NormalOperation),
+            "CANCEL_ONLY" => Some(Self::CancelOnly),
             _ => None,
         }
     }

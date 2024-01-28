@@ -43,6 +43,7 @@ Every exchange message from `/book/:market_id` will be wrapped as an
 | mbp_diff | [MarketByPriceDiff](#marketbypricediff) |  | Market by price diff |
 | kline | [Kline](#kline) |  | Candlestick |
 | implied | [ImpliedMarketByPrice](#impliedmarketbyprice) |  |  |
+| market_status | [MarketStatus](#marketstatus) |  |  |
 
 
 
@@ -251,6 +252,21 @@ Note that changes in implied quantity are likely to change all levels wider.
 
 
 
+## MarketStatus
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| transact_time | [uint64](#uint64) |  |  |
+| market_state | [MarketState](#marketstate) |  |  |
+
+
+
+
+
+
+
 ### Trades
 Trades since the latest `Trades` message. The result of the trades will also
 appear in the MBP and MBO feeds independently as updates to the resting
@@ -393,6 +409,7 @@ Top of book
 | implied_bid_quantity | [uint64](#uint64) | optional |  |
 | implied_ask_price | [uint64](#uint64) | optional |  |
 | implied_ask_quantity | [uint64](#uint64) | optional |  |
+| market_state | [MarketState](#marketstate) |  |  |
 
 
 
@@ -513,6 +530,18 @@ The candlestick interval.
 | H1 | 3 | 1 hour |
 | H4 | 4 | 4 hours |
 | D1 | 5 | 1 day |
+
+
+
+
+## MarketState
+The per-market matching engine state. Affects order-entry.
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| UNSPECIFIED | 0 | Sentinel |
+| NORMAL_OPERATION | 1 | The market is in its normal operating state. All order operations are supported. |
+| CANCEL_ONLY | 2 | The market is in cancel-only mode. Existing orders are not automatically canceled, and may be filled when the market transitions back to normal-operation. |
 
 
 
