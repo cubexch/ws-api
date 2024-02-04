@@ -223,13 +223,13 @@ message Trades {
 // Rolling 24h stats.
 message Summary {
   // 24h open price
-  uint64 open = 1;
+  optional uint64 open = 1;
   // Latest price
-  uint64 close = 2;
+  optional uint64 close = 2;
   // 24h low price
-  uint64 low = 3;
+  optional uint64 low = 3;
   // 24h high price
-  uint64 high = 4;
+  optional uint64 high = 4;
   // Low 64-bits of the base quantity traded
   uint64 base_volume_lo = 5;
   // High 64-bits of the base quantity traded
@@ -246,13 +246,13 @@ message Kline {
   // The unix nanosecond timestamp that this kline covers.
   uint64 start_time = 2;
   // Kline open price.
-  uint64 open = 3;
+  optional uint64 open = 3;
   // Kline close price.
-  uint64 close = 4;
+  optional uint64 close = 4;
   // Kline high price.
-  uint64 high = 5;
+  optional uint64 high = 5;
   // Kline low price.
-  uint64 low = 6;
+  optional uint64 low = 6;
   // Low 64-bits of the base quantity traded.
   uint64 volume_lo = 7;
   // High 64-bits of the base quantity traded.
@@ -290,17 +290,17 @@ message TopOfBook {
   // book update on this market.
   uint64 transact_time = 2;
   // The best bid price.
-  uint64 bid_price = 3;
+  optional uint64 bid_price = 3;
   // The total bid quantity at the best bid price.
-  uint64 bid_quantity = 4;
+  optional uint64 bid_quantity = 4;
   // The best ask price.
-  uint64 ask_price = 5;
+  optional uint64 ask_price = 5;
   // The total ask quantity at the best ask price.
-  uint64 ask_quantity = 6;
+  optional uint64 ask_quantity = 6;
   // The last trade price.
-  uint64 last_price = 7;
+  optional uint64 last_price = 7;
   // The 24h open price.
-  uint64 rolling24h_price = 8;
+  optional uint64 rolling24h_price = 8;
 }
 
 // Top of books for all books that were updates since the last top-of-books

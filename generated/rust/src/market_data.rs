@@ -343,17 +343,17 @@ pub mod trades {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Summary {
     /// 24h open price
-    #[prost(uint64, tag="1")]
-    pub open: u64,
+    #[prost(uint64, optional, tag="1")]
+    pub open: ::core::option::Option<u64>,
     /// Latest price
-    #[prost(uint64, tag="2")]
-    pub close: u64,
+    #[prost(uint64, optional, tag="2")]
+    pub close: ::core::option::Option<u64>,
     /// 24h low price
-    #[prost(uint64, tag="3")]
-    pub low: u64,
+    #[prost(uint64, optional, tag="3")]
+    pub low: ::core::option::Option<u64>,
     /// 24h high price
-    #[prost(uint64, tag="4")]
-    pub high: u64,
+    #[prost(uint64, optional, tag="4")]
+    pub high: ::core::option::Option<u64>,
     /// Low 64-bits of the base quantity traded
     #[prost(uint64, tag="5")]
     pub base_volume_lo: u64,
@@ -380,17 +380,17 @@ pub struct Kline {
     #[prost(uint64, tag="2")]
     pub start_time: u64,
     /// Kline open price.
-    #[prost(uint64, tag="3")]
-    pub open: u64,
+    #[prost(uint64, optional, tag="3")]
+    pub open: ::core::option::Option<u64>,
     /// Kline close price.
-    #[prost(uint64, tag="4")]
-    pub close: u64,
+    #[prost(uint64, optional, tag="4")]
+    pub close: ::core::option::Option<u64>,
     /// Kline high price.
-    #[prost(uint64, tag="5")]
-    pub high: u64,
+    #[prost(uint64, optional, tag="5")]
+    pub high: ::core::option::Option<u64>,
     /// Kline low price.
-    #[prost(uint64, tag="6")]
-    pub low: u64,
+    #[prost(uint64, optional, tag="6")]
+    pub low: ::core::option::Option<u64>,
     /// Low 64-bits of the base quantity traded.
     #[prost(uint64, tag="7")]
     pub volume_lo: u64,
@@ -464,23 +464,23 @@ pub struct TopOfBook {
     #[prost(uint64, tag="2")]
     pub transact_time: u64,
     /// The best bid price.
-    #[prost(uint64, tag="3")]
-    pub bid_price: u64,
+    #[prost(uint64, optional, tag="3")]
+    pub bid_price: ::core::option::Option<u64>,
     /// The total bid quantity at the best bid price.
-    #[prost(uint64, tag="4")]
-    pub bid_quantity: u64,
+    #[prost(uint64, optional, tag="4")]
+    pub bid_quantity: ::core::option::Option<u64>,
     /// The best ask price.
-    #[prost(uint64, tag="5")]
-    pub ask_price: u64,
+    #[prost(uint64, optional, tag="5")]
+    pub ask_price: ::core::option::Option<u64>,
     /// The total ask quantity at the best ask price.
-    #[prost(uint64, tag="6")]
-    pub ask_quantity: u64,
+    #[prost(uint64, optional, tag="6")]
+    pub ask_quantity: ::core::option::Option<u64>,
     /// The last trade price.
-    #[prost(uint64, tag="7")]
-    pub last_price: u64,
+    #[prost(uint64, optional, tag="7")]
+    pub last_price: ::core::option::Option<u64>,
     /// The 24h open price.
-    #[prost(uint64, tag="8")]
-    pub rolling24h_price: u64,
+    #[prost(uint64, optional, tag="8")]
+    pub rolling24h_price: ::core::option::Option<u64>,
 }
 /// Top of books for all books that were updates since the last top-of-books
 /// message.

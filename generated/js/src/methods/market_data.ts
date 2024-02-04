@@ -1207,10 +1207,10 @@ export const Trades_TradeMethods = {
 
 function createBaseSummary(): Summary {
   return {
-    open: BigInt("0"),
-    close: BigInt("0"),
-    low: BigInt("0"),
-    high: BigInt("0"),
+    open: undefined,
+    close: undefined,
+    low: undefined,
+    high: undefined,
     baseVolumeLo: BigInt("0"),
     baseVolumeHi: BigInt("0"),
     quoteVolumeLo: BigInt("0"),
@@ -1220,16 +1220,16 @@ function createBaseSummary(): Summary {
 
 export const SummaryMethods = {
   encode(message: Summary, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.open !== BigInt("0")) {
+    if (message.open !== undefined) {
       writer.uint32(8).uint64(message.open.toString());
     }
-    if (message.close !== BigInt("0")) {
+    if (message.close !== undefined) {
       writer.uint32(16).uint64(message.close.toString());
     }
-    if (message.low !== BigInt("0")) {
+    if (message.low !== undefined) {
       writer.uint32(24).uint64(message.low.toString());
     }
-    if (message.high !== BigInt("0")) {
+    if (message.high !== undefined) {
       writer.uint32(32).uint64(message.high.toString());
     }
     if (message.baseVolumeLo !== BigInt("0")) {
@@ -1321,10 +1321,10 @@ export const SummaryMethods = {
 
   fromJSON(object: any): Summary {
     return {
-      open: isSet(object.open) ? BigInt(object.open) : BigInt("0"),
-      close: isSet(object.close) ? BigInt(object.close) : BigInt("0"),
-      low: isSet(object.low) ? BigInt(object.low) : BigInt("0"),
-      high: isSet(object.high) ? BigInt(object.high) : BigInt("0"),
+      open: isSet(object.open) ? BigInt(object.open) : undefined,
+      close: isSet(object.close) ? BigInt(object.close) : undefined,
+      low: isSet(object.low) ? BigInt(object.low) : undefined,
+      high: isSet(object.high) ? BigInt(object.high) : undefined,
       baseVolumeLo: isSet(object.baseVolumeLo) ? BigInt(object.baseVolumeLo) : BigInt("0"),
       baseVolumeHi: isSet(object.baseVolumeHi) ? BigInt(object.baseVolumeHi) : BigInt("0"),
       quoteVolumeLo: isSet(object.quoteVolumeLo) ? BigInt(object.quoteVolumeLo) : BigInt("0"),
@@ -1350,10 +1350,10 @@ function createBaseKline(): Kline {
   return {
     interval: 0,
     startTime: BigInt("0"),
-    open: BigInt("0"),
-    close: BigInt("0"),
-    high: BigInt("0"),
-    low: BigInt("0"),
+    open: undefined,
+    close: undefined,
+    high: undefined,
+    low: undefined,
     volumeLo: BigInt("0"),
     volumeHi: BigInt("0"),
   };
@@ -1367,16 +1367,16 @@ export const KlineMethods = {
     if (message.startTime !== BigInt("0")) {
       writer.uint32(16).uint64(message.startTime.toString());
     }
-    if (message.open !== BigInt("0")) {
+    if (message.open !== undefined) {
       writer.uint32(24).uint64(message.open.toString());
     }
-    if (message.close !== BigInt("0")) {
+    if (message.close !== undefined) {
       writer.uint32(32).uint64(message.close.toString());
     }
-    if (message.high !== BigInt("0")) {
+    if (message.high !== undefined) {
       writer.uint32(40).uint64(message.high.toString());
     }
-    if (message.low !== BigInt("0")) {
+    if (message.low !== undefined) {
       writer.uint32(48).uint64(message.low.toString());
     }
     if (message.volumeLo !== BigInt("0")) {
@@ -1464,10 +1464,10 @@ export const KlineMethods = {
     return {
       interval: isSet(object.interval) ? klineIntervalFromJSON(object.interval) : 0,
       startTime: isSet(object.startTime) ? BigInt(object.startTime) : BigInt("0"),
-      open: isSet(object.open) ? BigInt(object.open) : BigInt("0"),
-      close: isSet(object.close) ? BigInt(object.close) : BigInt("0"),
-      high: isSet(object.high) ? BigInt(object.high) : BigInt("0"),
-      low: isSet(object.low) ? BigInt(object.low) : BigInt("0"),
+      open: isSet(object.open) ? BigInt(object.open) : undefined,
+      close: isSet(object.close) ? BigInt(object.close) : undefined,
+      high: isSet(object.high) ? BigInt(object.high) : undefined,
+      low: isSet(object.low) ? BigInt(object.low) : undefined,
       volumeLo: isSet(object.volumeLo) ? BigInt(object.volumeLo) : BigInt("0"),
       volumeHi: isSet(object.volumeHi) ? BigInt(object.volumeHi) : BigInt("0"),
     };
@@ -1676,12 +1676,12 @@ function createBaseTopOfBook(): TopOfBook {
   return {
     marketId: BigInt("0"),
     transactTime: BigInt("0"),
-    bidPrice: BigInt("0"),
-    bidQuantity: BigInt("0"),
-    askPrice: BigInt("0"),
-    askQuantity: BigInt("0"),
-    lastPrice: BigInt("0"),
-    rolling24hPrice: BigInt("0"),
+    bidPrice: undefined,
+    bidQuantity: undefined,
+    askPrice: undefined,
+    askQuantity: undefined,
+    lastPrice: undefined,
+    rolling24hPrice: undefined,
   };
 }
 
@@ -1693,22 +1693,22 @@ export const TopOfBookMethods = {
     if (message.transactTime !== BigInt("0")) {
       writer.uint32(16).uint64(message.transactTime.toString());
     }
-    if (message.bidPrice !== BigInt("0")) {
+    if (message.bidPrice !== undefined) {
       writer.uint32(24).uint64(message.bidPrice.toString());
     }
-    if (message.bidQuantity !== BigInt("0")) {
+    if (message.bidQuantity !== undefined) {
       writer.uint32(32).uint64(message.bidQuantity.toString());
     }
-    if (message.askPrice !== BigInt("0")) {
+    if (message.askPrice !== undefined) {
       writer.uint32(40).uint64(message.askPrice.toString());
     }
-    if (message.askQuantity !== BigInt("0")) {
+    if (message.askQuantity !== undefined) {
       writer.uint32(48).uint64(message.askQuantity.toString());
     }
-    if (message.lastPrice !== BigInt("0")) {
+    if (message.lastPrice !== undefined) {
       writer.uint32(56).uint64(message.lastPrice.toString());
     }
-    if (message.rolling24hPrice !== BigInt("0")) {
+    if (message.rolling24hPrice !== undefined) {
       writer.uint32(64).uint64(message.rolling24hPrice.toString());
     }
     return writer;
@@ -1790,12 +1790,12 @@ export const TopOfBookMethods = {
     return {
       marketId: isSet(object.marketId) ? BigInt(object.marketId) : BigInt("0"),
       transactTime: isSet(object.transactTime) ? BigInt(object.transactTime) : BigInt("0"),
-      bidPrice: isSet(object.bidPrice) ? BigInt(object.bidPrice) : BigInt("0"),
-      bidQuantity: isSet(object.bidQuantity) ? BigInt(object.bidQuantity) : BigInt("0"),
-      askPrice: isSet(object.askPrice) ? BigInt(object.askPrice) : BigInt("0"),
-      askQuantity: isSet(object.askQuantity) ? BigInt(object.askQuantity) : BigInt("0"),
-      lastPrice: isSet(object.lastPrice) ? BigInt(object.lastPrice) : BigInt("0"),
-      rolling24hPrice: isSet(object.rolling24hPrice) ? BigInt(object.rolling24hPrice) : BigInt("0"),
+      bidPrice: isSet(object.bidPrice) ? BigInt(object.bidPrice) : undefined,
+      bidQuantity: isSet(object.bidQuantity) ? BigInt(object.bidQuantity) : undefined,
+      askPrice: isSet(object.askPrice) ? BigInt(object.askPrice) : undefined,
+      askQuantity: isSet(object.askQuantity) ? BigInt(object.askQuantity) : undefined,
+      lastPrice: isSet(object.lastPrice) ? BigInt(object.lastPrice) : undefined,
+      rolling24hPrice: isSet(object.rolling24hPrice) ? BigInt(object.rolling24hPrice) : undefined,
     };
   },
 

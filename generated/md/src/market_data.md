@@ -244,10 +244,10 @@ Rolling 24h stats.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| open | [uint64](#uint64) |  | 24h open price |
-| close | [uint64](#uint64) |  | Latest price |
-| low | [uint64](#uint64) |  | 24h low price |
-| high | [uint64](#uint64) |  | 24h high price |
+| open | [uint64](#uint64) | optional | 24h open price |
+| close | [uint64](#uint64) | optional | Latest price |
+| low | [uint64](#uint64) | optional | 24h low price |
+| high | [uint64](#uint64) | optional | 24h high price |
 | base_volume_lo | [uint64](#uint64) |  | Low 64-bits of the base quantity traded |
 | base_volume_hi | [uint64](#uint64) |  | High 64-bits of the base quantity traded |
 | quote_volume_lo | [uint64](#uint64) |  | Low 64-bits of the quote quantity traded |
@@ -267,10 +267,10 @@ Candlestick bar.
 | ----- | ---- | ----- | ----------- |
 | interval | [KlineInterval](#klineinterval) |  |  |
 | start_time | [uint64](#uint64) |  | The unix nanosecond timestamp that this kline covers. |
-| open | [uint64](#uint64) |  | Kline open price. |
-| close | [uint64](#uint64) |  | Kline close price. |
-| high | [uint64](#uint64) |  | Kline high price. |
-| low | [uint64](#uint64) |  | Kline low price. |
+| open | [uint64](#uint64) | optional | Kline open price. |
+| close | [uint64](#uint64) | optional | Kline close price. |
+| high | [uint64](#uint64) | optional | Kline high price. |
+| low | [uint64](#uint64) | optional | Kline low price. |
 | volume_lo | [uint64](#uint64) |  | Low 64-bits of the base quantity traded. |
 | volume_hi | [uint64](#uint64) |  | High 64-bits of the base quantity traded. |
 
@@ -334,12 +334,12 @@ Top of book
 | ----- | ---- | ----- | ----------- |
 | market_id | [uint64](#uint64) |  |  |
 | transact_time | [uint64](#uint64) |  | The [transact time](./websocket-trade-api.md#transact-time) of the latest book update on this market. |
-| bid_price | [uint64](#uint64) |  | The best bid price. |
-| bid_quantity | [uint64](#uint64) |  | The total bid quantity at the best bid price. |
-| ask_price | [uint64](#uint64) |  | The best ask price. |
-| ask_quantity | [uint64](#uint64) |  | The total ask quantity at the best ask price. |
-| last_price | [uint64](#uint64) |  | The last trade price. |
-| rolling24h_price | [uint64](#uint64) |  | The 24h open price. |
+| bid_price | [uint64](#uint64) | optional | The best bid price. |
+| bid_quantity | [uint64](#uint64) | optional | The total bid quantity at the best bid price. |
+| ask_price | [uint64](#uint64) | optional | The best ask price. |
+| ask_quantity | [uint64](#uint64) | optional | The total ask quantity at the best ask price. |
+| last_price | [uint64](#uint64) | optional | The last trade price. |
+| rolling24h_price | [uint64](#uint64) | optional | The 24h open price. |
 
 
 

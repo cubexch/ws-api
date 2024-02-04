@@ -282,13 +282,21 @@ export interface Trades_Trade {
 /** Rolling 24h stats. */
 export interface Summary {
   /** 24h open price */
-  open: bigint;
+  open?:
+    | bigint
+    | undefined;
   /** Latest price */
-  close: bigint;
+  close?:
+    | bigint
+    | undefined;
   /** 24h low price */
-  low: bigint;
+  low?:
+    | bigint
+    | undefined;
   /** 24h high price */
-  high: bigint;
+  high?:
+    | bigint
+    | undefined;
   /** Low 64-bits of the base quantity traded */
   baseVolumeLo: bigint;
   /** High 64-bits of the base quantity traded */
@@ -305,13 +313,21 @@ export interface Kline {
   /** The unix nanosecond timestamp that this kline covers. */
   startTime: bigint;
   /** Kline open price. */
-  open: bigint;
+  open?:
+    | bigint
+    | undefined;
   /** Kline close price. */
-  close: bigint;
+  close?:
+    | bigint
+    | undefined;
   /** Kline high price. */
-  high: bigint;
+  high?:
+    | bigint
+    | undefined;
   /** Kline low price. */
-  low: bigint;
+  low?:
+    | bigint
+    | undefined;
   /** Low 64-bits of the base quantity traded. */
   volumeLo: bigint;
   /** High 64-bits of the base quantity traded. */
@@ -355,17 +371,27 @@ export interface TopOfBook {
    */
   transactTime: bigint;
   /** The best bid price. */
-  bidPrice: bigint;
+  bidPrice?:
+    | bigint
+    | undefined;
   /** The total bid quantity at the best bid price. */
-  bidQuantity: bigint;
+  bidQuantity?:
+    | bigint
+    | undefined;
   /** The best ask price. */
-  askPrice: bigint;
+  askPrice?:
+    | bigint
+    | undefined;
   /** The total ask quantity at the best ask price. */
-  askQuantity: bigint;
+  askQuantity?:
+    | bigint
+    | undefined;
   /** The last trade price. */
-  lastPrice: bigint;
+  lastPrice?:
+    | bigint
+    | undefined;
   /** The 24h open price. */
-  rolling24hPrice: bigint;
+  rolling24hPrice?: bigint | undefined;
 }
 
 /**
