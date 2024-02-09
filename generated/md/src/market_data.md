@@ -1,8 +1,8 @@
 # WebSocket: Market Data API
 
-## market_data.proto
 This schema defines the Protobuf messages used for communication with the
-Cube Market Data Service (Mendelev, MD).
+Cube Market Data Service (Mendelev, MD). The `proto` definition file can be
+found [here](https://github.com/cubexch/ws-api/blob/main/schema/market_data.proto).
 
 ### Order Book Data
 
@@ -362,7 +362,7 @@ message.
 
 
 
-## RateUpdate
+### RateUpdate
 Rate update. Used in conjuction with another rate update to get the price of
 that divisor. Rate's should not be used alone. For example, given a
 RateUpdate for `assetId = BTC, updateSide = BASE` of `r1`, and `assetId =
@@ -382,7 +382,7 @@ EUR, updateSide = QUOTE` of `r2`, the BTC-EUR price estimate is `r1 * r2`.
 
 
 
-## RateUpdates
+### RateUpdates
 Rates for all assets. Published on connect and updates since the last
 rate-updates message.
 
@@ -436,7 +436,6 @@ and `mbo` can be set.
 ## Enums
 
 
-
 ### Side
 Side specifies whether the level, order, or diff, is for buying or selling
 the base asset.
@@ -464,7 +463,7 @@ The candlestick interval.
 
 
 
-## RateUpdateSide
+### RateUpdateSide
 The side of the rate update. Given a `BASE` rate of `r`, the `QUOTE` rate is
 `1 / r`, and vice versa.
 

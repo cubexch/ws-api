@@ -7,12 +7,12 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Side(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-    __slots__ = []
+    __slots__ = ()
     BID: _ClassVar[Side]
     ASK: _ClassVar[Side]
 
 class KlineInterval(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-    __slots__ = []
+    __slots__ = ()
     S1: _ClassVar[KlineInterval]
     M1: _ClassVar[KlineInterval]
     M15: _ClassVar[KlineInterval]
@@ -21,7 +21,7 @@ class KlineInterval(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     D1: _ClassVar[KlineInterval]
 
 class RateUpdateSide(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-    __slots__ = []
+    __slots__ = ()
     BASE: _ClassVar[RateUpdateSide]
     QUOTE: _ClassVar[RateUpdateSide]
 BID: Side
@@ -36,7 +36,7 @@ BASE: RateUpdateSide
 QUOTE: RateUpdateSide
 
 class MdMessage(_message.Message):
-    __slots__ = ["heartbeat", "summary", "trades", "mbo_snapshot", "mbo_diff", "mbp_snapshot", "mbp_diff", "kline"]
+    __slots__ = ("heartbeat", "summary", "trades", "mbo_snapshot", "mbo_diff", "mbp_snapshot", "mbp_diff", "kline")
     HEARTBEAT_FIELD_NUMBER: _ClassVar[int]
     SUMMARY_FIELD_NUMBER: _ClassVar[int]
     TRADES_FIELD_NUMBER: _ClassVar[int]
@@ -56,9 +56,9 @@ class MdMessage(_message.Message):
     def __init__(self, heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., summary: _Optional[_Union[Summary, _Mapping]] = ..., trades: _Optional[_Union[Trades, _Mapping]] = ..., mbo_snapshot: _Optional[_Union[MarketByOrder, _Mapping]] = ..., mbo_diff: _Optional[_Union[MarketByOrderDiff, _Mapping]] = ..., mbp_snapshot: _Optional[_Union[MarketByPrice, _Mapping]] = ..., mbp_diff: _Optional[_Union[MarketByPriceDiff, _Mapping]] = ..., kline: _Optional[_Union[Kline, _Mapping]] = ...) -> None: ...
 
 class MarketByPrice(_message.Message):
-    __slots__ = ["levels", "chunk", "num_chunks"]
+    __slots__ = ("levels", "chunk", "num_chunks")
     class Level(_message.Message):
-        __slots__ = ["price", "quantity", "side"]
+        __slots__ = ("price", "quantity", "side")
         PRICE_FIELD_NUMBER: _ClassVar[int]
         QUANTITY_FIELD_NUMBER: _ClassVar[int]
         SIDE_FIELD_NUMBER: _ClassVar[int]
@@ -75,9 +75,9 @@ class MarketByPrice(_message.Message):
     def __init__(self, levels: _Optional[_Iterable[_Union[MarketByPrice.Level, _Mapping]]] = ..., chunk: _Optional[int] = ..., num_chunks: _Optional[int] = ...) -> None: ...
 
 class MarketByPriceDiff(_message.Message):
-    __slots__ = ["diffs", "total_bid_levels", "total_ask_levels"]
+    __slots__ = ("diffs", "total_bid_levels", "total_ask_levels")
     class DiffOp(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = []
+        __slots__ = ()
         ADD: _ClassVar[MarketByPriceDiff.DiffOp]
         REMOVE: _ClassVar[MarketByPriceDiff.DiffOp]
         REPLACE: _ClassVar[MarketByPriceDiff.DiffOp]
@@ -85,7 +85,7 @@ class MarketByPriceDiff(_message.Message):
     REMOVE: MarketByPriceDiff.DiffOp
     REPLACE: MarketByPriceDiff.DiffOp
     class Diff(_message.Message):
-        __slots__ = ["price", "quantity", "side", "op"]
+        __slots__ = ("price", "quantity", "side", "op")
         PRICE_FIELD_NUMBER: _ClassVar[int]
         QUANTITY_FIELD_NUMBER: _ClassVar[int]
         SIDE_FIELD_NUMBER: _ClassVar[int]
@@ -104,9 +104,9 @@ class MarketByPriceDiff(_message.Message):
     def __init__(self, diffs: _Optional[_Iterable[_Union[MarketByPriceDiff.Diff, _Mapping]]] = ..., total_bid_levels: _Optional[int] = ..., total_ask_levels: _Optional[int] = ...) -> None: ...
 
 class MarketByOrder(_message.Message):
-    __slots__ = ["orders", "chunk", "num_chunks"]
+    __slots__ = ("orders", "chunk", "num_chunks")
     class Order(_message.Message):
-        __slots__ = ["price", "quantity", "exchange_order_id", "side", "priority"]
+        __slots__ = ("price", "quantity", "exchange_order_id", "side", "priority")
         PRICE_FIELD_NUMBER: _ClassVar[int]
         QUANTITY_FIELD_NUMBER: _ClassVar[int]
         EXCHANGE_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
@@ -127,9 +127,9 @@ class MarketByOrder(_message.Message):
     def __init__(self, orders: _Optional[_Iterable[_Union[MarketByOrder.Order, _Mapping]]] = ..., chunk: _Optional[int] = ..., num_chunks: _Optional[int] = ...) -> None: ...
 
 class MarketByOrderDiff(_message.Message):
-    __slots__ = ["diffs", "total_bid_levels", "total_ask_levels", "total_bid_orders", "total_ask_orders"]
+    __slots__ = ("diffs", "total_bid_levels", "total_ask_levels", "total_bid_orders", "total_ask_orders")
     class DiffOp(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = []
+        __slots__ = ()
         ADD: _ClassVar[MarketByOrderDiff.DiffOp]
         REMOVE: _ClassVar[MarketByOrderDiff.DiffOp]
         REPLACE: _ClassVar[MarketByOrderDiff.DiffOp]
@@ -137,7 +137,7 @@ class MarketByOrderDiff(_message.Message):
     REMOVE: MarketByOrderDiff.DiffOp
     REPLACE: MarketByOrderDiff.DiffOp
     class Diff(_message.Message):
-        __slots__ = ["price", "quantity", "exchange_order_id", "side", "op", "priority"]
+        __slots__ = ("price", "quantity", "exchange_order_id", "side", "op", "priority")
         PRICE_FIELD_NUMBER: _ClassVar[int]
         QUANTITY_FIELD_NUMBER: _ClassVar[int]
         EXCHANGE_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
@@ -164,9 +164,9 @@ class MarketByOrderDiff(_message.Message):
     def __init__(self, diffs: _Optional[_Iterable[_Union[MarketByOrderDiff.Diff, _Mapping]]] = ..., total_bid_levels: _Optional[int] = ..., total_ask_levels: _Optional[int] = ..., total_bid_orders: _Optional[int] = ..., total_ask_orders: _Optional[int] = ...) -> None: ...
 
 class Trades(_message.Message):
-    __slots__ = ["trades"]
+    __slots__ = ("trades",)
     class Trade(_message.Message):
-        __slots__ = ["tradeId", "price", "aggressing_side", "resting_exchange_order_id", "fill_quantity", "transact_time", "aggressing_exchange_order_id"]
+        __slots__ = ("tradeId", "price", "aggressing_side", "resting_exchange_order_id", "fill_quantity", "transact_time", "aggressing_exchange_order_id")
         TRADEID_FIELD_NUMBER: _ClassVar[int]
         PRICE_FIELD_NUMBER: _ClassVar[int]
         AGGRESSING_SIDE_FIELD_NUMBER: _ClassVar[int]
@@ -187,7 +187,7 @@ class Trades(_message.Message):
     def __init__(self, trades: _Optional[_Iterable[_Union[Trades.Trade, _Mapping]]] = ...) -> None: ...
 
 class Summary(_message.Message):
-    __slots__ = ["open", "close", "low", "high", "base_volume_lo", "base_volume_hi", "quote_volume_lo", "quote_volume_hi"]
+    __slots__ = ("open", "close", "low", "high", "base_volume_lo", "base_volume_hi", "quote_volume_lo", "quote_volume_hi")
     OPEN_FIELD_NUMBER: _ClassVar[int]
     CLOSE_FIELD_NUMBER: _ClassVar[int]
     LOW_FIELD_NUMBER: _ClassVar[int]
@@ -207,7 +207,7 @@ class Summary(_message.Message):
     def __init__(self, open: _Optional[int] = ..., close: _Optional[int] = ..., low: _Optional[int] = ..., high: _Optional[int] = ..., base_volume_lo: _Optional[int] = ..., base_volume_hi: _Optional[int] = ..., quote_volume_lo: _Optional[int] = ..., quote_volume_hi: _Optional[int] = ...) -> None: ...
 
 class Kline(_message.Message):
-    __slots__ = ["interval", "start_time", "open", "close", "high", "low", "volume_lo", "volume_hi"]
+    __slots__ = ("interval", "start_time", "open", "close", "high", "low", "volume_lo", "volume_hi")
     INTERVAL_FIELD_NUMBER: _ClassVar[int]
     START_TIME_FIELD_NUMBER: _ClassVar[int]
     OPEN_FIELD_NUMBER: _ClassVar[int]
@@ -227,7 +227,7 @@ class Kline(_message.Message):
     def __init__(self, interval: _Optional[_Union[KlineInterval, str]] = ..., start_time: _Optional[int] = ..., open: _Optional[int] = ..., close: _Optional[int] = ..., high: _Optional[int] = ..., low: _Optional[int] = ..., volume_lo: _Optional[int] = ..., volume_hi: _Optional[int] = ...) -> None: ...
 
 class Heartbeat(_message.Message):
-    __slots__ = ["request_id", "timestamp"]
+    __slots__ = ("request_id", "timestamp")
     REQUEST_ID_FIELD_NUMBER: _ClassVar[int]
     TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
     request_id: int
@@ -235,13 +235,13 @@ class Heartbeat(_message.Message):
     def __init__(self, request_id: _Optional[int] = ..., timestamp: _Optional[int] = ...) -> None: ...
 
 class MdMessages(_message.Message):
-    __slots__ = ["messages"]
+    __slots__ = ("messages",)
     MESSAGES_FIELD_NUMBER: _ClassVar[int]
     messages: _containers.RepeatedCompositeFieldContainer[MdMessage]
     def __init__(self, messages: _Optional[_Iterable[_Union[MdMessage, _Mapping]]] = ...) -> None: ...
 
 class AggMessage(_message.Message):
-    __slots__ = ["heartbeat", "top_of_books", "rate_updates"]
+    __slots__ = ("heartbeat", "top_of_books", "rate_updates")
     HEARTBEAT_FIELD_NUMBER: _ClassVar[int]
     TOP_OF_BOOKS_FIELD_NUMBER: _ClassVar[int]
     RATE_UPDATES_FIELD_NUMBER: _ClassVar[int]
@@ -251,7 +251,7 @@ class AggMessage(_message.Message):
     def __init__(self, heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., top_of_books: _Optional[_Union[TopOfBooks, _Mapping]] = ..., rate_updates: _Optional[_Union[RateUpdates, _Mapping]] = ...) -> None: ...
 
 class TopOfBook(_message.Message):
-    __slots__ = ["market_id", "transact_time", "bid_price", "bid_quantity", "ask_price", "ask_quantity", "last_price", "rolling24h_price"]
+    __slots__ = ("market_id", "transact_time", "bid_price", "bid_quantity", "ask_price", "ask_quantity", "last_price", "rolling24h_price")
     MARKET_ID_FIELD_NUMBER: _ClassVar[int]
     TRANSACT_TIME_FIELD_NUMBER: _ClassVar[int]
     BID_PRICE_FIELD_NUMBER: _ClassVar[int]
@@ -271,13 +271,13 @@ class TopOfBook(_message.Message):
     def __init__(self, market_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., bid_price: _Optional[int] = ..., bid_quantity: _Optional[int] = ..., ask_price: _Optional[int] = ..., ask_quantity: _Optional[int] = ..., last_price: _Optional[int] = ..., rolling24h_price: _Optional[int] = ...) -> None: ...
 
 class TopOfBooks(_message.Message):
-    __slots__ = ["tops"]
+    __slots__ = ("tops",)
     TOPS_FIELD_NUMBER: _ClassVar[int]
     tops: _containers.RepeatedCompositeFieldContainer[TopOfBook]
     def __init__(self, tops: _Optional[_Iterable[_Union[TopOfBook, _Mapping]]] = ...) -> None: ...
 
 class RateUpdate(_message.Message):
-    __slots__ = ["asset_id", "timestamp", "rate", "side"]
+    __slots__ = ("asset_id", "timestamp", "rate", "side")
     ASSET_ID_FIELD_NUMBER: _ClassVar[int]
     TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
     RATE_FIELD_NUMBER: _ClassVar[int]
@@ -289,13 +289,13 @@ class RateUpdate(_message.Message):
     def __init__(self, asset_id: _Optional[int] = ..., timestamp: _Optional[int] = ..., rate: _Optional[int] = ..., side: _Optional[_Union[RateUpdateSide, str]] = ...) -> None: ...
 
 class RateUpdates(_message.Message):
-    __slots__ = ["updates"]
+    __slots__ = ("updates",)
     UPDATES_FIELD_NUMBER: _ClassVar[int]
     updates: _containers.RepeatedCompositeFieldContainer[RateUpdate]
     def __init__(self, updates: _Optional[_Iterable[_Union[RateUpdate, _Mapping]]] = ...) -> None: ...
 
 class ClientMessage(_message.Message):
-    __slots__ = ["heartbeat", "config"]
+    __slots__ = ("heartbeat", "config")
     HEARTBEAT_FIELD_NUMBER: _ClassVar[int]
     CONFIG_FIELD_NUMBER: _ClassVar[int]
     heartbeat: Heartbeat
@@ -303,7 +303,7 @@ class ClientMessage(_message.Message):
     def __init__(self, heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., config: _Optional[_Union[Config, _Mapping]] = ...) -> None: ...
 
 class Config(_message.Message):
-    __slots__ = ["mbp", "mbo", "trades", "summary", "klines"]
+    __slots__ = ("mbp", "mbo", "trades", "summary", "klines")
     MBP_FIELD_NUMBER: _ClassVar[int]
     MBO_FIELD_NUMBER: _ClassVar[int]
     TRADES_FIELD_NUMBER: _ClassVar[int]

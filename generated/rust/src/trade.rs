@@ -1,19 +1,3 @@
-/// A fixed-point decimal number.
-/// Matches the representation preferred by the FIX protocol,
-/// except that the exponent is int32 since Protobuf does not have an int8 type.
-/// The value is computed as `mantissa * 10^exponent`;
-/// for example, `mantissa = 1234` and `exponent = -2` is `12.34`.
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct FixedPointDecimal {
-    #[prost(int64, tag="1")]
-    pub mantissa: i64,
-    #[prost(int32, tag="2")]
-    pub exponent: i32,
-}
 /// Sent by client on websocket initialization. Once the websocket has been
 /// connected, the client is expected to send this credentials message
 /// immediately. The API key (UUID) and secret access key (hex-encoded 32-byte
@@ -22,7 +6,7 @@ pub struct FixedPointDecimal {
 /// `cube.xyz` and the current unix epoch in seconds interpreted at a
 /// little-endian 64-bit number.
 ///
-/// Implementation notes:
+/// ### Implementation notes:
 /// - The signature is base-64 encoded with the 'standard' alphabet and
 ///    padding.
 ///
@@ -33,15 +17,26 @@ pub struct FixedPointDecimal {
 /// - The secret key should be decoded from a hex string into a 32-byte array of
 ///    bytes
 ///
+/// If the credentials provided are incorrect, the server will drop the connection with a close code of 4401.
+///
+/// ### Examples
+///
+/// In the following examples, replace "cafecafecafe..." with your secret key.
+/// When calculated for:
+///    secret key: "cafecafecafecafecafecafecafecafecafecafecafecafecafecafecafecafe"
+///    timestamp: 1706546268
+/// ...the resulting signature should be:
+///    "tmtSP4NIzTLXyVUHIOfinotGnPWyfM8JefxivBdSjc8="
 ///
 /// #### Rust
 ///
 /// ```rust compile_fail
+/// // With crates hmac, base64, hex:
 /// use base64::Engine;
 /// use hmac::{Hmac, Mac, NewMac};
 /// use std::time::SystemTime;
 ///
-/// let secret_key = \[...\];
+/// let secret_key = hex::decode("cafecafecafecafecafecafecafecafecafecafecafecafecafecafecafecafe").expect("secret key valid hex").as_slice();
 ///
 /// let timestamp: u64 = SystemTime::now().duration_since(SystemTime::UNIX_EPOCH).unwrap().as_secs();
 ///
@@ -905,6 +900,22 @@ pub struct Fill {
     /// participanting in the match event will receive this trade ID
     #[prost(uint64, tag="14")]
     pub trade_id: u64,
+}
+/// A fixed-point decimal number.
+/// Matches the representation preferred by the FIX protocol,
+/// except that the exponent is int32 since Protobuf does not have an int8 type.
+/// The value is computed as `mantissa * 10^exponent`;
+/// for example, `mantissa = 1234` and `exponent = -2` is `12.34`.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct FixedPointDecimal {
+    #[prost(int64, tag="1")]
+    pub mantissa: i64,
+    #[prost(int32, tag="2")]
+    pub exponent: i32,
 }
 /// The user's underlying asset position. These are sent asynchronously as
 /// positions are updated and broadcast through internal position channels. They

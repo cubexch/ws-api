@@ -4,7 +4,8 @@ export const protobufPackage = "market_data";
 
 /**
  * This schema defines the Protobuf messages used for communication with the
- * Cube Market Data Service (Mendelev, MD).
+ * Cube Market Data Service (Mendelev, MD). The `proto` definition file can be
+ * found [here](https://github.com/cubexch/ws-api/blob/main/schema/market_data.proto).
  *
  * ### Order Book Data
  *
