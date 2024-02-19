@@ -21,13 +21,13 @@ class KlineInterval(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     D1: _ClassVar[KlineInterval]
 
 class MarketState(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-    __slots__ = []
+    __slots__ = ()
     UNSPECIFIED: _ClassVar[MarketState]
     NORMAL_OPERATION: _ClassVar[MarketState]
     CANCEL_ONLY: _ClassVar[MarketState]
 
 class AggressingSide(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-    __slots__ = []
+    __slots__ = ()
     AGGRESSING_BID: _ClassVar[AggressingSide]
     AGGRESSING_ASK: _ClassVar[AggressingSide]
     AGGRESSING_IMPLIED_BID: _ClassVar[AggressingSide]
@@ -56,7 +56,7 @@ BASE: RateUpdateSide
 QUOTE: RateUpdateSide
 
 class MdMessage(_message.Message):
-    __slots__ = ["heartbeat", "summary", "trades", "mbo_snapshot", "mbo_diff", "mbp_snapshot", "mbp_diff", "kline", "implied", "market_status"]
+    __slots__ = ("heartbeat", "summary", "trades", "mbo_snapshot", "mbo_diff", "mbp_snapshot", "mbp_diff", "kline", "implied", "market_status")
     HEARTBEAT_FIELD_NUMBER: _ClassVar[int]
     SUMMARY_FIELD_NUMBER: _ClassVar[int]
     TRADES_FIELD_NUMBER: _ClassVar[int]
@@ -188,14 +188,14 @@ class MarketByOrderDiff(_message.Message):
     def __init__(self, diffs: _Optional[_Iterable[_Union[MarketByOrderDiff.Diff, _Mapping]]] = ..., total_bid_levels: _Optional[int] = ..., total_ask_levels: _Optional[int] = ..., total_bid_orders: _Optional[int] = ..., total_ask_orders: _Optional[int] = ...) -> None: ...
 
 class ImpliedMarketByPrice(_message.Message):
-    __slots__ = ["bids", "asks"]
+    __slots__ = ("bids", "asks")
     class ImpliedLevels(_message.Message):
-        __slots__ = ["levels"]
+        __slots__ = ("levels",)
         LEVELS_FIELD_NUMBER: _ClassVar[int]
         levels: _containers.RepeatedCompositeFieldContainer[ImpliedMarketByPrice.Level]
         def __init__(self, levels: _Optional[_Iterable[_Union[ImpliedMarketByPrice.Level, _Mapping]]] = ...) -> None: ...
     class Level(_message.Message):
-        __slots__ = ["price", "quantity"]
+        __slots__ = ("price", "quantity")
         PRICE_FIELD_NUMBER: _ClassVar[int]
         QUANTITY_FIELD_NUMBER: _ClassVar[int]
         price: int
@@ -208,7 +208,7 @@ class ImpliedMarketByPrice(_message.Message):
     def __init__(self, bids: _Optional[_Union[ImpliedMarketByPrice.ImpliedLevels, _Mapping]] = ..., asks: _Optional[_Union[ImpliedMarketByPrice.ImpliedLevels, _Mapping]] = ...) -> None: ...
 
 class MarketStatus(_message.Message):
-    __slots__ = ["transact_time", "market_state"]
+    __slots__ = ("transact_time", "market_state")
     TRANSACT_TIME_FIELD_NUMBER: _ClassVar[int]
     MARKET_STATE_FIELD_NUMBER: _ClassVar[int]
     transact_time: int
@@ -303,7 +303,7 @@ class AggMessage(_message.Message):
     def __init__(self, heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., top_of_books: _Optional[_Union[TopOfBooks, _Mapping]] = ..., rate_updates: _Optional[_Union[RateUpdates, _Mapping]] = ...) -> None: ...
 
 class TopOfBook(_message.Message):
-    __slots__ = ["market_id", "transact_time", "bid_price", "bid_quantity", "ask_price", "ask_quantity", "last_price", "rolling24h_price", "implied_bid_price", "implied_bid_quantity", "implied_ask_price", "implied_ask_quantity", "market_state"]
+    __slots__ = ("market_id", "transact_time", "bid_price", "bid_quantity", "ask_price", "ask_quantity", "last_price", "rolling24h_price", "implied_bid_price", "implied_bid_quantity", "implied_ask_price", "implied_ask_quantity", "market_state")
     MARKET_ID_FIELD_NUMBER: _ClassVar[int]
     TRANSACT_TIME_FIELD_NUMBER: _ClassVar[int]
     BID_PRICE_FIELD_NUMBER: _ClassVar[int]
@@ -365,7 +365,7 @@ class ClientMessage(_message.Message):
     def __init__(self, heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., config: _Optional[_Union[Config, _Mapping]] = ...) -> None: ...
 
 class Config(_message.Message):
-    __slots__ = ["mbp", "mbo", "trades", "summary", "klines", "implied_levels"]
+    __slots__ = ("mbp", "mbo", "trades", "summary", "klines", "implied_levels")
     MBP_FIELD_NUMBER: _ClassVar[int]
     MBO_FIELD_NUMBER: _ClassVar[int]
     TRADES_FIELD_NUMBER: _ClassVar[int]

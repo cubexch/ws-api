@@ -746,16 +746,32 @@ export interface Fill {
   clientOrderId: bigint;
   /** [Exchange order ID](#exchange-order-id) */
   exchangeOrderId: bigint;
-  /** The price that this trade occured at. */
+  /**
+   * The price at which this trade occured.
+   * In the case of an implied fill, this price may be fractional,
+   * and will be truncated in that case.
+   * To determine the exact amount of the assets exchanged in the fill,
+   * use the fill_quantity and quote_quantity fields.
+   */
   fillPrice: bigint;
-  /** The quantity that was traded in this fill. */
+  /**
+   * The quantity of the base asset that was traded in this fill,
+   * expressed in lots of the base asset.
+   */
   fillQuantity: bigint;
-  /** The remaining quantity for this order after the fill is applied. */
+  /** The remaining base quantity for this order after the fill is applied. */
   leavesQuantity: bigint;
+  /**
+   * The quantity of the quote asset that was traded in this fill,
+   * expressed in lots of the quote asset.
+   * This will generally be the same as the base fill_quantity * fill_price,
+   * but may be different in the case of an implied fill.
+   */
+  quoteQuantity: bigint;
   /** [Transact time](#transact-time) */
   transactTime: bigint;
   subaccountId: bigint;
-  /** The cumulative filled quantity for this order after the fill is applied. */
+  /** The cumulative filled base quantity for this order after the fill is applied. */
   cumulativeQuantity: bigint;
   side: Side;
   aggressorIndicator: boolean;

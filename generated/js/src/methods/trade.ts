@@ -2497,6 +2497,7 @@ function createBaseFill(): Fill {
     fillPrice: BigInt("0"),
     fillQuantity: BigInt("0"),
     leavesQuantity: BigInt("0"),
+    quoteQuantity: BigInt("0"),
     transactTime: BigInt("0"),
     subaccountId: BigInt("0"),
     cumulativeQuantity: BigInt("0"),
@@ -2529,6 +2530,9 @@ export const FillMethods = {
     }
     if (message.leavesQuantity !== BigInt("0")) {
       writer.uint32(56).uint64(message.leavesQuantity.toString());
+    }
+    if (message.quoteQuantity !== BigInt("0")) {
+      writer.uint32(120).uint64(message.quoteQuantity.toString());
     }
     if (message.transactTime !== BigInt("0")) {
       writer.uint32(64).uint64(message.transactTime.toString());
@@ -2610,6 +2614,13 @@ export const FillMethods = {
 
           message.leavesQuantity = longToBigint(reader.uint64() as Long);
           continue;
+        case 15:
+          if (tag !== 120) {
+            break;
+          }
+
+          message.quoteQuantity = longToBigint(reader.uint64() as Long);
+          continue;
         case 8:
           if (tag !== 64) {
             break;
@@ -2677,6 +2688,7 @@ export const FillMethods = {
       fillPrice: isSet(object.fillPrice) ? BigInt(object.fillPrice) : BigInt("0"),
       fillQuantity: isSet(object.fillQuantity) ? BigInt(object.fillQuantity) : BigInt("0"),
       leavesQuantity: isSet(object.leavesQuantity) ? BigInt(object.leavesQuantity) : BigInt("0"),
+      quoteQuantity: isSet(object.quoteQuantity) ? BigInt(object.quoteQuantity) : BigInt("0"),
       transactTime: isSet(object.transactTime) ? BigInt(object.transactTime) : BigInt("0"),
       subaccountId: isSet(object.subaccountId) ? BigInt(object.subaccountId) : BigInt("0"),
       cumulativeQuantity: isSet(object.cumulativeQuantity) ? BigInt(object.cumulativeQuantity) : BigInt("0"),
@@ -2696,6 +2708,7 @@ export const FillMethods = {
     message.fillPrice !== undefined && (obj.fillPrice = message.fillPrice.toString());
     message.fillQuantity !== undefined && (obj.fillQuantity = message.fillQuantity.toString());
     message.leavesQuantity !== undefined && (obj.leavesQuantity = message.leavesQuantity.toString());
+    message.quoteQuantity !== undefined && (obj.quoteQuantity = message.quoteQuantity.toString());
     message.transactTime !== undefined && (obj.transactTime = message.transactTime.toString());
     message.subaccountId !== undefined && (obj.subaccountId = message.subaccountId.toString());
     message.cumulativeQuantity !== undefined && (obj.cumulativeQuantity = message.cumulativeQuantity.toString());
