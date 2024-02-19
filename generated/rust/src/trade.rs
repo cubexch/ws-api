@@ -871,21 +871,32 @@ pub struct Fill {
     /// [Exchange order ID](#exchange-order-id)
     #[prost(uint64, tag="4")]
     pub exchange_order_id: u64,
-    /// The price that this trade occured at.
+    /// The price at which this trade occured.
+    /// In the case of an implied fill, this price may be fractional,
+    /// and will be truncated in that case.
+    /// To determine the exact amount of the assets exchanged in the fill,
+    /// use the fill_quantity and quote_quantity fields.
     #[prost(uint64, tag="5")]
     pub fill_price: u64,
-    /// The quantity that was traded in this fill.
+    /// The quantity of the base asset that was traded in this fill,
+    /// expressed in lots of the base asset.
     #[prost(uint64, tag="6")]
     pub fill_quantity: u64,
-    /// The remaining quantity for this order after the fill is applied.
+    /// The remaining base quantity for this order after the fill is applied.
     #[prost(uint64, tag="7")]
     pub leaves_quantity: u64,
+    /// The quantity of the quote asset that was traded in this fill,
+    /// expressed in lots of the quote asset.
+    /// This will generally be the same as the base fill_quantity,
+    /// but may be different in the case of an implied fill.
+    #[prost(uint64, tag="15")]
+    pub quote_quantity: u64,
     /// [Transact time](#transact-time)
     #[prost(uint64, tag="8")]
     pub transact_time: u64,
     #[prost(uint64, tag="9")]
     pub subaccount_id: u64,
-    /// The cumulative filled quantity for this order after the fill is applied.
+    /// The cumulative filled base quantity for this order after the fill is applied.
     #[prost(uint64, tag="10")]
     pub cumulative_quantity: u64,
     #[prost(enumeration="Side", tag="11")]
