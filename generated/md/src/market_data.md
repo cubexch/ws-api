@@ -37,13 +37,13 @@ Every exchange message from `/book/:market_id` will be wrapped as an
 | heartbeat | [Heartbeat](#heartbeat) |  | Server heartbeat reply |
 | summary | [Summary](#summary) |  | 24h summary |
 | trades | [Trades](#trades) |  | Recent trades |
-| mbo_snapshot | [MarketByOrder](#market-by-order) |  | Market by order snapshot |
-| mbo_diff | [MarketByOrderDiff](#market-by-order-diff) |  | Market by order diff |
-| mbp_snapshot | [MarketByPrice](#market-by-price) |  | Market by price snapshot |
-| mbp_diff | [MarketByPriceDiff](#market-by-price-diff) |  | Market by price diff |
+| mbo_snapshot | [MarketByOrder](#marketbyorder) |  | Market by order snapshot |
+| mbo_diff | [MarketByOrderDiff](#marketbyorderdiff) |  | Market by order diff |
+| mbp_snapshot | [MarketByPrice](#marketbyprice) |  | Market by price snapshot |
+| mbp_diff | [MarketByPriceDiff](#marketbypricediff) |  | Market by price diff |
 | kline | [Kline](#kline) |  | Candlestick |
-| implied | [ImpliedMarketByPrice](#implied-market-by-price) |  |  |
-| market_status | [MarketStatus](#market-status) |  |  |
+| implied | [ImpliedMarketByPrice](#impliedmarketbyprice) |  |  |
+| market_status | [MarketStatus](#marketstatus) |  |  |
 
 
 
@@ -61,7 +61,7 @@ levels, but no ordering is guaranteed.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| levels | [MarketByPrice.Level](#market-by-price-level) | repeated |  |
+| levels | [MarketByPrice.Level](#marketbyprice.level) | repeated |  |
 | chunk | [uint32](#uint32) |  |  |
 | num_chunks | [uint32](#uint32) |  |  |
 
@@ -96,7 +96,7 @@ reconciliation.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| diffs | [MarketByPriceDiff.Diff](#market-by-price-diff-diff) | repeated |  |
+| diffs | [MarketByPriceDiff.Diff](#marketbypricediff.diff) | repeated |  |
 | total_bid_levels | [uint32](#uint32) |  | Total number of bid levels after this diff is applied. |
 | total_ask_levels | [uint32](#uint32) |  | Total number of ask levels after this diff is applied. |
 
@@ -115,7 +115,7 @@ A price level diff overwrites the existing price level.
 | price | [uint64](#uint64) |  |  |
 | quantity | [uint64](#uint64) |  |  |
 | side | [Side](#side) |  |  |
-| op | [MarketByPriceDiff.DiffOp](#market-by-price-diff-diff-op) |  |  |
+| op | [MarketByPriceDiff.DiffOp](#marketbypricediff.diffop) |  |  |
 
 
 
@@ -133,7 +133,7 @@ matched when that level is aggressed.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| orders | [MarketByOrder.Order](#market-by-order-order) | repeated |  |
+| orders | [MarketByOrder.Order](#marketbyorder.order) | repeated |  |
 | chunk | [uint32](#uint32) |  |  |
 | num_chunks | [uint32](#uint32) |  |  |
 
@@ -173,7 +173,7 @@ exchange order ID will not change.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| diffs | [MarketByOrderDiff.Diff](#market-by-order-diff-diff) | repeated |  |
+| diffs | [MarketByOrderDiff.Diff](#marketbyorderdiff.diff) | repeated |  |
 | total_bid_levels | [uint32](#uint32) |  | Total number of bid levels after this diff is applied. |
 | total_ask_levels | [uint32](#uint32) |  | Total number of ask levels after this diff is applied. |
 | total_bid_orders | [uint32](#uint32) |  | Total number of bid orders after this diff is applied. |
@@ -196,7 +196,7 @@ An order diff creates, updates, or deletes a resting order based on the
 | quantity | [uint64](#uint64) |  |  |
 | exchange_order_id | [uint64](#uint64) |  | [Exchange order ID](./websocket-trade-api.md#exchange-order-id) |
 | side | [Side](#side) |  |  |
-| op | [MarketByOrderDiff.DiffOp](#market-by-order-diff-diff-op) |  |  |
+| op | [MarketByOrderDiff.DiffOp](#marketbyorderdiff.diffop) |  |  |
 | priority | [uint64](#uint64) |  | See [`MarketByOrder.Order`](#marketbyorder.order) |
 
 
@@ -214,8 +214,8 @@ Note that changes in implied quantity are likely to change all levels wider.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| bids | [ImpliedMarketByPrice.ImpliedLevels](#implied-market-by-price-implied-levels) | optional |  |
-| asks | [ImpliedMarketByPrice.ImpliedLevels](#implied-market-by-price-implied-levels) | optional |  |
+| bids | [ImpliedMarketByPrice.ImpliedLevels](#impliedmarketbyprice.impliedlevels) | optional |  |
+| asks | [ImpliedMarketByPrice.ImpliedLevels](#impliedmarketbyprice.impliedlevels) | optional |  |
 
 
 
@@ -229,7 +229,7 @@ Note that changes in implied quantity are likely to change all levels wider.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| levels | [ImpliedMarketByPrice.Level](#implied-market-by-price-level) | repeated |  |
+| levels | [ImpliedMarketByPrice.Level](#impliedmarketbyprice.level) | repeated |  |
 
 
 
@@ -259,7 +259,7 @@ Note that changes in implied quantity are likely to change all levels wider.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | transact_time | [uint64](#uint64) |  |  |
-| market_state | [MarketState](#market-state) |  |  |
+| market_state | [MarketState](#marketstate) |  |  |
 
 
 
@@ -275,7 +275,7 @@ orders and levels, respectively.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| trades | [Trades.Trade](#trades-trade) | repeated |  |
+| trades | [Trades.Trade](#trades.trade) | repeated |  |
 
 
 
@@ -291,7 +291,7 @@ orders and levels, respectively.
 | ----- | ---- | ----- | ----------- |
 | tradeId | [uint64](#uint64) |  | The ID assigned to this trade. All trades that occur from the same event will be assigned the same ID, and are considered to be an atomic batch. |
 | price | [uint64](#uint64) |  | The price that this trade occurred at. |
-| aggressing_side | [AggressingSide](#aggressing-side) |  | The side of the aggressing order. |
+| aggressing_side | [AggressingSide](#aggressingside) |  | The side of the aggressing order. |
 | resting_exchange_order_id | [uint64](#uint64) |  | The [Exchange order ID](./websocket-trade-api.md#exchange-order-id) of the resting order. |
 | fill_quantity | [uint64](#uint64) |  |  |
 | transact_time | [uint64](#uint64) |  | The [transact time](./websocket-trade-api.md#transact-time) assigned by the matching engine for this trade. All trades that occur from the same event will be assigned the same transact time. |
@@ -330,7 +330,7 @@ Candlestick bar.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| interval | [KlineInterval](#kline-interval) |  |  |
+| interval | [KlineInterval](#klineinterval) |  |  |
 | start_time | [uint64](#uint64) |  | The unix nanosecond timestamp that this kline covers. |
 | open | [uint64](#uint64) | optional | Kline open price. |
 | close | [uint64](#uint64) | optional | Kline close price. |
@@ -367,7 +367,7 @@ value, comes from the market data service.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| messages | [MdMessage](#md-message) | repeated |  |
+| messages | [MdMessage](#mdmessage) | repeated |  |
 
 
 
@@ -382,8 +382,8 @@ Every exchange message from `/tops` will be wrapped as an `AggMessage`.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | heartbeat | [Heartbeat](#heartbeat) |  | Server heartbeat reply |
-| top_of_books | [TopOfBooks](#top-of-books) |  | Top of books |
-| rate_updates | [RateUpdates](#rate-updates) |  | Rates for all assets |
+| top_of_books | [TopOfBooks](#topofbooks) |  | Top of books |
+| rate_updates | [RateUpdates](#rateupdates) |  | Rates for all assets |
 
 
 
@@ -409,7 +409,7 @@ Top of book
 | implied_bid_quantity | [uint64](#uint64) | optional |  |
 | implied_ask_price | [uint64](#uint64) | optional |  |
 | implied_ask_quantity | [uint64](#uint64) | optional |  |
-| market_state | [MarketState](#market-state) |  |  |
+| market_state | [MarketState](#marketstate) |  |  |
 
 
 
@@ -424,7 +424,7 @@ message.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| tops | [TopOfBook](#top-of-book) | repeated |  |
+| tops | [TopOfBook](#topofbook) | repeated |  |
 
 
 
@@ -444,7 +444,7 @@ EUR, updateSide = QUOTE` of `r2`, the BTC-EUR price estimate is `r1 * r2`.
 | asset_id | [uint64](#uint64) |  |  |
 | timestamp | [uint64](#uint64) |  | The nanosecond timestamp of the update. |
 | rate | [uint64](#uint64) |  | The asset rate at the given timestamp. |
-| side | [RateUpdateSide](#rate-update-side) |  |  |
+| side | [RateUpdateSide](#rateupdateside) |  |  |
 
 
 
@@ -459,7 +459,7 @@ rate-updates message.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| updates | [RateUpdate](#rate-update) | repeated |  |
+| updates | [RateUpdate](#rateupdate) | repeated |  |
 
 
 
@@ -495,7 +495,7 @@ and `mbo` can be set.
 | mbo | [bool](#bool) |  | Enable MBO feeds |
 | trades | [bool](#bool) |  | Enable recent trades |
 | summary | [bool](#bool) |  | Enable 24h summary |
-| klines | [KlineInterval](#kline-interval) | repeated | Enable price klines |
+| klines | [KlineInterval](#klineinterval) | repeated | Enable price klines |
 | implied_levels | [uint32](#uint32) |  | Enable implied prices for this many levels. Note that high levels of implied calculation will be expensive for bandwith, and may require additional permissions. |
 
 
@@ -534,7 +534,7 @@ The candlestick interval.
 
 
 
-## MarketState
+### MarketState
 The per-market matching engine state. Affects order-entry.
 
 | Name | Number | Description |
@@ -546,7 +546,7 @@ The per-market matching engine state. Affects order-entry.
 
 
 
-## AggressingSide
+### AggressingSide
 The side of the aggressing order. This also indicates if the aggressing order
 was an implied order (i.e aggressed into a different market and executed into
 this one through implieds)
@@ -561,7 +561,7 @@ this one through implieds)
 
 
 
-## RateUpdateSide
+### RateUpdateSide
 The side of the rate update. Given a `BASE` rate of `r`, the `QUOTE` rate is
 `1 / r`, and vice versa.
 
@@ -623,3 +623,4 @@ order is `REMOVE`'d when it is fully filled or canceled.
 | bool |  | bool | bool | boolean | bool |
 | string | A string must always contain UTF-8 encoded or 7-bit ASCII text. | String | string | str/unicode | string |
 | bytes | May contain any arbitrary sequence of bytes. | Vec<u8> | string | str | []byte |
+

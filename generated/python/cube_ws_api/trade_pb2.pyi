@@ -47,14 +47,6 @@ ALLOW_SELF_TRADE: SelfTradePrevention
 DISABLED: PostOnly
 ENABLED: PostOnly
 
-class FixedPointDecimal(_message.Message):
-    __slots__ = ("mantissa", "exponent")
-    MANTISSA_FIELD_NUMBER: _ClassVar[int]
-    EXPONENT_FIELD_NUMBER: _ClassVar[int]
-    mantissa: int
-    exponent: int
-    def __init__(self, mantissa: _Optional[int] = ..., exponent: _Optional[int] = ...) -> None: ...
-
 class Credentials(_message.Message):
     __slots__ = ("access_key_id", "signature", "timestamp")
     ACCESS_KEY_ID_FIELD_NUMBER: _ClassVar[int]
