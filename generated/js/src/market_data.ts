@@ -10,7 +10,8 @@ export const protobufPackage = "market_data";
  * ### Order Book Data
  *
  * The market data service exposes a websocket endpoint for order book data for
- * a given market at `/book/:market_id`. The order book can be consumed by both
+ * a given market at `wss://api.cube.exchange/md/book/:market_id`. The order
+ * book can be consumed by both
  * price level through the Market by Price (MBP) and order-by-order through the
  * Market by Order (MBO). In addition, clients can subscribe to the trade stream
  * and price candlesticks. Clients should submit a [`Config`](#config) and then
@@ -19,8 +20,8 @@ export const protobufPackage = "market_data";
  * ### Aggregate Book Tops Data
  *
  * The market data service exposes a websocket endpoint for aggregated
- * tops-of-book for all markets at `/tops`. Client should process
- * [`AggMessage`](#aggmessage).
+ * tops-of-book for all markets at `wss://api.cube.exchange/md/tops`. Client
+ * should process [`AggMessage`](#aggmessage).
  *
  * ### Heartbeats
  *
