@@ -1,12 +1,22 @@
 import logging
 from sortedcontainers import SortedDict
 from cube_ws_api import market_data_pb2
+import util
 
 class PriceBook:
     def __init__(self):
         self.bids = SortedDict()
         self.asks = SortedDict()
         self.logger = logging.getLogger('pricebook')
+
+    def dump(self, fname):
+        with open(fname, "w") as f:
+            f.write(util.BIDS_HEADER)
+            for i, p in reversed(self.bids):
+                f.write(f"level: {i} price: {p} quantity: {self.bids[p]}\n")
+            f.write(util.ASKS_HEADER)
+            for i, p in self.asks:
+                f.write(f"level: {i} price: {p} quantity: {self.asks[p]}\n")
 
     def apply_mbp_diff(self, mbp_diff: market_data_pb2.MarketByPriceDiff):
         exp_bid_lvs, exp_ask_lvs = mbp_diff.total_bid_levels, mbp_diff.total_ask_levels
