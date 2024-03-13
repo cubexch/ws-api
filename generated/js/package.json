@@ -9,8 +9,6 @@
   "files": [
     "lib/**/*"
   ],
-  "dependencies": {
-  },
   "devDependencies": {
     "@types/debug": "^4.1.7",
     "ts-proto": "^1.149.0",
