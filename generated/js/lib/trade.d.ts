@@ -732,7 +732,7 @@ export interface Fill {
      * This will generally be the same as the base fill_quantity * fill_price,
      * but may be different in the case of an implied fill.
      */
-    quoteQuantity: bigint;
+    fillQuoteQuantity: bigint;
     /** [Transact time](#transact-time) */
     transactTime: bigint;
     subaccountId: bigint;

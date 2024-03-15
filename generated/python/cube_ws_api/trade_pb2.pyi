@@ -438,7 +438,7 @@ class ModifyOrderReject(_message.Message):
     def __init__(self, msg_seq_num: _Optional[int] = ..., client_order_id: _Optional[int] = ..., request_id: _Optional[int] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., reason: _Optional[_Union[ModifyOrderReject.Reason, str]] = ..., market_id: _Optional[int] = ...) -> None: ...
 
 class Fill(_message.Message):
-    __slots__ = ("msg_seq_num", "market_id", "client_order_id", "exchange_order_id", "fill_price", "fill_quantity", "leaves_quantity", "quote_quantity", "transact_time", "subaccount_id", "cumulative_quantity", "side", "aggressor_indicator", "fee_ratio", "trade_id")
+    __slots__ = ("msg_seq_num", "market_id", "client_order_id", "exchange_order_id", "fill_price", "fill_quantity", "leaves_quantity", "fill_quote_quantity", "transact_time", "subaccount_id", "cumulative_quantity", "side", "aggressor_indicator", "fee_ratio", "trade_id")
     MSG_SEQ_NUM_FIELD_NUMBER: _ClassVar[int]
     MARKET_ID_FIELD_NUMBER: _ClassVar[int]
     CLIENT_ORDER_ID_FIELD_NUMBER: _ClassVar[int]
@@ -446,7 +446,7 @@ class Fill(_message.Message):
     FILL_PRICE_FIELD_NUMBER: _ClassVar[int]
     FILL_QUANTITY_FIELD_NUMBER: _ClassVar[int]
     LEAVES_QUANTITY_FIELD_NUMBER: _ClassVar[int]
-    QUOTE_QUANTITY_FIELD_NUMBER: _ClassVar[int]
+    FILL_QUOTE_QUANTITY_FIELD_NUMBER: _ClassVar[int]
     TRANSACT_TIME_FIELD_NUMBER: _ClassVar[int]
     SUBACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     CUMULATIVE_QUANTITY_FIELD_NUMBER: _ClassVar[int]
@@ -461,7 +461,7 @@ class Fill(_message.Message):
     fill_price: int
     fill_quantity: int
     leaves_quantity: int
-    quote_quantity: int
+    fill_quote_quantity: int
     transact_time: int
     subaccount_id: int
     cumulative_quantity: int
@@ -469,7 +469,7 @@ class Fill(_message.Message):
     aggressor_indicator: bool
     fee_ratio: FixedPointDecimal
     trade_id: int
-    def __init__(self, msg_seq_num: _Optional[int] = ..., market_id: _Optional[int] = ..., client_order_id: _Optional[int] = ..., exchange_order_id: _Optional[int] = ..., fill_price: _Optional[int] = ..., fill_quantity: _Optional[int] = ..., leaves_quantity: _Optional[int] = ..., quote_quantity: _Optional[int] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., cumulative_quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., aggressor_indicator: bool = ..., fee_ratio: _Optional[_Union[FixedPointDecimal, _Mapping]] = ..., trade_id: _Optional[int] = ...) -> None: ...
+    def __init__(self, msg_seq_num: _Optional[int] = ..., market_id: _Optional[int] = ..., client_order_id: _Optional[int] = ..., exchange_order_id: _Optional[int] = ..., fill_price: _Optional[int] = ..., fill_quantity: _Optional[int] = ..., leaves_quantity: _Optional[int] = ..., fill_quote_quantity: _Optional[int] = ..., transact_time: _Optional[int] = ..., subaccount_id: _Optional[int] = ..., cumulative_quantity: _Optional[int] = ..., side: _Optional[_Union[Side, str]] = ..., aggressor_indicator: bool = ..., fee_ratio: _Optional[_Union[FixedPointDecimal, _Mapping]] = ..., trade_id: _Optional[int] = ...) -> None: ...
 
 class FixedPointDecimal(_message.Message):
     __slots__ = ("mantissa", "exponent")

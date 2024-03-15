@@ -678,7 +678,7 @@ message Fill {
   // expressed in lots of the quote asset.
   // This will generally be the same as the base fill_quantity * fill_price,
   // but may be different in the case of an implied fill.
-  uint64 quote_quantity = 15;
+  uint64 fill_quote_quantity = 15;
   // [Transact time](#transact-time)
   uint64 transact_time = 8;
   uint64 subaccount_id = 9;

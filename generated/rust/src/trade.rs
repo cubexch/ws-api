@@ -890,7 +890,7 @@ pub struct Fill {
     /// This will generally be the same as the base fill_quantity * fill_price,
     /// but may be different in the case of an implied fill.
     #[prost(uint64, tag="15")]
-    pub quote_quantity: u64,
+    pub fill_quote_quantity: u64,
     /// [Transact time](#transact-time)
     #[prost(uint64, tag="8")]
     pub transact_time: u64,
