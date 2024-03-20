@@ -33,6 +33,11 @@ class PostOnly(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = ()
     DISABLED: _ClassVar[PostOnly]
     ENABLED: _ClassVar[PostOnly]
+
+class ConnectionStatus(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    READ_ONLY: _ClassVar[ConnectionStatus]
+    READ_WRITE: _ClassVar[ConnectionStatus]
 BID: Side
 ASK: Side
 IMMEDIATE_OR_CANCEL: TimeInForce
@@ -46,6 +51,8 @@ CANCEL_AGGRESSING: SelfTradePrevention
 ALLOW_SELF_TRADE: SelfTradePrevention
 DISABLED: PostOnly
 ENABLED: PostOnly
+READ_ONLY: ConnectionStatus
+READ_WRITE: ConnectionStatus
 
 class Credentials(_message.Message):
     __slots__ = ("access_key_id", "signature", "timestamp")
@@ -152,7 +159,7 @@ class Heartbeat(_message.Message):
     def __init__(self, request_id: _Optional[int] = ..., timestamp: _Optional[int] = ...) -> None: ...
 
 class OrderResponse(_message.Message):
-    __slots__ = ("new_ack", "cancel_ack", "modify_ack", "new_reject", "cancel_reject", "modify_reject", "fill", "heartbeat", "position", "mass_cancel_ack")
+    __slots__ = ("new_ack", "cancel_ack", "modify_ack", "new_reject", "cancel_reject", "modify_reject", "fill", "heartbeat", "position", "mass_cancel_ack", "trading_status")
     NEW_ACK_FIELD_NUMBER: _ClassVar[int]
     CANCEL_ACK_FIELD_NUMBER: _ClassVar[int]
     MODIFY_ACK_FIELD_NUMBER: _ClassVar[int]
@@ -163,6 +170,7 @@ class OrderResponse(_message.Message):
     HEARTBEAT_FIELD_NUMBER: _ClassVar[int]
     POSITION_FIELD_NUMBER: _ClassVar[int]
     MASS_CANCEL_ACK_FIELD_NUMBER: _ClassVar[int]
+    TRADING_STATUS_FIELD_NUMBER: _ClassVar[int]
     new_ack: NewOrderAck
     cancel_ack: CancelOrderAck
     modify_ack: ModifyOrderAck
@@ -173,7 +181,8 @@ class OrderResponse(_message.Message):
     heartbeat: Heartbeat
     position: AssetPosition
     mass_cancel_ack: MassCancelAck
-    def __init__(self, new_ack: _Optional[_Union[NewOrderAck, _Mapping]] = ..., cancel_ack: _Optional[_Union[CancelOrderAck, _Mapping]] = ..., modify_ack: _Optional[_Union[ModifyOrderAck, _Mapping]] = ..., new_reject: _Optional[_Union[NewOrderReject, _Mapping]] = ..., cancel_reject: _Optional[_Union[CancelOrderReject, _Mapping]] = ..., modify_reject: _Optional[_Union[ModifyOrderReject, _Mapping]] = ..., fill: _Optional[_Union[Fill, _Mapping]] = ..., heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., position: _Optional[_Union[AssetPosition, _Mapping]] = ..., mass_cancel_ack: _Optional[_Union[MassCancelAck, _Mapping]] = ...) -> None: ...
+    trading_status: TradingStatus
+    def __init__(self, new_ack: _Optional[_Union[NewOrderAck, _Mapping]] = ..., cancel_ack: _Optional[_Union[CancelOrderAck, _Mapping]] = ..., modify_ack: _Optional[_Union[ModifyOrderAck, _Mapping]] = ..., new_reject: _Optional[_Union[NewOrderReject, _Mapping]] = ..., cancel_reject: _Optional[_Union[CancelOrderReject, _Mapping]] = ..., modify_reject: _Optional[_Union[ModifyOrderReject, _Mapping]] = ..., fill: _Optional[_Union[Fill, _Mapping]] = ..., heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., position: _Optional[_Union[AssetPosition, _Mapping]] = ..., mass_cancel_ack: _Optional[_Union[MassCancelAck, _Mapping]] = ..., trading_status: _Optional[_Union[TradingStatus, _Mapping]] = ...) -> None: ...
 
 class NewOrderAck(_message.Message):
     __slots__ = ("msg_seq_num", "client_order_id", "request_id", "exchange_order_id", "market_id", "price", "quantity", "side", "time_in_force", "order_type", "transact_time", "subaccount_id", "cancel_on_disconnect")
@@ -504,14 +513,16 @@ class RawUnits(_message.Message):
     def __init__(self, word0: _Optional[int] = ..., word1: _Optional[int] = ..., word2: _Optional[int] = ..., word3: _Optional[int] = ...) -> None: ...
 
 class Bootstrap(_message.Message):
-    __slots__ = ("done", "resting", "position")
+    __slots__ = ("done", "resting", "position", "trading_status")
     DONE_FIELD_NUMBER: _ClassVar[int]
     RESTING_FIELD_NUMBER: _ClassVar[int]
     POSITION_FIELD_NUMBER: _ClassVar[int]
+    TRADING_STATUS_FIELD_NUMBER: _ClassVar[int]
     done: Done
     resting: RestingOrders
     position: AssetPositions
-    def __init__(self, done: _Optional[_Union[Done, _Mapping]] = ..., resting: _Optional[_Union[RestingOrders, _Mapping]] = ..., position: _Optional[_Union[AssetPositions, _Mapping]] = ...) -> None: ...
+    trading_status: TradingStatus
+    def __init__(self, done: _Optional[_Union[Done, _Mapping]] = ..., resting: _Optional[_Union[RestingOrders, _Mapping]] = ..., position: _Optional[_Union[AssetPositions, _Mapping]] = ..., trading_status: _Optional[_Union[TradingStatus, _Mapping]] = ...) -> None: ...
 
 class RestingOrders(_message.Message):
     __slots__ = ("orders",)
@@ -532,6 +543,12 @@ class Done(_message.Message):
     latest_transact_time: int
     read_only: bool
     def __init__(self, latest_transact_time: _Optional[int] = ..., read_only: bool = ...) -> None: ...
+
+class TradingStatus(_message.Message):
+    __slots__ = ("connection_status",)
+    CONNECTION_STATUS_FIELD_NUMBER: _ClassVar[int]
+    connection_status: ConnectionStatus
+    def __init__(self, connection_status: _Optional[_Union[ConnectionStatus, str]] = ...) -> None: ...
 
 class RestingOrder(_message.Message):
     __slots__ = ("client_order_id", "exchange_order_id", "market_id", "price", "order_quantity", "side", "time_in_force", "order_type", "remaining_quantity", "rest_time", "subaccount_id", "cumulative_quantity", "cancel_on_disconnect")

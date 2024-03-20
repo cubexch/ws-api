@@ -4,6 +4,7 @@ import {
   OrderType,
   SelfTradePrevention,
   PostOnly,
+  ConnectionStatus,
   Credentials,
   OrderRequest,
   NewOrder,
@@ -32,6 +33,7 @@ import {
   RestingOrders,
   AssetPositions,
   Done,
+  TradingStatus,
   RestingOrder,
 } from '../trade';
 import * as Long from "long";
@@ -168,6 +170,30 @@ export function postOnlyToJSON(object: PostOnly): string {
       return "ENABLED";
     default:
       throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum PostOnly");
+  }
+}
+
+export function connectionStatusFromJSON(object: any): ConnectionStatus {
+  switch (object) {
+    case 0:
+    case "READ_ONLY":
+      return ConnectionStatus.READ_ONLY;
+    case 1:
+    case "READ_WRITE":
+      return ConnectionStatus.READ_WRITE;
+    default:
+      throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum ConnectionStatus");
+  }
+}
+
+export function connectionStatusToJSON(object: ConnectionStatus): string {
+  switch (object) {
+    case ConnectionStatus.READ_ONLY:
+      return "READ_ONLY";
+    case ConnectionStatus.READ_WRITE:
+      return "READ_WRITE";
+    default:
+      throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum ConnectionStatus");
   }
 }
 
@@ -1233,6 +1259,7 @@ function createBaseOrderResponse(): OrderResponse {
     heartbeat: undefined,
     position: undefined,
     massCancelAck: undefined,
+    tradingStatus: undefined,
   };
 }
 
@@ -1267,6 +1294,9 @@ export const OrderResponseMethods = {
     }
     if (message.massCancelAck !== undefined) {
       MassCancelAckMethods.encode(message.massCancelAck, writer.uint32(82).fork()).ldelim();
+    }
+    if (message.tradingStatus !== undefined) {
+      TradingStatusMethods.encode(message.tradingStatus, writer.uint32(90).fork()).ldelim();
     }
     return writer;
   },
@@ -1348,6 +1378,13 @@ export const OrderResponseMethods = {
 
           message.massCancelAck = MassCancelAckMethods.decode(reader, reader.uint32());
           continue;
+        case 11:
+          if (tag !== 90) {
+            break;
+          }
+
+          message.tradingStatus = TradingStatusMethods.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1369,6 +1406,7 @@ export const OrderResponseMethods = {
       heartbeat: isSet(object.heartbeat) ? HeartbeatMethods.fromJSON(object.heartbeat) : undefined,
       position: isSet(object.position) ? AssetPositionMethods.fromJSON(object.position) : undefined,
       massCancelAck: isSet(object.massCancelAck) ? MassCancelAckMethods.fromJSON(object.massCancelAck) : undefined,
+      tradingStatus: isSet(object.tradingStatus) ? TradingStatusMethods.fromJSON(object.tradingStatus) : undefined,
     };
   },
 
@@ -1392,6 +1430,8 @@ export const OrderResponseMethods = {
       (obj.position = message.position ? AssetPositionMethods.toJSON(message.position) : undefined);
     message.massCancelAck !== undefined &&
       (obj.massCancelAck = message.massCancelAck ? MassCancelAckMethods.toJSON(message.massCancelAck) : undefined);
+    message.tradingStatus !== undefined &&
+      (obj.tradingStatus = message.tradingStatus ? TradingStatusMethods.toJSON(message.tradingStatus) : undefined);
     return obj;
   },
 };
@@ -2951,7 +2991,7 @@ export const RawUnitsMethods = {
 };
 
 function createBaseBootstrap(): Bootstrap {
-  return { done: undefined, resting: undefined, position: undefined };
+  return { done: undefined, resting: undefined, position: undefined, tradingStatus: undefined };
 }
 
 export const BootstrapMethods = {
@@ -2964,6 +3004,9 @@ export const BootstrapMethods = {
     }
     if (message.position !== undefined) {
       AssetPositionsMethods.encode(message.position, writer.uint32(26).fork()).ldelim();
+    }
+    if (message.tradingStatus !== undefined) {
+      TradingStatusMethods.encode(message.tradingStatus, writer.uint32(34).fork()).ldelim();
     }
     return writer;
   },
@@ -2996,6 +3039,13 @@ export const BootstrapMethods = {
 
           message.position = AssetPositionsMethods.decode(reader, reader.uint32());
           continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.tradingStatus = TradingStatusMethods.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -3010,6 +3060,7 @@ export const BootstrapMethods = {
       done: isSet(object.done) ? DoneMethods.fromJSON(object.done) : undefined,
       resting: isSet(object.resting) ? RestingOrdersMethods.fromJSON(object.resting) : undefined,
       position: isSet(object.position) ? AssetPositionsMethods.fromJSON(object.position) : undefined,
+      tradingStatus: isSet(object.tradingStatus) ? TradingStatusMethods.fromJSON(object.tradingStatus) : undefined,
     };
   },
 
@@ -3020,6 +3071,8 @@ export const BootstrapMethods = {
       (obj.resting = message.resting ? RestingOrdersMethods.toJSON(message.resting) : undefined);
     message.position !== undefined &&
       (obj.position = message.position ? AssetPositionsMethods.toJSON(message.position) : undefined);
+    message.tradingStatus !== undefined &&
+      (obj.tradingStatus = message.tradingStatus ? TradingStatusMethods.toJSON(message.tradingStatus) : undefined);
     return obj;
   },
 };
@@ -3182,6 +3235,52 @@ export const DoneMethods = {
     const obj: any = {};
     message.latestTransactTime !== undefined && (obj.latestTransactTime = message.latestTransactTime.toString());
     message.readOnly !== undefined && (obj.readOnly = message.readOnly);
+    return obj;
+  },
+};
+
+function createBaseTradingStatus(): TradingStatus {
+  return { connectionStatus: 0 };
+}
+
+export const TradingStatusMethods = {
+  encode(message: TradingStatus, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.connectionStatus !== 0) {
+      writer.uint32(8).int32(message.connectionStatus);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): TradingStatus {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseTradingStatus();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.connectionStatus = reader.int32() as any;
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): TradingStatus {
+    return { connectionStatus: isSet(object.connectionStatus) ? connectionStatusFromJSON(object.connectionStatus) : 0 };
+  },
+
+  toJSON(message: TradingStatus): unknown {
+    const obj: any = {};
+    message.connectionStatus !== undefined && (obj.connectionStatus = connectionStatusToJSON(message.connectionStatus));
     return obj;
   },
 };

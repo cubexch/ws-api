@@ -40,7 +40,7 @@ export declare const protobufPackage = "trade";
  * 230 base lots
  *   * (10^15 WEI / base lot)
  *   / (10^18 WEI / ETH)
- *   = 230 ETH
+ *   = 0.230 ETH
  *
  * 6300 quote lots / base lot
  *   * (1 SAT / quote lot)
@@ -207,6 +207,16 @@ export declare enum SelfTradePrevention {
 export declare enum PostOnly {
     DISABLED = 0,
     ENABLED = 1
+}
+/**
+ * Indicates which operations are allowed on this connection.
+ * The ConnectionStatus may change during a single connection's lifetime.
+ */
+export declare enum ConnectionStatus {
+    /** READ_ONLY - This connection may query balances and see resting orders but may not create, modify, or cancel orders e.g. */
+    READ_ONLY = 0,
+    /** READ_WRITE - There are no restrictions imposed by this connection (though restrictions may apply from elsewhere in the system). */
+    READ_WRITE = 1
 }
 /**
  * Sent by client on websocket initialization. Once the websocket has been
@@ -428,6 +438,7 @@ export interface OrderResponse {
     heartbeat?: Heartbeat | undefined;
     position?: AssetPosition | undefined;
     massCancelAck?: MassCancelAck | undefined;
+    tradingStatus?: TradingStatus | undefined;
 }
 /**
  * New-order-ack confirms a new-order request. The ack will be ordered before
@@ -790,9 +801,9 @@ export interface RawUnits {
 }
 /**
  * A bootstrap message sent after Credentials authentication.
- * Client resting and pending orders used to bootstrap state. Sent as the first
- * message(s) after initialization. Bootstrap is complete after a message tagged
- * `Done` is received and every message after that will be an `OrderResponse`.
+ * Client resting and pending orders used to bootstrap state.
+ * Sent as the first message(s) after initialization.
+ * A message containing the `Done` variant indicates that the Bootstrap is complete.
  * Multiple messages may be received for `RestingOrders` and `AssetPositions`
  * and these should be concatenated.
  */
@@ -800,6 +811,7 @@ export interface Bootstrap {
     done?: Done | undefined;
     resting?: RestingOrders | undefined;
     position?: AssetPositions | undefined;
+    tradingStatus?: TradingStatus | undefined;
 }
 /** A chunk of resting orders. Sent on bootstrap. */
 export interface RestingOrders {
@@ -813,7 +825,20 @@ export interface AssetPositions {
 export interface Done {
     /** [Transact time](#transact-time) */
     latestTransactTime: bigint;
+    /**
+     * DEPRECATED: will be removed in a future version;
+     * read the "connection_status" field in the "Bootstrap.TradingStatus" message
+     * that arrives before the "Done" message
+     */
     readOnly: boolean;
+}
+/**
+ * Indicates the scope of the ability to trade via this connection.
+ * This message will be sent each time that scope changes.
+ */
+export interface TradingStatus {
+    /** Indicates which operations are available through this connection as of this message. */
+    connectionStatus: ConnectionStatus;
 }
 /** A resting order. Sent on bootstrap in `RestingOrders`. */
 export interface RestingOrder {

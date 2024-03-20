@@ -193,6 +193,15 @@ enum PostOnly {
   ENABLED = 1;
 }
 
+// Indicates which operations are allowed on this connection.
+// The ConnectionStatus may change during a single connection's lifetime.
+enum ConnectionStatus {
+  // This connection may query balances and see resting orders but may not create, modify, or cancel orders e.g.
+  READ_ONLY = 0;
+  // There are no restrictions imposed by this connection (though restrictions may apply from elsewhere in the system).
+  READ_WRITE = 1;
+}
+
 // Sent by client on websocket initialization. Once the websocket has been
 // connected, the client is expected to send this credentials message
 // immediately. The API key (UUID) and secret access key (hex-encoded 32-byte
@@ -406,6 +415,7 @@ message OrderResponse {
     Heartbeat heartbeat = 8;
     AssetPosition position = 9;
     MassCancelAck mass_cancel_ack = 10;
+    TradingStatus trading_status = 11;
   }
 }
 
@@ -730,9 +740,9 @@ message RawUnits {
 
 
 // A bootstrap message sent after Credentials authentication.
-// Client resting and pending orders used to bootstrap state. Sent as the first
-// message(s) after initialization. Bootstrap is complete after a message tagged
-// `Done` is received and every message after that will be an `OrderResponse`.
+// Client resting and pending orders used to bootstrap state.
+// Sent as the first message(s) after initialization.
+// A message containing the `Done` variant indicates that the Bootstrap is complete.
 // Multiple messages may be received for `RestingOrders` and `AssetPositions`
 // and these should be concatenated.
 message Bootstrap {
@@ -740,6 +750,7 @@ message Bootstrap {
     Done done = 1;
     RestingOrders resting = 2;
     AssetPositions position = 3;
+    TradingStatus trading_status = 4;
   }
 }
 
@@ -757,7 +768,17 @@ message AssetPositions {
 message Done {
   // [Transact time](#transact-time)
   uint64 latest_transact_time = 1;
+  // DEPRECATED: will be removed in a future version;
+  // read the "connection_status" field in the "Bootstrap.TradingStatus" message
+  // that arrives before the "Done" message
   bool read_only = 2;
+}
+
+// Indicates the scope of the ability to trade via this connection.
+// This message will be sent each time that scope changes.
+message TradingStatus {
+  // Indicates which operations are available through this connection as of this message.
+  ConnectionStatus connection_status = 1;
 }
 
 // A resting order. Sent on bootstrap in `RestingOrders`.

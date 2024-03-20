@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RestingOrderMethods = exports.DoneMethods = exports.AssetPositionsMethods = exports.RestingOrdersMethods = exports.BootstrapMethods = exports.RawUnitsMethods = exports.AssetPositionMethods = exports.FixedPointDecimalMethods = exports.FillMethods = exports.ModifyOrderRejectMethods = exports.CancelOrderRejectMethods = exports.NewOrderRejectMethods = exports.MassCancelAckMethods = exports.ModifyOrderAckMethods = exports.CancelOrderAckMethods = exports.NewOrderAckMethods = exports.OrderResponseMethods = exports.HeartbeatMethods = exports.MassCancelMethods = exports.ModifyOrderMethods = exports.CancelOrderMethods = exports.NewOrderMethods = exports.OrderRequestMethods = exports.CredentialsMethods = exports.modifyOrderReject_ReasonToJSON = exports.modifyOrderReject_ReasonFromJSON = exports.cancelOrderReject_ReasonToJSON = exports.cancelOrderReject_ReasonFromJSON = exports.newOrderReject_ReasonToJSON = exports.newOrderReject_ReasonFromJSON = exports.massCancelAck_ReasonToJSON = exports.massCancelAck_ReasonFromJSON = exports.cancelOrderAck_ReasonToJSON = exports.cancelOrderAck_ReasonFromJSON = exports.postOnlyToJSON = exports.postOnlyFromJSON = exports.selfTradePreventionToJSON = exports.selfTradePreventionFromJSON = exports.orderTypeToJSON = exports.orderTypeFromJSON = exports.timeInForceToJSON = exports.timeInForceFromJSON = exports.sideToJSON = exports.sideFromJSON = void 0;
+exports.RestingOrderMethods = exports.TradingStatusMethods = exports.DoneMethods = exports.AssetPositionsMethods = exports.RestingOrdersMethods = exports.BootstrapMethods = exports.RawUnitsMethods = exports.AssetPositionMethods = exports.FixedPointDecimalMethods = exports.FillMethods = exports.ModifyOrderRejectMethods = exports.CancelOrderRejectMethods = exports.NewOrderRejectMethods = exports.MassCancelAckMethods = exports.ModifyOrderAckMethods = exports.CancelOrderAckMethods = exports.NewOrderAckMethods = exports.OrderResponseMethods = exports.HeartbeatMethods = exports.MassCancelMethods = exports.ModifyOrderMethods = exports.CancelOrderMethods = exports.NewOrderMethods = exports.OrderRequestMethods = exports.CredentialsMethods = exports.modifyOrderReject_ReasonToJSON = exports.modifyOrderReject_ReasonFromJSON = exports.cancelOrderReject_ReasonToJSON = exports.cancelOrderReject_ReasonFromJSON = exports.newOrderReject_ReasonToJSON = exports.newOrderReject_ReasonFromJSON = exports.massCancelAck_ReasonToJSON = exports.massCancelAck_ReasonFromJSON = exports.cancelOrderAck_ReasonToJSON = exports.cancelOrderAck_ReasonFromJSON = exports.connectionStatusToJSON = exports.connectionStatusFromJSON = exports.postOnlyToJSON = exports.postOnlyFromJSON = exports.selfTradePreventionToJSON = exports.selfTradePreventionFromJSON = exports.orderTypeToJSON = exports.orderTypeFromJSON = exports.timeInForceToJSON = exports.timeInForceFromJSON = exports.sideToJSON = exports.sideFromJSON = void 0;
 const trade_1 = require("../trade");
 const Long = require("long");
 const _m0 = require("protobufjs/minimal");
@@ -139,6 +139,30 @@ function postOnlyToJSON(object) {
     }
 }
 exports.postOnlyToJSON = postOnlyToJSON;
+function connectionStatusFromJSON(object) {
+    switch (object) {
+        case 0:
+        case "READ_ONLY":
+            return trade_1.ConnectionStatus.READ_ONLY;
+        case 1:
+        case "READ_WRITE":
+            return trade_1.ConnectionStatus.READ_WRITE;
+        default:
+            throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum ConnectionStatus");
+    }
+}
+exports.connectionStatusFromJSON = connectionStatusFromJSON;
+function connectionStatusToJSON(object) {
+    switch (object) {
+        case trade_1.ConnectionStatus.READ_ONLY:
+            return "READ_ONLY";
+        case trade_1.ConnectionStatus.READ_WRITE:
+            return "READ_WRITE";
+        default:
+            throw new tsProtoGlobalThis.Error("Unrecognized enum value " + object + " for enum ConnectionStatus");
+    }
+}
+exports.connectionStatusToJSON = connectionStatusToJSON;
 function cancelOrderAck_ReasonFromJSON(object) {
     switch (object) {
         case 0:
@@ -1127,6 +1151,7 @@ function createBaseOrderResponse() {
         heartbeat: undefined,
         position: undefined,
         massCancelAck: undefined,
+        tradingStatus: undefined,
     };
 }
 exports.OrderResponseMethods = {
@@ -1160,6 +1185,9 @@ exports.OrderResponseMethods = {
         }
         if (message.massCancelAck !== undefined) {
             exports.MassCancelAckMethods.encode(message.massCancelAck, writer.uint32(82).fork()).ldelim();
+        }
+        if (message.tradingStatus !== undefined) {
+            exports.TradingStatusMethods.encode(message.tradingStatus, writer.uint32(90).fork()).ldelim();
         }
         return writer;
     },
@@ -1230,6 +1258,12 @@ exports.OrderResponseMethods = {
                     }
                     message.massCancelAck = exports.MassCancelAckMethods.decode(reader, reader.uint32());
                     continue;
+                case 11:
+                    if (tag !== 90) {
+                        break;
+                    }
+                    message.tradingStatus = exports.TradingStatusMethods.decode(reader, reader.uint32());
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -1250,6 +1284,7 @@ exports.OrderResponseMethods = {
             heartbeat: isSet(object.heartbeat) ? exports.HeartbeatMethods.fromJSON(object.heartbeat) : undefined,
             position: isSet(object.position) ? exports.AssetPositionMethods.fromJSON(object.position) : undefined,
             massCancelAck: isSet(object.massCancelAck) ? exports.MassCancelAckMethods.fromJSON(object.massCancelAck) : undefined,
+            tradingStatus: isSet(object.tradingStatus) ? exports.TradingStatusMethods.fromJSON(object.tradingStatus) : undefined,
         };
     },
     toJSON(message) {
@@ -1272,6 +1307,8 @@ exports.OrderResponseMethods = {
             (obj.position = message.position ? exports.AssetPositionMethods.toJSON(message.position) : undefined);
         message.massCancelAck !== undefined &&
             (obj.massCancelAck = message.massCancelAck ? exports.MassCancelAckMethods.toJSON(message.massCancelAck) : undefined);
+        message.tradingStatus !== undefined &&
+            (obj.tradingStatus = message.tradingStatus ? exports.TradingStatusMethods.toJSON(message.tradingStatus) : undefined);
         return obj;
     },
 };
@@ -2686,7 +2723,7 @@ exports.RawUnitsMethods = {
     },
 };
 function createBaseBootstrap() {
-    return { done: undefined, resting: undefined, position: undefined };
+    return { done: undefined, resting: undefined, position: undefined, tradingStatus: undefined };
 }
 exports.BootstrapMethods = {
     encode(message, writer = _m0.Writer.create()) {
@@ -2698,6 +2735,9 @@ exports.BootstrapMethods = {
         }
         if (message.position !== undefined) {
             exports.AssetPositionsMethods.encode(message.position, writer.uint32(26).fork()).ldelim();
+        }
+        if (message.tradingStatus !== undefined) {
+            exports.TradingStatusMethods.encode(message.tradingStatus, writer.uint32(34).fork()).ldelim();
         }
         return writer;
     },
@@ -2726,6 +2766,12 @@ exports.BootstrapMethods = {
                     }
                     message.position = exports.AssetPositionsMethods.decode(reader, reader.uint32());
                     continue;
+                case 4:
+                    if (tag !== 34) {
+                        break;
+                    }
+                    message.tradingStatus = exports.TradingStatusMethods.decode(reader, reader.uint32());
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -2739,6 +2785,7 @@ exports.BootstrapMethods = {
             done: isSet(object.done) ? exports.DoneMethods.fromJSON(object.done) : undefined,
             resting: isSet(object.resting) ? exports.RestingOrdersMethods.fromJSON(object.resting) : undefined,
             position: isSet(object.position) ? exports.AssetPositionsMethods.fromJSON(object.position) : undefined,
+            tradingStatus: isSet(object.tradingStatus) ? exports.TradingStatusMethods.fromJSON(object.tradingStatus) : undefined,
         };
     },
     toJSON(message) {
@@ -2748,6 +2795,8 @@ exports.BootstrapMethods = {
             (obj.resting = message.resting ? exports.RestingOrdersMethods.toJSON(message.resting) : undefined);
         message.position !== undefined &&
             (obj.position = message.position ? exports.AssetPositionsMethods.toJSON(message.position) : undefined);
+        message.tradingStatus !== undefined &&
+            (obj.tradingStatus = message.tradingStatus ? exports.TradingStatusMethods.toJSON(message.tradingStatus) : undefined);
         return obj;
     },
 };
@@ -2893,6 +2942,46 @@ exports.DoneMethods = {
         const obj = {};
         message.latestTransactTime !== undefined && (obj.latestTransactTime = message.latestTransactTime.toString());
         message.readOnly !== undefined && (obj.readOnly = message.readOnly);
+        return obj;
+    },
+};
+function createBaseTradingStatus() {
+    return { connectionStatus: 0 };
+}
+exports.TradingStatusMethods = {
+    encode(message, writer = _m0.Writer.create()) {
+        if (message.connectionStatus !== 0) {
+            writer.uint32(8).int32(message.connectionStatus);
+        }
+        return writer;
+    },
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseTradingStatus();
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    if (tag !== 8) {
+                        break;
+                    }
+                    message.connectionStatus = reader.int32();
+                    continue;
+            }
+            if ((tag & 7) === 4 || tag === 0) {
+                break;
+            }
+            reader.skipType(tag & 7);
+        }
+        return message;
+    },
+    fromJSON(object) {
+        return { connectionStatus: isSet(object.connectionStatus) ? connectionStatusFromJSON(object.connectionStatus) : 0 };
+    },
+    toJSON(message) {
+        const obj = {};
+        message.connectionStatus !== undefined && (obj.connectionStatus = connectionStatusToJSON(message.connectionStatus));
         return obj;
     },
 };

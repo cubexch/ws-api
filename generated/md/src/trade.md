@@ -40,7 +40,7 @@ ETH`. In more detail, we have:
 230 base lots
   * (10^15 WEI / base lot)
   / (10^18 WEI / ETH)
-  = 230 ETH
+  = 0.230 ETH
 
 6300 quote lots / base lot
   * (1 SAT / quote lot)
@@ -351,6 +351,7 @@ OrderResponse.
 | heartbeat | [Heartbeat](#heartbeat) |  |  |
 | position | [AssetPosition](#assetposition) |  |  |
 | mass_cancel_ack | [MassCancelAck](#masscancelack) |  |  |
+| trading_status | [TradingStatus](#tradingstatus) |  |  |
 
 
 
@@ -609,9 +610,9 @@ word3]`.
 
 ## Bootstrap
 A bootstrap message sent after Credentials authentication.
-Client resting and pending orders used to bootstrap state. Sent as the first
-message(s) after initialization. Bootstrap is complete after a message tagged
-`Done` is received and every message after that will be an `OrderResponse`.
+Client resting and pending orders used to bootstrap state.
+Sent as the first message(s) after initialization.
+A message containing the `Done` variant indicates that the Bootstrap is complete.
 Multiple messages may be received for `RestingOrders` and `AssetPositions`
 and these should be concatenated.
 
@@ -621,6 +622,7 @@ and these should be concatenated.
 | done | [Done](#done) |  |  |
 | resting | [RestingOrders](#restingorders) |  |  |
 | position | [AssetPositions](#assetpositions) |  |  |
+| trading_status | [TradingStatus](#tradingstatus) |  |  |
 
 
 
@@ -663,7 +665,22 @@ An indication that bootstrap is complete.
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | latest_transact_time | [uint64](#uint64) |  | [Transact time](#transact-time) |
-| read_only | [bool](#bool) |  |  |
+| read_only | [bool](#bool) |  | DEPRECATED: will be removed in a future version; read the "connection_status" field in the "Bootstrap.TradingStatus" message that arrives before the "Done" message |
+
+
+
+
+
+
+
+## TradingStatus
+Indicates the scope of the ability to trade via this connection.
+This message will be sent each time that scope changes.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| connection_status | [ConnectionStatus](#connectionstatus) |  | Indicates which operations are available through this connection as of this message. |
 
 
 
@@ -773,6 +790,18 @@ allow resting orders.
 | ---- | ------ | ----------- |
 | DISABLED | 0 |  |
 | ENABLED | 1 |  |
+
+
+
+
+### ConnectionStatus
+Indicates which operations are allowed on this connection.
+The ConnectionStatus may change during a single connection's lifetime.
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| READ_ONLY | 0 | This connection may query balances and see resting orders but may not create, modify, or cancel orders e.g. |
+| READ_WRITE | 1 | There are no restrictions imposed by this connection (though restrictions may apply from elsewhere in the system). |
 
 
 

@@ -1,4 +1,4 @@
-import { Side, TimeInForce, OrderType, SelfTradePrevention, PostOnly, Credentials, OrderRequest, NewOrder, CancelOrder, ModifyOrder, MassCancel, Heartbeat, OrderResponse, NewOrderAck, CancelOrderAck, CancelOrderAck_Reason, ModifyOrderAck, MassCancelAck, MassCancelAck_Reason, NewOrderReject, NewOrderReject_Reason, CancelOrderReject, CancelOrderReject_Reason, ModifyOrderReject, ModifyOrderReject_Reason, Fill, FixedPointDecimal, AssetPosition, RawUnits, Bootstrap, RestingOrders, AssetPositions, Done, RestingOrder } from '../trade';
+import { Side, TimeInForce, OrderType, SelfTradePrevention, PostOnly, ConnectionStatus, Credentials, OrderRequest, NewOrder, CancelOrder, ModifyOrder, MassCancel, Heartbeat, OrderResponse, NewOrderAck, CancelOrderAck, CancelOrderAck_Reason, ModifyOrderAck, MassCancelAck, MassCancelAck_Reason, NewOrderReject, NewOrderReject_Reason, CancelOrderReject, CancelOrderReject_Reason, ModifyOrderReject, ModifyOrderReject_Reason, Fill, FixedPointDecimal, AssetPosition, RawUnits, Bootstrap, RestingOrders, AssetPositions, Done, TradingStatus, RestingOrder } from '../trade';
 import * as _m0 from "protobufjs/minimal";
 export declare function sideFromJSON(object: any): Side;
 export declare function sideToJSON(object: Side): string;
@@ -10,6 +10,8 @@ export declare function selfTradePreventionFromJSON(object: any): SelfTradePreve
 export declare function selfTradePreventionToJSON(object: SelfTradePrevention): string;
 export declare function postOnlyFromJSON(object: any): PostOnly;
 export declare function postOnlyToJSON(object: PostOnly): string;
+export declare function connectionStatusFromJSON(object: any): ConnectionStatus;
+export declare function connectionStatusToJSON(object: ConnectionStatus): string;
 export declare function cancelOrderAck_ReasonFromJSON(object: any): CancelOrderAck_Reason;
 export declare function cancelOrderAck_ReasonToJSON(object: CancelOrderAck_Reason): string;
 export declare function massCancelAck_ReasonFromJSON(object: any): MassCancelAck_Reason;
@@ -157,6 +159,12 @@ export declare const DoneMethods: {
     decode(input: _m0.Reader | Uint8Array, length?: number): Done;
     fromJSON(object: any): Done;
     toJSON(message: Done): unknown;
+};
+export declare const TradingStatusMethods: {
+    encode(message: TradingStatus, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): TradingStatus;
+    fromJSON(object: any): TradingStatus;
+    toJSON(message: TradingStatus): unknown;
 };
 export declare const RestingOrderMethods: {
     encode(message: RestingOrder, writer?: _m0.Writer): _m0.Writer;

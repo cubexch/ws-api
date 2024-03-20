@@ -278,7 +278,7 @@ pub struct Heartbeat {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OrderResponse {
-    #[prost(oneof="order_response::Inner", tags="1, 2, 3, 4, 5, 6, 7, 8, 9, 10")]
+    #[prost(oneof="order_response::Inner", tags="1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11")]
     pub inner: ::core::option::Option<order_response::Inner>,
 }
 /// Nested message and enum types in `OrderResponse`.
@@ -309,6 +309,8 @@ pub mod order_response {
         Position(super::AssetPosition),
         #[prost(message, tag="10")]
         MassCancelAck(super::MassCancelAck),
+        #[prost(message, tag="11")]
+        TradingStatus(super::TradingStatus),
     }
 }
 /// New-order-ack confirms a new-order request. The ack will be ordered before
@@ -969,9 +971,9 @@ pub struct RawUnits {
     pub word3: u64,
 }
 /// A bootstrap message sent after Credentials authentication.
-/// Client resting and pending orders used to bootstrap state. Sent as the first
-/// message(s) after initialization. Bootstrap is complete after a message tagged
-/// `Done` is received and every message after that will be an `OrderResponse`.
+/// Client resting and pending orders used to bootstrap state.
+/// Sent as the first message(s) after initialization.
+/// A message containing the `Done` variant indicates that the Bootstrap is complete.
 /// Multiple messages may be received for `RestingOrders` and `AssetPositions`
 /// and these should be concatenated.
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -980,7 +982,7 @@ pub struct RawUnits {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Bootstrap {
-    #[prost(oneof="bootstrap::Inner", tags="1, 2, 3")]
+    #[prost(oneof="bootstrap::Inner", tags="1, 2, 3, 4")]
     pub inner: ::core::option::Option<bootstrap::Inner>,
 }
 /// Nested message and enum types in `Bootstrap`.
@@ -997,6 +999,8 @@ pub mod bootstrap {
         Resting(super::RestingOrders),
         #[prost(message, tag="3")]
         Position(super::AssetPositions),
+        #[prost(message, tag="4")]
+        TradingStatus(super::TradingStatus),
     }
 }
 /// A chunk of resting orders. Sent on bootstrap.
@@ -1029,8 +1033,23 @@ pub struct Done {
     /// [Transact time](#transact-time)
     #[prost(uint64, tag="1")]
     pub latest_transact_time: u64,
+    /// DEPRECATED: will be removed in a future version;
+    /// read the "connection_status" field in the "Bootstrap.TradingStatus" message
+    /// that arrives before the "Done" message
     #[prost(bool, tag="2")]
     pub read_only: bool,
+}
+/// Indicates the scope of the ability to trade via this connection.
+/// This message will be sent each time that scope changes.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct TradingStatus {
+    /// Indicates which operations are available through this connection as of this message.
+    #[prost(enumeration="ConnectionStatus", tag="1")]
+    pub connection_status: i32,
 }
 /// A resting order. Sent on bootstrap in `RestingOrders`.
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -1284,6 +1303,39 @@ impl PostOnly {
         match value {
             "DISABLED" => Some(Self::Disabled),
             "ENABLED" => Some(Self::Enabled),
+            _ => None,
+        }
+    }
+}
+/// Indicates which operations are allowed on this connection.
+/// The ConnectionStatus may change during a single connection's lifetime.
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum ConnectionStatus {
+    /// This connection may query balances and see resting orders but may not create, modify, or cancel orders e.g.
+    ReadOnly = 0,
+    /// There are no restrictions imposed by this connection (though restrictions may apply from elsewhere in the system).
+    ReadWrite = 1,
+}
+impl ConnectionStatus {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            ConnectionStatus::ReadOnly => "READ_ONLY",
+            ConnectionStatus::ReadWrite => "READ_WRITE",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "READ_ONLY" => Some(Self::ReadOnly),
+            "READ_WRITE" => Some(Self::ReadWrite),
             _ => None,
         }
     }

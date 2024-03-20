@@ -1,7 +1,7 @@
 "use strict";
 /* eslint-disable */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ModifyOrderReject_Reason = exports.CancelOrderReject_Reason = exports.NewOrderReject_Reason = exports.MassCancelAck_Reason = exports.CancelOrderAck_Reason = exports.PostOnly = exports.SelfTradePrevention = exports.OrderType = exports.TimeInForce = exports.Side = exports.protobufPackage = void 0;
+exports.ModifyOrderReject_Reason = exports.CancelOrderReject_Reason = exports.NewOrderReject_Reason = exports.MassCancelAck_Reason = exports.CancelOrderAck_Reason = exports.ConnectionStatus = exports.PostOnly = exports.SelfTradePrevention = exports.OrderType = exports.TimeInForce = exports.Side = exports.protobufPackage = void 0;
 exports.protobufPackage = "trade";
 /**
  * This schema defines the Protobuf messages used for communication with the
@@ -44,7 +44,7 @@ exports.protobufPackage = "trade";
  * 230 base lots
  *   * (10^15 WEI / base lot)
  *   / (10^18 WEI / ETH)
- *   = 230 ETH
+ *   = 0.230 ETH
  *
  * 6300 quote lots / base lot
  *   * (1 SAT / quote lot)
@@ -217,6 +217,17 @@ var PostOnly;
     PostOnly[PostOnly["DISABLED"] = 0] = "DISABLED";
     PostOnly[PostOnly["ENABLED"] = 1] = "ENABLED";
 })(PostOnly = exports.PostOnly || (exports.PostOnly = {}));
+/**
+ * Indicates which operations are allowed on this connection.
+ * The ConnectionStatus may change during a single connection's lifetime.
+ */
+var ConnectionStatus;
+(function (ConnectionStatus) {
+    /** READ_ONLY - This connection may query balances and see resting orders but may not create, modify, or cancel orders e.g. */
+    ConnectionStatus[ConnectionStatus["READ_ONLY"] = 0] = "READ_ONLY";
+    /** READ_WRITE - There are no restrictions imposed by this connection (though restrictions may apply from elsewhere in the system). */
+    ConnectionStatus[ConnectionStatus["READ_WRITE"] = 1] = "READ_WRITE";
+})(ConnectionStatus = exports.ConnectionStatus || (exports.ConnectionStatus = {}));
 var CancelOrderAck_Reason;
 (function (CancelOrderAck_Reason) {
     CancelOrderAck_Reason[CancelOrderAck_Reason["UNCLASSIFIED"] = 0] = "UNCLASSIFIED";
