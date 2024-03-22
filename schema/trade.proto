@@ -38,7 +38,7 @@
 // 230 base lots
 //   * (10^15 WEI / base lot)
 //   / (10^18 WEI / ETH)
-//   = 230 ETH
+//   = 0.230 ETH
 //
 // 6300 quote lots / base lot
 //   * (1 SAT / quote lot)
