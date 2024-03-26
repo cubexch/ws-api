@@ -108,7 +108,6 @@ export interface MdMessage {
     mbpDiff?: MarketByPriceDiff | undefined;
     /** Candlestick */
     kline?: Kline | undefined;
-    implied?: ImpliedMarketByPrice | undefined;
     marketStatus?: MarketStatus | undefined;
 }
 /**
@@ -239,23 +238,6 @@ export interface MarketByOrderDiff_Diff {
     op: MarketByOrderDiff_DiffOp;
     /** See [`MarketByOrder.Order`](#marketbyorder.order) */
     priority: bigint;
-}
-/**
- * The implied prices and quantities for the subscribed market. These are
- * matched as the last quantity at the price level.
- *
- * Note that changes in implied quantity are likely to change all levels wider.
- */
-export interface ImpliedMarketByPrice {
-    bids?: ImpliedMarketByPrice_ImpliedLevels | undefined;
-    asks?: ImpliedMarketByPrice_ImpliedLevels | undefined;
-}
-export interface ImpliedMarketByPrice_ImpliedLevels {
-    levels: ImpliedMarketByPrice_Level[];
-}
-export interface ImpliedMarketByPrice_Level {
-    price: bigint;
-    quantity: bigint;
 }
 export interface MarketStatus {
     transactTime: bigint;
@@ -433,10 +415,4 @@ export interface Config {
     summary: boolean;
     /** Enable price klines */
     klines: KlineInterval[];
-    /**
-     * Enable implied prices for this many levels. Note that high levels of
-     * implied calculation will be expensive for bandwith, and may require
-     * additional permissions.
-     */
-    impliedLevels: number;
 }

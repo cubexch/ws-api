@@ -74,7 +74,6 @@ message MdMessage {
     MarketByPriceDiff mbp_diff = 7;
     // Candlestick
     Kline kline = 8;
-    ImpliedMarketByPrice implied = 9;
     MarketStatus market_status = 10;
   }
 }
@@ -193,25 +192,6 @@ message MarketByOrderDiff {
     DiffOp op = 5;
     // See [`MarketByOrder.Order`](#marketbyorder.order)
     uint64 priority = 6;
-  }
-}
-
-
-// The implied prices and quantities for the subscribed market. These are
-// matched as the last quantity at the price level.
-//
-// Note that changes in implied quantity are likely to change all levels wider.
-message ImpliedMarketByPrice {
-  optional ImpliedLevels bids = 1;
-  optional ImpliedLevels asks = 2;
-
-  message ImpliedLevels {
-    repeated Level levels = 1;
-  }
-
-  message Level {
-    uint64 price = 1;
-    uint64 quantity = 2;
   }
 }
 
@@ -418,8 +398,4 @@ message Config {
   bool summary = 4;
   // Enable price klines
   repeated KlineInterval klines = 5;
-  // Enable implied prices for this many levels. Note that high levels of
-  // implied calculation will be expensive for bandwith, and may require
-  // additional permissions.
-  uint32 implied_levels = 6;
 }

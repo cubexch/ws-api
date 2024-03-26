@@ -15,9 +15,6 @@ import {
   MarketByOrderDiff,
   MarketByOrderDiff_DiffOp,
   MarketByOrderDiff_Diff,
-  ImpliedMarketByPrice,
-  ImpliedMarketByPrice_ImpliedLevels,
-  ImpliedMarketByPrice_Level,
   MarketStatus,
   Trades,
   Trades_Trade,
@@ -259,7 +256,6 @@ function createBaseMdMessage(): MdMessage {
     mbpSnapshot: undefined,
     mbpDiff: undefined,
     kline: undefined,
-    implied: undefined,
     marketStatus: undefined,
   };
 }
@@ -289,9 +285,6 @@ export const MdMessageMethods = {
     }
     if (message.kline !== undefined) {
       KlineMethods.encode(message.kline, writer.uint32(66).fork()).ldelim();
-    }
-    if (message.implied !== undefined) {
-      ImpliedMarketByPriceMethods.encode(message.implied, writer.uint32(74).fork()).ldelim();
     }
     if (message.marketStatus !== undefined) {
       MarketStatusMethods.encode(message.marketStatus, writer.uint32(82).fork()).ldelim();
@@ -362,13 +355,6 @@ export const MdMessageMethods = {
 
           message.kline = KlineMethods.decode(reader, reader.uint32());
           continue;
-        case 9:
-          if (tag !== 74) {
-            break;
-          }
-
-          message.implied = ImpliedMarketByPriceMethods.decode(reader, reader.uint32());
-          continue;
         case 10:
           if (tag !== 82) {
             break;
@@ -395,7 +381,6 @@ export const MdMessageMethods = {
       mbpSnapshot: isSet(object.mbpSnapshot) ? MarketByPriceMethods.fromJSON(object.mbpSnapshot) : undefined,
       mbpDiff: isSet(object.mbpDiff) ? MarketByPriceDiffMethods.fromJSON(object.mbpDiff) : undefined,
       kline: isSet(object.kline) ? KlineMethods.fromJSON(object.kline) : undefined,
-      implied: isSet(object.implied) ? ImpliedMarketByPriceMethods.fromJSON(object.implied) : undefined,
       marketStatus: isSet(object.marketStatus) ? MarketStatusMethods.fromJSON(object.marketStatus) : undefined,
     };
   },
@@ -415,8 +400,6 @@ export const MdMessageMethods = {
     message.mbpDiff !== undefined &&
       (obj.mbpDiff = message.mbpDiff ? MarketByPriceDiffMethods.toJSON(message.mbpDiff) : undefined);
     message.kline !== undefined && (obj.kline = message.kline ? KlineMethods.toJSON(message.kline) : undefined);
-    message.implied !== undefined &&
-      (obj.implied = message.implied ? ImpliedMarketByPriceMethods.toJSON(message.implied) : undefined);
     message.marketStatus !== undefined &&
       (obj.marketStatus = message.marketStatus ? MarketStatusMethods.toJSON(message.marketStatus) : undefined);
     return obj;
@@ -1114,182 +1097,6 @@ export const MarketByOrderDiff_DiffMethods = {
     message.side !== undefined && (obj.side = sideToJSON(message.side));
     message.op !== undefined && (obj.op = marketByOrderDiff_DiffOpToJSON(message.op));
     message.priority !== undefined && (obj.priority = message.priority.toString());
-    return obj;
-  },
-};
-
-function createBaseImpliedMarketByPrice(): ImpliedMarketByPrice {
-  return { bids: undefined, asks: undefined };
-}
-
-export const ImpliedMarketByPriceMethods = {
-  encode(message: ImpliedMarketByPrice, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.bids !== undefined) {
-      ImpliedMarketByPrice_ImpliedLevelsMethods.encode(message.bids, writer.uint32(10).fork()).ldelim();
-    }
-    if (message.asks !== undefined) {
-      ImpliedMarketByPrice_ImpliedLevelsMethods.encode(message.asks, writer.uint32(18).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): ImpliedMarketByPrice {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseImpliedMarketByPrice();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-
-          message.bids = ImpliedMarketByPrice_ImpliedLevelsMethods.decode(reader, reader.uint32());
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
-
-          message.asks = ImpliedMarketByPrice_ImpliedLevelsMethods.decode(reader, reader.uint32());
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): ImpliedMarketByPrice {
-    return {
-      bids: isSet(object.bids) ? ImpliedMarketByPrice_ImpliedLevelsMethods.fromJSON(object.bids) : undefined,
-      asks: isSet(object.asks) ? ImpliedMarketByPrice_ImpliedLevelsMethods.fromJSON(object.asks) : undefined,
-    };
-  },
-
-  toJSON(message: ImpliedMarketByPrice): unknown {
-    const obj: any = {};
-    message.bids !== undefined &&
-      (obj.bids = message.bids ? ImpliedMarketByPrice_ImpliedLevelsMethods.toJSON(message.bids) : undefined);
-    message.asks !== undefined &&
-      (obj.asks = message.asks ? ImpliedMarketByPrice_ImpliedLevelsMethods.toJSON(message.asks) : undefined);
-    return obj;
-  },
-};
-
-function createBaseImpliedMarketByPrice_ImpliedLevels(): ImpliedMarketByPrice_ImpliedLevels {
-  return { levels: [] };
-}
-
-export const ImpliedMarketByPrice_ImpliedLevelsMethods = {
-  encode(message: ImpliedMarketByPrice_ImpliedLevels, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    for (const v of message.levels) {
-      ImpliedMarketByPrice_LevelMethods.encode(v!, writer.uint32(10).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): ImpliedMarketByPrice_ImpliedLevels {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseImpliedMarketByPrice_ImpliedLevels();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-
-          message.levels.push(ImpliedMarketByPrice_LevelMethods.decode(reader, reader.uint32()));
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): ImpliedMarketByPrice_ImpliedLevels {
-    return {
-      levels: Array.isArray(object?.levels)
-        ? object.levels.map((e: any) => ImpliedMarketByPrice_LevelMethods.fromJSON(e))
-        : [],
-    };
-  },
-
-  toJSON(message: ImpliedMarketByPrice_ImpliedLevels): unknown {
-    const obj: any = {};
-    if (message.levels) {
-      obj.levels = message.levels.map((e) => e ? ImpliedMarketByPrice_LevelMethods.toJSON(e) : undefined);
-    } else {
-      obj.levels = [];
-    }
-    return obj;
-  },
-};
-
-function createBaseImpliedMarketByPrice_Level(): ImpliedMarketByPrice_Level {
-  return { price: BigInt("0"), quantity: BigInt("0") };
-}
-
-export const ImpliedMarketByPrice_LevelMethods = {
-  encode(message: ImpliedMarketByPrice_Level, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.price !== BigInt("0")) {
-      writer.uint32(8).uint64(message.price.toString());
-    }
-    if (message.quantity !== BigInt("0")) {
-      writer.uint32(16).uint64(message.quantity.toString());
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): ImpliedMarketByPrice_Level {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseImpliedMarketByPrice_Level();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 8) {
-            break;
-          }
-
-          message.price = longToBigint(reader.uint64() as Long);
-          continue;
-        case 2:
-          if (tag !== 16) {
-            break;
-          }
-
-          message.quantity = longToBigint(reader.uint64() as Long);
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): ImpliedMarketByPrice_Level {
-    return {
-      price: isSet(object.price) ? BigInt(object.price) : BigInt("0"),
-      quantity: isSet(object.quantity) ? BigInt(object.quantity) : BigInt("0"),
-    };
-  },
-
-  toJSON(message: ImpliedMarketByPrice_Level): unknown {
-    const obj: any = {};
-    message.price !== undefined && (obj.price = message.price.toString());
-    message.quantity !== undefined && (obj.quantity = message.quantity.toString());
     return obj;
   },
 };
@@ -2457,7 +2264,7 @@ export const ClientMessageMethods = {
 };
 
 function createBaseConfig(): Config {
-  return { mbp: false, mbo: false, trades: false, summary: false, klines: [], impliedLevels: 0 };
+  return { mbp: false, mbo: false, trades: false, summary: false, klines: [] };
 }
 
 export const ConfigMethods = {
@@ -2479,9 +2286,6 @@ export const ConfigMethods = {
       writer.int32(v);
     }
     writer.ldelim();
-    if (message.impliedLevels !== 0) {
-      writer.uint32(48).uint32(message.impliedLevels);
-    }
     return writer;
   },
 
@@ -2537,13 +2341,6 @@ export const ConfigMethods = {
           }
 
           break;
-        case 6:
-          if (tag !== 48) {
-            break;
-          }
-
-          message.impliedLevels = reader.uint32();
-          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2560,7 +2357,6 @@ export const ConfigMethods = {
       trades: isSet(object.trades) ? Boolean(object.trades) : false,
       summary: isSet(object.summary) ? Boolean(object.summary) : false,
       klines: Array.isArray(object?.klines) ? object.klines.map((e: any) => klineIntervalFromJSON(e)) : [],
-      impliedLevels: isSet(object.impliedLevels) ? Number(object.impliedLevels) : 0,
     };
   },
 
@@ -2575,7 +2371,6 @@ export const ConfigMethods = {
     } else {
       obj.klines = [];
     }
-    message.impliedLevels !== undefined && (obj.impliedLevels = Math.round(message.impliedLevels));
     return obj;
   },
 };

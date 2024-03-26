@@ -56,7 +56,7 @@ BASE: RateUpdateSide
 QUOTE: RateUpdateSide
 
 class MdMessage(_message.Message):
-    __slots__ = ("heartbeat", "summary", "trades", "mbo_snapshot", "mbo_diff", "mbp_snapshot", "mbp_diff", "kline", "implied", "market_status")
+    __slots__ = ("heartbeat", "summary", "trades", "mbo_snapshot", "mbo_diff", "mbp_snapshot", "mbp_diff", "kline", "market_status")
     HEARTBEAT_FIELD_NUMBER: _ClassVar[int]
     SUMMARY_FIELD_NUMBER: _ClassVar[int]
     TRADES_FIELD_NUMBER: _ClassVar[int]
@@ -65,7 +65,6 @@ class MdMessage(_message.Message):
     MBP_SNAPSHOT_FIELD_NUMBER: _ClassVar[int]
     MBP_DIFF_FIELD_NUMBER: _ClassVar[int]
     KLINE_FIELD_NUMBER: _ClassVar[int]
-    IMPLIED_FIELD_NUMBER: _ClassVar[int]
     MARKET_STATUS_FIELD_NUMBER: _ClassVar[int]
     heartbeat: Heartbeat
     summary: Summary
@@ -75,9 +74,8 @@ class MdMessage(_message.Message):
     mbp_snapshot: MarketByPrice
     mbp_diff: MarketByPriceDiff
     kline: Kline
-    implied: ImpliedMarketByPrice
     market_status: MarketStatus
-    def __init__(self, heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., summary: _Optional[_Union[Summary, _Mapping]] = ..., trades: _Optional[_Union[Trades, _Mapping]] = ..., mbo_snapshot: _Optional[_Union[MarketByOrder, _Mapping]] = ..., mbo_diff: _Optional[_Union[MarketByOrderDiff, _Mapping]] = ..., mbp_snapshot: _Optional[_Union[MarketByPrice, _Mapping]] = ..., mbp_diff: _Optional[_Union[MarketByPriceDiff, _Mapping]] = ..., kline: _Optional[_Union[Kline, _Mapping]] = ..., implied: _Optional[_Union[ImpliedMarketByPrice, _Mapping]] = ..., market_status: _Optional[_Union[MarketStatus, _Mapping]] = ...) -> None: ...
+    def __init__(self, heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., summary: _Optional[_Union[Summary, _Mapping]] = ..., trades: _Optional[_Union[Trades, _Mapping]] = ..., mbo_snapshot: _Optional[_Union[MarketByOrder, _Mapping]] = ..., mbo_diff: _Optional[_Union[MarketByOrderDiff, _Mapping]] = ..., mbp_snapshot: _Optional[_Union[MarketByPrice, _Mapping]] = ..., mbp_diff: _Optional[_Union[MarketByPriceDiff, _Mapping]] = ..., kline: _Optional[_Union[Kline, _Mapping]] = ..., market_status: _Optional[_Union[MarketStatus, _Mapping]] = ...) -> None: ...
 
 class MarketByPrice(_message.Message):
     __slots__ = ("levels", "chunk", "num_chunks")
@@ -186,26 +184,6 @@ class MarketByOrderDiff(_message.Message):
     total_bid_orders: int
     total_ask_orders: int
     def __init__(self, diffs: _Optional[_Iterable[_Union[MarketByOrderDiff.Diff, _Mapping]]] = ..., total_bid_levels: _Optional[int] = ..., total_ask_levels: _Optional[int] = ..., total_bid_orders: _Optional[int] = ..., total_ask_orders: _Optional[int] = ...) -> None: ...
-
-class ImpliedMarketByPrice(_message.Message):
-    __slots__ = ("bids", "asks")
-    class ImpliedLevels(_message.Message):
-        __slots__ = ("levels",)
-        LEVELS_FIELD_NUMBER: _ClassVar[int]
-        levels: _containers.RepeatedCompositeFieldContainer[ImpliedMarketByPrice.Level]
-        def __init__(self, levels: _Optional[_Iterable[_Union[ImpliedMarketByPrice.Level, _Mapping]]] = ...) -> None: ...
-    class Level(_message.Message):
-        __slots__ = ("price", "quantity")
-        PRICE_FIELD_NUMBER: _ClassVar[int]
-        QUANTITY_FIELD_NUMBER: _ClassVar[int]
-        price: int
-        quantity: int
-        def __init__(self, price: _Optional[int] = ..., quantity: _Optional[int] = ...) -> None: ...
-    BIDS_FIELD_NUMBER: _ClassVar[int]
-    ASKS_FIELD_NUMBER: _ClassVar[int]
-    bids: ImpliedMarketByPrice.ImpliedLevels
-    asks: ImpliedMarketByPrice.ImpliedLevels
-    def __init__(self, bids: _Optional[_Union[ImpliedMarketByPrice.ImpliedLevels, _Mapping]] = ..., asks: _Optional[_Union[ImpliedMarketByPrice.ImpliedLevels, _Mapping]] = ...) -> None: ...
 
 class MarketStatus(_message.Message):
     __slots__ = ("transact_time", "market_state")
@@ -365,17 +343,15 @@ class ClientMessage(_message.Message):
     def __init__(self, heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., config: _Optional[_Union[Config, _Mapping]] = ...) -> None: ...
 
 class Config(_message.Message):
-    __slots__ = ("mbp", "mbo", "trades", "summary", "klines", "implied_levels")
+    __slots__ = ("mbp", "mbo", "trades", "summary", "klines")
     MBP_FIELD_NUMBER: _ClassVar[int]
     MBO_FIELD_NUMBER: _ClassVar[int]
     TRADES_FIELD_NUMBER: _ClassVar[int]
     SUMMARY_FIELD_NUMBER: _ClassVar[int]
     KLINES_FIELD_NUMBER: _ClassVar[int]
-    IMPLIED_LEVELS_FIELD_NUMBER: _ClassVar[int]
     mbp: bool
     mbo: bool
     trades: bool
     summary: bool
     klines: _containers.RepeatedScalarFieldContainer[KlineInterval]
-    implied_levels: int
-    def __init__(self, mbp: bool = ..., mbo: bool = ..., trades: bool = ..., summary: bool = ..., klines: _Optional[_Iterable[_Union[KlineInterval, str]]] = ..., implied_levels: _Optional[int] = ...) -> None: ...
+    def __init__(self, mbp: bool = ..., mbo: bool = ..., trades: bool = ..., summary: bool = ..., klines: _Optional[_Iterable[_Union[KlineInterval, str]]] = ...) -> None: ...

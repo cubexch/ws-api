@@ -6,7 +6,7 @@
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MdMessage {
-    #[prost(oneof="md_message::Inner", tags="1, 2, 3, 4, 5, 6, 7, 8, 9, 10")]
+    #[prost(oneof="md_message::Inner", tags="1, 2, 3, 4, 5, 6, 7, 8, 10")]
     pub inner: ::core::option::Option<md_message::Inner>,
 }
 /// Nested message and enum types in `MdMessage`.
@@ -41,8 +41,6 @@ pub mod md_message {
         /// Candlestick
         #[prost(message, tag="8")]
         Kline(super::Kline),
-        #[prost(message, tag="9")]
-        Implied(super::ImpliedMarketByPrice),
         #[prost(message, tag="10")]
         MarketStatus(super::MarketStatus),
     }
@@ -290,44 +288,6 @@ pub mod market_by_order_diff {
                 _ => None,
             }
         }
-    }
-}
-/// The implied prices and quantities for the subscribed market. These are
-/// matched as the last quantity at the price level.
-///
-/// Note that changes in implied quantity are likely to change all levels wider.
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ImpliedMarketByPrice {
-    #[prost(message, optional, tag="1")]
-    pub bids: ::core::option::Option<implied_market_by_price::ImpliedLevels>,
-    #[prost(message, optional, tag="2")]
-    pub asks: ::core::option::Option<implied_market_by_price::ImpliedLevels>,
-}
-/// Nested message and enum types in `ImpliedMarketByPrice`.
-pub mod implied_market_by_price {
-    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
-    #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-    pub struct ImpliedLevels {
-        #[prost(message, repeated, tag="1")]
-        pub levels: ::prost::alloc::vec::Vec<Level>,
-    }
-    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-#[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
-    #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-    pub struct Level {
-        #[prost(uint64, tag="1")]
-        pub price: u64,
-        #[prost(uint64, tag="2")]
-        pub quantity: u64,
     }
 }
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -637,11 +597,6 @@ pub struct Config {
     /// Enable price klines
     #[prost(enumeration="KlineInterval", repeated, tag="5")]
     pub klines: ::prost::alloc::vec::Vec<i32>,
-    /// Enable implied prices for this many levels. Note that high levels of
-    /// implied calculation will be expensive for bandwith, and may require
-    /// additional permissions.
-    #[prost(uint32, tag="6")]
-    pub implied_levels: u32,
 }
 /// Side specifies whether the level, order, or diff, is for buying or selling
 /// the base asset.

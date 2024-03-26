@@ -1,4 +1,4 @@
-import { Side, KlineInterval, MarketState, AggressingSide, RateUpdateSide, MdMessage, MarketByPrice, MarketByPrice_Level, MarketByPriceDiff, MarketByPriceDiff_DiffOp, MarketByPriceDiff_Diff, MarketByOrder, MarketByOrder_Order, MarketByOrderDiff, MarketByOrderDiff_DiffOp, MarketByOrderDiff_Diff, ImpliedMarketByPrice, ImpliedMarketByPrice_ImpliedLevels, ImpliedMarketByPrice_Level, MarketStatus, Trades, Trades_Trade, Summary, Kline, Heartbeat, MdMessages, AggMessage, TopOfBook, TopOfBooks, RateUpdate, RateUpdates, ClientMessage, Config } from '../market_data';
+import { Side, KlineInterval, MarketState, AggressingSide, RateUpdateSide, MdMessage, MarketByPrice, MarketByPrice_Level, MarketByPriceDiff, MarketByPriceDiff_DiffOp, MarketByPriceDiff_Diff, MarketByOrder, MarketByOrder_Order, MarketByOrderDiff, MarketByOrderDiff_DiffOp, MarketByOrderDiff_Diff, MarketStatus, Trades, Trades_Trade, Summary, Kline, Heartbeat, MdMessages, AggMessage, TopOfBook, TopOfBooks, RateUpdate, RateUpdates, ClientMessage, Config } from '../market_data';
 import * as _m0 from "protobufjs/minimal";
 export declare function sideFromJSON(object: any): Side;
 export declare function sideToJSON(object: Side): string;
@@ -67,24 +67,6 @@ export declare const MarketByOrderDiff_DiffMethods: {
     decode(input: _m0.Reader | Uint8Array, length?: number): MarketByOrderDiff_Diff;
     fromJSON(object: any): MarketByOrderDiff_Diff;
     toJSON(message: MarketByOrderDiff_Diff): unknown;
-};
-export declare const ImpliedMarketByPriceMethods: {
-    encode(message: ImpliedMarketByPrice, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): ImpliedMarketByPrice;
-    fromJSON(object: any): ImpliedMarketByPrice;
-    toJSON(message: ImpliedMarketByPrice): unknown;
-};
-export declare const ImpliedMarketByPrice_ImpliedLevelsMethods: {
-    encode(message: ImpliedMarketByPrice_ImpliedLevels, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): ImpliedMarketByPrice_ImpliedLevels;
-    fromJSON(object: any): ImpliedMarketByPrice_ImpliedLevels;
-    toJSON(message: ImpliedMarketByPrice_ImpliedLevels): unknown;
-};
-export declare const ImpliedMarketByPrice_LevelMethods: {
-    encode(message: ImpliedMarketByPrice_Level, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): ImpliedMarketByPrice_Level;
-    fromJSON(object: any): ImpliedMarketByPrice_Level;
-    toJSON(message: ImpliedMarketByPrice_Level): unknown;
 };
 export declare const MarketStatusMethods: {
     encode(message: MarketStatus, writer?: _m0.Writer): _m0.Writer;
