@@ -345,15 +345,17 @@ class ClientMessage(_message.Message):
     def __init__(self, heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., config: _Optional[_Union[Config, _Mapping]] = ...) -> None: ...
 
 class Config(_message.Message):
-    __slots__ = ("mbp", "mbo", "trades", "summary", "klines")
+    __slots__ = ("mbp", "mbo", "trades", "summary", "klines", "market_ids")
     MBP_FIELD_NUMBER: _ClassVar[int]
     MBO_FIELD_NUMBER: _ClassVar[int]
     TRADES_FIELD_NUMBER: _ClassVar[int]
     SUMMARY_FIELD_NUMBER: _ClassVar[int]
     KLINES_FIELD_NUMBER: _ClassVar[int]
+    MARKET_IDS_FIELD_NUMBER: _ClassVar[int]
     mbp: bool
     mbo: bool
     trades: bool
     summary: bool
     klines: _containers.RepeatedScalarFieldContainer[KlineInterval]
-    def __init__(self, mbp: bool = ..., mbo: bool = ..., trades: bool = ..., summary: bool = ..., klines: _Optional[_Iterable[_Union[KlineInterval, str]]] = ...) -> None: ...
+    market_ids: _containers.RepeatedScalarFieldContainer[int]
+    def __init__(self, mbp: bool = ..., mbo: bool = ..., trades: bool = ..., summary: bool = ..., klines: _Optional[_Iterable[_Union[KlineInterval, str]]] = ..., market_ids: _Optional[_Iterable[int]] = ...) -> None: ...

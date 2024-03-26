@@ -600,6 +600,9 @@ pub struct Config {
     /// Enable price klines
     #[prost(enumeration="KlineInterval", repeated, tag="5")]
     pub klines: ::prost::alloc::vec::Vec<i32>,
+    /// Market's to subscribe to. Limit 3.
+    #[prost(uint64, repeated, tag="6")]
+    pub market_ids: ::prost::alloc::vec::Vec<u64>,
 }
 /// Side specifies whether the level, order, or diff, is for buying or selling
 /// the base asset.

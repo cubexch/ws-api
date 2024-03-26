@@ -2277,7 +2277,7 @@ export const ClientMessageMethods = {
 };
 
 function createBaseConfig(): Config {
-  return { mbp: false, mbo: false, trades: false, summary: false, klines: [] };
+  return { mbp: false, mbo: false, trades: false, summary: false, klines: [], marketIds: [] };
 }
 
 export const ConfigMethods = {
@@ -2297,6 +2297,11 @@ export const ConfigMethods = {
     writer.uint32(42).fork();
     for (const v of message.klines) {
       writer.int32(v);
+    }
+    writer.ldelim();
+    writer.uint32(50).fork();
+    for (const v of message.marketIds) {
+      writer.uint64(v.toString());
     }
     writer.ldelim();
     return writer;
@@ -2354,6 +2359,23 @@ export const ConfigMethods = {
           }
 
           break;
+        case 6:
+          if (tag === 48) {
+            message.marketIds.push(longToBigint(reader.uint64() as Long));
+
+            continue;
+          }
+
+          if (tag === 50) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.marketIds.push(longToBigint(reader.uint64() as Long));
+            }
+
+            continue;
+          }
+
+          break;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2370,6 +2392,7 @@ export const ConfigMethods = {
       trades: isSet(object.trades) ? Boolean(object.trades) : false,
       summary: isSet(object.summary) ? Boolean(object.summary) : false,
       klines: Array.isArray(object?.klines) ? object.klines.map((e: any) => klineIntervalFromJSON(e)) : [],
+      marketIds: Array.isArray(object?.marketIds) ? object.marketIds.map((e: any) => BigInt(e)) : [],
     };
   },
 
@@ -2383,6 +2406,11 @@ export const ConfigMethods = {
       obj.klines = message.klines.map((e) => klineIntervalToJSON(e));
     } else {
       obj.klines = [];
+    }
+    if (message.marketIds) {
+      obj.marketIds = message.marketIds.map((e) => e.toString());
+    } else {
+      obj.marketIds = [];
     }
     return obj;
   },

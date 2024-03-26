@@ -496,4 +496,6 @@ export interface Config {
   summary: boolean;
   /** Enable price klines */
   klines: KlineInterval[];
+  /** Market's to subscribe to. Limit 3. */
+  marketIds: bigint[];
 }

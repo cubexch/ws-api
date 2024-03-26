@@ -400,4 +400,6 @@ message Config {
   bool summary = 4;
   // Enable price klines
   repeated KlineInterval klines = 5;
+  // Market's to subscribe to. Limit 3.
+  repeated uint64 market_ids = 6;
 }

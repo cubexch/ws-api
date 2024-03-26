@@ -449,6 +449,7 @@ and `mbo` can be set.
 | trades | [bool](#bool) |  | Enable recent trades |
 | summary | [bool](#bool) |  | Enable 24h summary |
 | klines | [KlineInterval](#klineinterval) | repeated | Enable price klines |
+| market_ids | [uint64](#uint64) | repeated | Market's to subscribe to. Limit 3. |
 
 
 
