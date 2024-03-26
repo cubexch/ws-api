@@ -131,7 +131,11 @@ export interface MdMessage {
     | undefined;
   /** Candlestick */
   kline?: Kline | undefined;
-  marketStatus?: MarketStatus | undefined;
+  marketStatus?:
+    | MarketStatus
+    | undefined;
+  /** The market ID that this message is for. Null for `MdMessage.Heartbeat`. */
+  marketId?: bigint | undefined;
 }
 
 /**

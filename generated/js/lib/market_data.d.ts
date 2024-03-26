@@ -109,6 +109,8 @@ export interface MdMessage {
     /** Candlestick */
     kline?: Kline | undefined;
     marketStatus?: MarketStatus | undefined;
+    /** The market ID that this message is for. Null for `MdMessage.Heartbeat`. */
+    marketId?: bigint | undefined;
 }
 /**
  * Market by price snapshot message. This is chunked into `num_chunks` and starts

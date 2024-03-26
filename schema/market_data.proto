@@ -76,6 +76,8 @@ message MdMessage {
     Kline kline = 8;
     MarketStatus market_status = 10;
   }
+  // The market ID that this message is for. Null for `MdMessage.Heartbeat`.
+  optional uint64 market_id = 9;
 }
 
 // Market by price snapshot message. This is chunked into `num_chunks` and starts

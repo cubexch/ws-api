@@ -43,6 +43,7 @@ Every exchange message from `/book/:market_id` will be wrapped as an
 | mbp_diff | [MarketByPriceDiff](#marketbypricediff) |  | Market by price diff |
 | kline | [Kline](#kline) |  | Candlestick |
 | market_status | [MarketStatus](#marketstatus) |  |  |
+| market_id | [uint64](#uint64) | optional | The market ID that this message is for. Null for `MdMessage.Heartbeat`. |
 
 
 

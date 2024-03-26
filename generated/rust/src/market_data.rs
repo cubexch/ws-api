@@ -6,6 +6,9 @@
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MdMessage {
+    /// The market ID that this message is for. Null for `MdMessage.Heartbeat`.
+    #[prost(uint64, optional, tag="9")]
+    pub market_id: ::core::option::Option<u64>,
     #[prost(oneof="md_message::Inner", tags="1, 2, 3, 4, 5, 6, 7, 8, 10")]
     pub inner: ::core::option::Option<md_message::Inner>,
 }

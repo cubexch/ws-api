@@ -228,6 +228,7 @@ function createBaseMdMessage() {
         mbpDiff: undefined,
         kline: undefined,
         marketStatus: undefined,
+        marketId: undefined,
     };
 }
 exports.MdMessageMethods = {
@@ -258,6 +259,9 @@ exports.MdMessageMethods = {
         }
         if (message.marketStatus !== undefined) {
             exports.MarketStatusMethods.encode(message.marketStatus, writer.uint32(82).fork()).ldelim();
+        }
+        if (message.marketId !== undefined) {
+            writer.uint32(72).uint64(message.marketId.toString());
         }
         return writer;
     },
@@ -322,6 +326,12 @@ exports.MdMessageMethods = {
                     }
                     message.marketStatus = exports.MarketStatusMethods.decode(reader, reader.uint32());
                     continue;
+                case 9:
+                    if (tag !== 72) {
+                        break;
+                    }
+                    message.marketId = longToBigint(reader.uint64());
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -341,6 +351,7 @@ exports.MdMessageMethods = {
             mbpDiff: isSet(object.mbpDiff) ? exports.MarketByPriceDiffMethods.fromJSON(object.mbpDiff) : undefined,
             kline: isSet(object.kline) ? exports.KlineMethods.fromJSON(object.kline) : undefined,
             marketStatus: isSet(object.marketStatus) ? exports.MarketStatusMethods.fromJSON(object.marketStatus) : undefined,
+            marketId: isSet(object.marketId) ? BigInt(object.marketId) : undefined,
         };
     },
     toJSON(message) {
@@ -360,6 +371,7 @@ exports.MdMessageMethods = {
         message.kline !== undefined && (obj.kline = message.kline ? exports.KlineMethods.toJSON(message.kline) : undefined);
         message.marketStatus !== undefined &&
             (obj.marketStatus = message.marketStatus ? exports.MarketStatusMethods.toJSON(message.marketStatus) : undefined);
+        message.marketId !== undefined && (obj.marketId = message.marketId.toString());
         return obj;
     },
 };

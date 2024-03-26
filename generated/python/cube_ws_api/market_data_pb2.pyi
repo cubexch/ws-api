@@ -56,7 +56,7 @@ BASE: RateUpdateSide
 QUOTE: RateUpdateSide
 
 class MdMessage(_message.Message):
-    __slots__ = ("heartbeat", "summary", "trades", "mbo_snapshot", "mbo_diff", "mbp_snapshot", "mbp_diff", "kline", "market_status")
+    __slots__ = ("heartbeat", "summary", "trades", "mbo_snapshot", "mbo_diff", "mbp_snapshot", "mbp_diff", "kline", "market_status", "market_id")
     HEARTBEAT_FIELD_NUMBER: _ClassVar[int]
     SUMMARY_FIELD_NUMBER: _ClassVar[int]
     TRADES_FIELD_NUMBER: _ClassVar[int]
@@ -66,6 +66,7 @@ class MdMessage(_message.Message):
     MBP_DIFF_FIELD_NUMBER: _ClassVar[int]
     KLINE_FIELD_NUMBER: _ClassVar[int]
     MARKET_STATUS_FIELD_NUMBER: _ClassVar[int]
+    MARKET_ID_FIELD_NUMBER: _ClassVar[int]
     heartbeat: Heartbeat
     summary: Summary
     trades: Trades
@@ -75,7 +76,8 @@ class MdMessage(_message.Message):
     mbp_diff: MarketByPriceDiff
     kline: Kline
     market_status: MarketStatus
-    def __init__(self, heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., summary: _Optional[_Union[Summary, _Mapping]] = ..., trades: _Optional[_Union[Trades, _Mapping]] = ..., mbo_snapshot: _Optional[_Union[MarketByOrder, _Mapping]] = ..., mbo_diff: _Optional[_Union[MarketByOrderDiff, _Mapping]] = ..., mbp_snapshot: _Optional[_Union[MarketByPrice, _Mapping]] = ..., mbp_diff: _Optional[_Union[MarketByPriceDiff, _Mapping]] = ..., kline: _Optional[_Union[Kline, _Mapping]] = ..., market_status: _Optional[_Union[MarketStatus, _Mapping]] = ...) -> None: ...
+    market_id: int
+    def __init__(self, heartbeat: _Optional[_Union[Heartbeat, _Mapping]] = ..., summary: _Optional[_Union[Summary, _Mapping]] = ..., trades: _Optional[_Union[Trades, _Mapping]] = ..., mbo_snapshot: _Optional[_Union[MarketByOrder, _Mapping]] = ..., mbo_diff: _Optional[_Union[MarketByOrderDiff, _Mapping]] = ..., mbp_snapshot: _Optional[_Union[MarketByPrice, _Mapping]] = ..., mbp_diff: _Optional[_Union[MarketByPriceDiff, _Mapping]] = ..., kline: _Optional[_Union[Kline, _Mapping]] = ..., market_status: _Optional[_Union[MarketStatus, _Mapping]] = ..., market_id: _Optional[int] = ...) -> None: ...
 
 class MarketByPrice(_message.Message):
     __slots__ = ("levels", "chunk", "num_chunks")

@@ -257,6 +257,7 @@ function createBaseMdMessage(): MdMessage {
     mbpDiff: undefined,
     kline: undefined,
     marketStatus: undefined,
+    marketId: undefined,
   };
 }
 
@@ -288,6 +289,9 @@ export const MdMessageMethods = {
     }
     if (message.marketStatus !== undefined) {
       MarketStatusMethods.encode(message.marketStatus, writer.uint32(82).fork()).ldelim();
+    }
+    if (message.marketId !== undefined) {
+      writer.uint32(72).uint64(message.marketId.toString());
     }
     return writer;
   },
@@ -362,6 +366,13 @@ export const MdMessageMethods = {
 
           message.marketStatus = MarketStatusMethods.decode(reader, reader.uint32());
           continue;
+        case 9:
+          if (tag !== 72) {
+            break;
+          }
+
+          message.marketId = longToBigint(reader.uint64() as Long);
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -382,6 +393,7 @@ export const MdMessageMethods = {
       mbpDiff: isSet(object.mbpDiff) ? MarketByPriceDiffMethods.fromJSON(object.mbpDiff) : undefined,
       kline: isSet(object.kline) ? KlineMethods.fromJSON(object.kline) : undefined,
       marketStatus: isSet(object.marketStatus) ? MarketStatusMethods.fromJSON(object.marketStatus) : undefined,
+      marketId: isSet(object.marketId) ? BigInt(object.marketId) : undefined,
     };
   },
 
@@ -402,6 +414,7 @@ export const MdMessageMethods = {
     message.kline !== undefined && (obj.kline = message.kline ? KlineMethods.toJSON(message.kline) : undefined);
     message.marketStatus !== undefined &&
       (obj.marketStatus = message.marketStatus ? MarketStatusMethods.toJSON(message.marketStatus) : undefined);
+    message.marketId !== undefined && (obj.marketId = message.marketId.toString());
     return obj;
   },
 };
