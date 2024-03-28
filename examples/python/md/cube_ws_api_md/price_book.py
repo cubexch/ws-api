@@ -40,9 +40,9 @@ class PriceBook:
                         else:
                             del self.bids[price]
                 case market_data_pb2.MarketByPriceDiff.REPLACE:
-                    best_bid = next(reversed(self.bids))
-                    best_ask = next(iter(self.asks))
-                    if price > best_bid and price < best_ask:
+                    best_bid = next(reversed(self.bids)) if self.bids else None
+                    best_ask = next(iter(self.asks)) if self.asks else None
+                    if (best_bid is not None and price > best_bid) and (best_ask is not None and price < best_ask):
                         self.logger.info(f"better price {price} than previous BBO ({best_bid} {best_ask})")
                     if diff.side == market_data_pb2.ASK:
                         self.asks[price] = qty

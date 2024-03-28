@@ -9,7 +9,9 @@ from cube_ws_api_md import price_book, order_book
 import md_client
 import util
 
-async def price_book_main(dump: bool, interval: int):
+async def price_book_main(dump: bool, interval: int, levels_only: bool):
+    if not levels_only:
+        logging.warn("orders option is not supported for MBP")
     market_id = settings.MARKET_ID
     book_conn_str = f"{settings.CUBE_MD_WS}/book/{market_id}?mbp=true"
     try:
