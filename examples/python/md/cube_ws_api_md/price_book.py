@@ -1,7 +1,7 @@
 import logging
 from sortedcontainers import SortedDict
 from cube_ws_api import market_data_pb2
-import util
+from cube_ws_api_md import constants
 
 class PriceBook:
     def __init__(self):
@@ -11,10 +11,10 @@ class PriceBook:
 
     def dump(self, fname):
         with open(fname, "w") as f:
-            f.write(util.BIDS_HEADER)
+            f.write(constants.BIDS_HEADER)
             for i, p in reversed(self.bids):
                 f.write(f"level: {i} price: {p} quantity: {self.bids[p]}\n")
-            f.write(util.ASKS_HEADER)
+            f.write(constants.ASKS_HEADER)
             for i, p in self.asks:
                 f.write(f"level: {i} price: {p} quantity: {self.asks[p]}\n")
 

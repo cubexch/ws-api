@@ -1,7 +1,8 @@
 import logging
 from sortedcontainers import SortedDict
 from cube_ws_api import market_data_pb2
-import util
+from cube_ws_api_md import constants
+
 class DefaultListSortedDict(SortedDict):
     def __missing__(self,k):
         self[k] = []
@@ -23,7 +24,7 @@ class OrderBook:
     
     def dump(self, fname, levels_only = True):
         with open(fname, "w") as f:
-            f.write(util.BIDS_HEADER)
+            f.write(constants.BIDS_HEADER)
             for i, bp in enumerate(reversed(self.bids)):
                 if levels_only:
                     lv_qty = sum([ o.quantity for o in self.bids[bp]])
@@ -31,7 +32,7 @@ class OrderBook:
                 else:
                     for o in self.bids[bp]:
                         f.write(f"oid: {o.exchange_order_id}, price: {o.price}, quantity: {o.quantity}\n")
-            f.write(util.ASKS_HEADER)
+            f.write(constants.ASKS_HEADER)
             for i, ap in enumerate(self.asks):
                 if levels_only:
                     lv_qty = sum([ o.quantity for o in self.asks[ap]])

@@ -5,8 +5,7 @@ import logging
 import argparse
 
 import settings
-import price_book
-import order_book
+from cube_ws_api_md import price_book, order_book
 import md_client
 import util
 
