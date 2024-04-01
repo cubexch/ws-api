@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='cubexch-client',
-    version='1.1.21',
+    version='1.2.0',
     description='cubexch client',
     author='cubexch',
     install_requires=[
