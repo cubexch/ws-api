@@ -877,7 +877,7 @@ pub struct Fill {
     /// In the case of an implied fill, this price may be fractional,
     /// and will be truncated in that case.
     /// To determine the exact amount of the assets exchanged in the fill,
-    /// use the fill_quantity and quote_quantity fields.
+    /// use the fill_quantity and fill_quote_quantity fields.
     #[prost(uint64, tag="5")]
     pub fill_price: u64,
     /// The quantity of the base asset that was traded in this fill,
