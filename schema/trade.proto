@@ -260,13 +260,17 @@ enum ConnectionStatus {
 // ).expect("new HMAC error");
 // mac.update(b"cube.xyz");
 // mac.update(&timestamp.to_le_bytes());
+//
 // let signature_bytes = <[u8; 32]>::from(mac.finalize().into_bytes());
 // let signature = base64::general_purpose::STANDARD.encode(signature_bytes);
+//
+// println!("{}", signature);
 // ```
 //
 // #### Typescript
-// ```
+// ```typescript
 // import { createHmac } from 'crypto';
+//
 // const secretKey = "cafecafecafecafecafecafecafecafecafecafecafecafecafecafecafecafe";
 // const timestampSecs = Math.floor(Date.now() / 1000);
 // const timestampBytes = Buffer.alloc(8);
@@ -276,8 +280,29 @@ enum ConnectionStatus {
 //   .update(`cube.xyz`)
 //   .update(timestampBytes)
 //   .digest('base64');
+//
+// console.log(signature)
 // ```
 //
+// #### Python
+// ```python`
+// import base64
+// import hmac
+//
+// # Calculates "signature" field for "Credentials" message
+// def calculate_signature(secret_key: bytes, timestamp_seconds: int) -> str:
+//     h = hmac.new(secret_key, digestmod=hashlib.sha256)
+//     h.update("cube.xyz".encode('utf-8'))
+//     h.update(timestamp_seconds.to_bytes(8, byteorder="little", signed=False))
+//     signature_bytes = h.digest()
+//     return base64.standard_b64encode(signature_bytes).decode('utf-8')
+//
+// secret_key = bytes.fromhex("cafecafecafecafecafecafecafecafecafecafecafecafecafecafecafecafe")
+// timestamp = int(time.time())
+// signature = calculate_signature(secret_key, timestamp)
+//
+// print(signature)
+// ````
 //
 message Credentials {
   // Public API key
