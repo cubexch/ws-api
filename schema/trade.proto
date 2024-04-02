@@ -238,10 +238,10 @@ enum ConnectionStatus {
 //
 // In the following examples, replace "cafecafecafe..." with your secret key.
 // When calculated for:
-//   secret key: "cafecafecafecafecafecafecafecafecafecafecafecafecafecafecafecafe"
-//   timestamp: 1706546268
+// - secret key: "cafecafecafecafecafecafecafecafecafecafecafecafecafecafecafecafe"
+// - timestamp: 1706546268
 // ...the resulting signature should be:
-//   "tmtSP4NIzTLXyVUHIOfinotGnPWyfM8JefxivBdSjc8="
+// - "tmtSP4NIzTLXyVUHIOfinotGnPWyfM8JefxivBdSjc8="
 //
 // #### Rust
 //
@@ -285,7 +285,7 @@ enum ConnectionStatus {
 // ```
 //
 // #### Python
-// ```python`
+// ```python
 // import base64
 // import hmac
 //
