@@ -53,9 +53,10 @@
 //
 // When orders are filled in a market enabled for implied matching,
 // **the price may not reflect the exact ratio between the base and quote asset transacted**.
-// See [Implied Matching](/implied-matching.md) for more details.
+// See [Implied Matching](./implied-matching.md) for more details.
 //
-// When calculating `RawUnit` amounts for transacted assets, e.g. for reconciliation,
+// When calculating `RawUnit` amounts for transacted assets,
+// e.g. for reconciliation against settled positions,
 // **use the `fill_quantity * base lot size` for the base asset
 // and the `fill_quote_quantity * quote lot size` for the quote asset**.
 //
@@ -732,12 +733,16 @@ message Fill {
   uint64 cumulative_quantity = 10;
   Side side = 11;
   bool aggressor_indicator = 12;
-  // Indicates the fee charged on this trade.
-  // See [Fees](#fees) for details.
+  // DEPRECATED; do not use.  Use fee_amount instead.
   FixedPointDecimal fee_ratio = 13;
   // The unique trade ID associated with a match event. Each order
   // participanting in the match event will receive this trade ID
   uint64 trade_id = 14;
+  // The asset ID of the asset denominating the fee_amount for this trade.
+  uint64 fee_asset_id = 16;
+  // The total amount of the fee charged on this trade in raw, indivisible units.
+  // See [Fees](#fees) for details.  TODO: fix this link
+  RawUnits fee_amount = 17;
 }
 
 // A fixed-point decimal number.
