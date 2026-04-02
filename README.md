@@ -2,8 +2,7 @@
 
 Protobuf Schema for WebSocket connections to Cube Exchange.
 
-See the [Cube API Documentation](https://cubexch.gitbook.io/cube-api) on GitBook for details
-(or view the generated Markdown [directly](https://github.com/cubexch/gitbook/tree/main/generated/ws-api) if you prefer).
+See the [Cube API Documentation](https://www.cube.exchange/docs/api) for details
 
 ## Contents
 | Directory | Contents                                       |
